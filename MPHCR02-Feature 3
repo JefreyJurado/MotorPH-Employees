@@ -305,7 +305,7 @@ public class MS1CP2MANUAL {
             model.setValueAt(TFSemiMo.getText(), selectedRow, 15);
             model.setValueAt(TFHourlyR.getText(), selectedRow, 16);
             
-            // Optionally, reset the text fields and disable the update button
+            // Optional only, reset the text fields and disable the update button
             clearFields();
             JBUpdate.setEnabled(false);
         }
@@ -359,7 +359,7 @@ public class MS1CP2MANUAL {
         computeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // For demonstration, we'll just display selected month and a dummy salary calculation
+                // For demonstration only, just to display selected month and a dummy salary calculation
                 String selectedMonth = (String) monthComboBox.getSelectedItem();
                 String employeeDetails = "Employee Details\n" +
                         "----------------\n" +
