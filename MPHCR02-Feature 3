@@ -148,8 +148,8 @@ public class MS1CP2MANUAL {
         // JTable and model
         String[] columnNames = {"Employee Number", "Last Name", "First Name", "Birthday", "Address", "Phone Number", "SSS Number", "Philhealth Number", "TIN", "Pagibig Number", "Position", "Status", "Basic Salary", "Rice Subsidy", "Clothing Allowance", "Semi Monthly Rate", "Hourly Rate"};
         Object[][] data = {
-                {"101", "Aljohn", "Liboon", "01/01/1980", "123 Street", "1234567890", "SSS123", "PH123", "TIN123", "PAG123", "Manager", "Active", "50000", "2000", "1000", "25000", "250"},
-                {"102", "Michael", "Sudara", "02/02/1990", "456 Avenue", "0987654321", "SSS456", "PH456", "TIN456", "PAG456", "Developer", "Active", "40000", "1500", "900", "20000", "200"},
+                {"101", "Lobo-on", "Aljohn", "01/01/1980", "123 Street", "1234567890", "SSS123", "PH123", "TIN123", "PAG123", "Manager", "Active", "50000", "2000", "1000", "25000", "250"},
+                {"102", "Sudara", "Michael", "02/02/1990", "456 Avenue", "0987654321", "SSS456", "PH456", "TIN456", "PAG456", "Software Engineer", "Active", "40000", "1500", "900", "20000", "200"},
                 // Add more rows as needed
         };
         model = new DefaultTableModel(data, columnNames);
