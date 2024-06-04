@@ -1,0 +1,403 @@
+package ms1cp2manual;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class MS1CP2MANUAL {
+
+    private static JTextField TFEmpNum, TFLastName, TFFirstName, TFBDay, TFAdd, TFPhone, TFSSS, TFPhealth, TFTin, TFPag, TFPosition, TFStatus, TFSalary, TFRice, TFClothing, TFSemiMo, TFHourlyR;
+    private static DefaultTableModel model;
+    private static JTable table;
+    private static JButton JBUpdate;
+
+    public static void main(String[] args) {
+        // LABEL
+        JLabel label1 = new JLabel("Employee Details");
+        label1.setBounds(20, 15, 200, 100);
+        label1.setFont(new Font("Nunito", Font.BOLD, 20));
+
+        JLabel IDNum = new JLabel("Employee Number");
+        IDNum.setBounds(30, 70, 200, 100);
+        IDNum.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel LName = new JLabel("Last Name");
+        LName.setBounds(30, 110, 200, 100);
+        LName.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel FName = new JLabel("First Name");
+        FName.setBounds(30, 150, 200, 100);
+        FName.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel BDay = new JLabel("Birthday");
+        BDay.setBounds(30, 190, 200, 100);
+        BDay.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel Add = new JLabel("Address");
+        Add.setBounds(30, 230, 200, 100);
+        Add.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel Phone = new JLabel("Phone Number");
+        Phone.setBounds(30, 320, 200, 100);
+        Phone.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel SSS = new JLabel("SSS Number");
+        SSS.setBounds(30, 360, 200, 100);
+        SSS.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel PH = new JLabel("Philhealth Number");
+        PH.setBounds(30, 400, 200, 100);
+        PH.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel TIN = new JLabel("TIN");
+        TIN.setBounds(30, 440, 200, 100);
+        TIN.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel Pagibig = new JLabel("Pagibig Number");
+        Pagibig.setBounds(30, 480, 200, 100);
+        Pagibig.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel Position = new JLabel("Position");
+        Position.setBounds(410, 70, 200, 100);
+        Position.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel Status = new JLabel("Status");
+        Status.setBounds(410, 110, 200, 100);
+        Status.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel Salary = new JLabel("Basic Salary");
+        Salary.setBounds(410, 150, 200, 100);
+        Salary.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel Rice = new JLabel("Rice Subsidy");
+        Rice.setBounds(410, 190, 200, 100);
+        Rice.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel PhoneA = new JLabel("Phone Allowance");
+        PhoneA.setBounds(410, 235, 200, 100);
+        PhoneA.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel Clothing = new JLabel("Clothing Allowance");
+        Clothing.setBounds(410, 230, 200, 100);
+        Clothing.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel Semi = new JLabel("Semi Monthly Rate");
+        Semi.setBounds(410, 270, 200, 100);
+        Semi.setFont(new Font("nunito", Font.BOLD, 16));
+
+        JLabel HourlyR = new JLabel("Hourly Rate");
+        HourlyR.setBounds(410, 310, 200, 100);
+        HourlyR.setFont(new Font("nunito", Font.BOLD, 16));
+
+        // TextField
+        TFEmpNum = new JTextField();
+        TFEmpNum.setBounds(180, 110, 200, 25);
+
+        TFLastName = new JTextField();
+        TFLastName.setBounds(180, 150, 200, 25);
+
+        TFFirstName = new JTextField();
+        TFFirstName.setBounds(180, 190, 200, 25);
+
+        TFBDay = new JTextField();
+        TFBDay.setBounds(180, 230, 200, 25);
+
+        TFAdd = new JTextField();
+        TFAdd.setBounds(180, 270, 200, 75);
+
+        TFPhone = new JTextField();
+        TFPhone.setBounds(180, 360, 200, 25);
+
+        TFSSS = new JTextField();
+        TFSSS.setBounds(180, 400, 200, 25);
+
+        TFPhealth = new JTextField();
+        TFPhealth.setBounds(180, 440, 200, 25);
+
+        TFTin = new JTextField();
+        TFTin.setBounds(180, 480, 200, 25);
+
+        TFPag = new JTextField();
+        TFPag.setBounds(180, 520, 200, 25);
+
+        TFPosition = new JTextField();
+        TFPosition.setBounds(510, 110, 200, 25);
+
+        TFStatus = new JTextField();
+        TFStatus.setBounds(510, 150, 200, 25);
+
+        TFSalary = new JTextField();
+        TFSalary.setBounds(510, 190, 200, 25);
+
+        TFRice = new JTextField();
+        TFRice.setBounds(570, 230, 138, 25);
+
+        TFClothing = new JTextField();
+        TFClothing.setBounds(570, 270, 138, 25);
+
+        TFSemiMo = new JTextField();
+        TFSemiMo.setBounds(570, 310, 138, 25);
+
+        TFHourlyR = new JTextField();
+        TFHourlyR.setBounds(570, 350, 138, 25);
+
+        // JTable and model
+        String[] columnNames = {"Employee Number", "Last Name", "First Name", "Birthday", "Address", "Phone Number", "SSS Number", "Philhealth Number", "TIN", "Pagibig Number", "Position", "Status", "Basic Salary", "Rice Subsidy", "Clothing Allowance", "Semi Monthly Rate", "Hourly Rate"};
+        Object[][] data = {
+                {"101", "Lobo-on", "Aljohn", "01/01/1980", "123 Street", "1234567890", "SSS123", "PH123", "TIN123", "PAG123", "Manager", "Active", "50000", "2000", "1000", "25000", "250"},
+                {"102", "Sudara", "Michael", "02/02/1990", "456 Avenue", "0987654321", "SSS456", "PH456", "TIN456", "PAG456", "Software Engineer", "Active", "40000", "1500", "900", "20000", "200"},
+                // Add more rows as needed
+        };
+        model = new DefaultTableModel(data, columnNames);
+        table = new JTable(model);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // Scroll pane for the table
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(20, 600, 950, 200);
+
+        // Add selection listener to the table
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = table.getSelectedRow();
+                    if (selectedRow != -1) {
+                        TFEmpNum.setText((String) model.getValueAt(selectedRow, 0));
+                        TFLastName.setText((String) model.getValueAt(selectedRow, 1));
+                        TFFirstName.setText((String) model.getValueAt(selectedRow, 2));
+                        TFBDay.setText((String) model.getValueAt(selectedRow, 3));
+                        TFAdd.setText((String) model.getValueAt(selectedRow, 4));
+                        TFPhone.setText((String) model.getValueAt(selectedRow, 5));
+                        TFSSS.setText((String) model.getValueAt(selectedRow, 6));
+                        TFPhealth.setText((String) model.getValueAt(selectedRow, 7));
+                        TFTin.setText((String) model.getValueAt(selectedRow, 8));
+                        TFPag.setText((String) model.getValueAt(selectedRow, 9));
+                        TFPosition.setText((String) model.getValueAt(selectedRow, 10));
+                        TFStatus.setText((String) model.getValueAt(selectedRow, 11));
+                        TFSalary.setText((String) model.getValueAt(selectedRow, 12));
+                        TFRice.setText((String) model.getValueAt(selectedRow, 13));
+                        TFClothing.setText((String) model.getValueAt(selectedRow, 14));
+                        TFSemiMo.setText((String) model.getValueAt(selectedRow, 15));
+                        TFHourlyR.setText((String) model.getValueAt(selectedRow, 16));
+
+                        // Enable the Update button
+                        JBUpdate.setEnabled(true);
+                    }
+                }
+            }
+        });
+
+        // Button
+        JButton ValidateEmpNum = new JButton("Query");
+        ValidateEmpNum.setBounds(363, 60, 100, 25);
+
+        JButton JBAdd = new JButton("Add");
+        JBAdd.setBounds(462, 60, 100, 25);
+
+        JBUpdate = new JButton("Update");
+        JBUpdate.setBounds(560, 60, 100, 25);
+        JBUpdate.setEnabled(false);
+        JBUpdate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateEmployeeDetails();
+            }
+        });
+
+        JButton JBClear = new JButton("Clear");
+        JBClear.setBounds(655, 60, 100, 25);
+
+        JButton JBDelete = new JButton("Delete");
+        JBDelete.setBounds(755, 60, 100, 25);
+        JBDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteEmployee();
+            }
+
+            private void deleteEmployee() {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+
+        JButton JBSave = new JButton("Save");
+        JBSave.setBounds(855, 60, 100, 25);
+
+        // New button for viewing employee
+        JButton JBView = new JButton("View Employee");
+        JBView.setBounds(755, 20, 200, 25);
+        JBView.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openViewEmployeeFrame();
+            }
+        });
+
+        // Button for leave application
+        JButton JBLeave = new JButton("Leave Application");
+        JBLeave.setBounds(755, 100, 200, 25);
+        JBLeave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openLeaveApplicationFrame();
+            }
+
+            private void openLeaveApplicationFrame() {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+
+        // MAIN FRAME
+        JFrame frame = new JFrame();
+        frame.setSize(1000, 850);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("MotorPH Employees");
+
+        // Label setting
+        frame.add(label1);
+        frame.add(IDNum);
+        frame.add(LName);
+        frame.add(FName);
+        frame.add(BDay);
+        frame.add(Add);
+        frame.add(Phone);
+        frame.add(SSS);
+        frame.add(PH);
+        frame.add(TIN);
+        frame.add(Pagibig);
+        frame.add(Position);
+        frame.add(Status);
+        frame.add(Salary);
+        frame.add(Rice);
+        frame.add(Semi);
+        frame.add(Clothing);
+        frame.add(HourlyR);
+        frame.add(TFEmpNum);
+        frame.add(TFLastName);
+        frame.add(TFFirstName);
+        frame.add(TFBDay);
+        frame.add(TFAdd);
+        frame.add(TFPhone);
+        frame.add(TFSSS);
+        frame.add(TFPhealth);
+        frame.add(TFTin);
+        frame.add(TFPag);
+        frame.add(TFPosition);
+        frame.add(TFPag);
+        frame.add(TFPosition);
+        frame.add(TFStatus);
+        frame.add(TFSalary);
+        frame.add(TFRice);
+        frame.add(TFClothing);
+        frame.add(TFSemiMo);
+        frame.add(TFHourlyR);
+        frame.add(ValidateEmpNum);
+        frame.add(JBDelete);
+        frame.add(JBSave);
+        frame.add(JBClear);
+        frame.add(JBAdd);
+        frame.add(JBUpdate);
+        frame.add(JBView); // Adding the new button to the frame
+        frame.add(scrollPane); // Add the scroll pane with table
+        frame.add(JBLeave); // Adding the leave application button
+        frame.setLayout(null);
+    }
+
+    private static void updateEmployeeDetails() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            model.setValueAt(TFEmpNum.getText(), selectedRow, 0);
+            model.setValueAt(TFLastName.getText(), selectedRow, 1);
+            model.setValueAt(TFFirstName.getText(), selectedRow, 2);
+            model.setValueAt(TFBDay.getText(), selectedRow, 3);
+            model.setValueAt(TFAdd.getText(), selectedRow, 4);
+            model.setValueAt(TFPhone.getText(), selectedRow, 5);
+            model.setValueAt(TFSSS.getText(), selectedRow, 6);
+            model.setValueAt(TFPhealth.getText(), selectedRow, 7);
+            model.setValueAt(TFTin.getText(), selectedRow, 8);
+            model.setValueAt(TFPag.getText(), selectedRow, 9);
+            model.setValueAt(TFPosition.getText(), selectedRow, 10);
+            model.setValueAt(TFStatus.getText(), selectedRow, 11);
+            model.setValueAt(TFSalary.getText(), selectedRow, 12);
+            model.setValueAt(TFRice.getText(), selectedRow, 13);
+            model.setValueAt(TFClothing.getText(), selectedRow, 14);
+            model.setValueAt(TFSemiMo.getText(), selectedRow, 15);
+            model.setValueAt(TFHourlyR.getText(), selectedRow, 16);
+
+            // Optional only, reset the text fields and disable the update button
+            clearFields();
+            JBUpdate.setEnabled(false);
+        }
+    }
+
+    private static void clearFields() {
+        TFEmpNum.setText("");
+        TFLastName.setText("");
+        TFFirstName.setText("");
+        TFBDay.setText("");
+        TFAdd.setText("");
+        TFPhone.setText("");
+        TFSSS.setText("");
+        TFPhealth.setText("");
+        TFTin.setText("");
+        TFPag.setText("");
+        TFPosition.setText("");
+        TFStatus.setText("");
+        TFSalary.setText("");
+        TFRice.setText("");
+        TFClothing.setText("");
+        TFSemiMo.setText("");
+        TFHourlyR.setText("");
+    }
+
+private static void openViewEmployeeFrame() {
+    // New frame for viewing employee details and computing salary
+    JFrame viewFrame = new JFrame("View Employee Details");
+    viewFrame.setSize(500, 500);
+    viewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    viewFrame.setLayout(null);
+
+    JLabel selectMonthLabel = new JLabel("Select Month:");
+    selectMonthLabel.setBounds(20, 20, 100, 25);
+    viewFrame.add(selectMonthLabel);
+
+    String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    JComboBox<String> monthComboBox = new JComboBox<>(months);
+    monthComboBox.setBounds(120, 20, 150, 25);
+    viewFrame.add(monthComboBox);
+
+    JButton computeButton = new JButton("Compute");
+    computeButton.setBounds(300, 20, 100, 25);
+    viewFrame.add(computeButton);
+
+    JTextArea employeeDetailsArea = new JTextArea();
+    employeeDetailsArea.setBounds(20, 60, 440, 380);
+    employeeDetailsArea.setEditable(false);
+    viewFrame.add(employeeDetailsArea);
+
+    computeButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // For demonstration only, just to display selected month and a dummy salary calculation
+            String selectedMonth = (String) monthComboBox.getSelectedItem();
+            String employeeDetails = "Employee Details\n" +
+                    "----------------\n" +
+                    "Name: Michael Paulo Sudara\n" +
+                    "Position: Software Engineer\n" +
+                    "Monthly Salary: 50,000\n" +
+                    "\n" +
+                    "Selected Month: " + selectedMonth + "\n" +
+                    "Computed Salary: 50,000"; // Dummy computation
+            employeeDetailsArea.setText(employeeDetails);
+        }
+    });
+
+    viewFrame.setVisible(true);
+}
+}
