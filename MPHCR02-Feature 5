@@ -28,7 +28,7 @@ public class MS1CP2MANUAL {
     }
 
     private static void showLoginDialog() {
-        JFrame loginFrame = new JFrame("Login");
+        JFrame loginFrame = new JFrame("Provide Username and Password");
         loginFrame.setSize(300, 200);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setLayout(null);
