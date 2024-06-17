@@ -33,6 +33,9 @@ public class MS1CP2MANUAL {
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setLayout(null);
 
+        // Removing default Java icon
+        loginFrame.setIconImage(null);
+
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setBounds(10, 20, 80, 25);
         loginFrame.add(usernameLabel);
@@ -387,6 +390,8 @@ public class MS1CP2MANUAL {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("MotorPH Employees");
+        
+        frame.setIconImage(null);
 
         // Label setting
         frame.add(label1);
