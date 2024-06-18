@@ -282,7 +282,7 @@ public class MS1CP2MANUAL {
 
         JBDelete.addActionListener(new ActionListener() {
             private static void clearTextFields() {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                throw new UnsupportedOperationException("Not supported yet.");
             }
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -323,7 +323,7 @@ public class MS1CP2MANUAL {
     }
 
     private void openLeaveApplicationFrame() {
-                JFrame leaveFrame = new JFrame("Leave Application");
+        JFrame leaveFrame = new JFrame("Leave Application");
         leaveFrame.setSize(300, 200);
         leaveFrame.setLayout(new GridLayout(5, 2));
 
