@@ -214,15 +214,25 @@ public class MS1CP2MANUAL {
 
         JButton JBDelete = new JButton("Delete");
         JBDelete.setBounds(755, 60, 100, 25);
+
         JBDelete.addActionListener(new ActionListener() {
+            private static void clearTextFields() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
             @Override
             public void actionPerformed(ActionEvent e) {
                 deleteEmployee();
             }
 
-            private void deleteEmployee() {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
+            private static void deleteEmployee() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            model.removeRow(selectedRow);
+            clearTextFields();
+        } else {
+            JOptionPane.showMessageDialog(null, "No employee selected to delete", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
         });
 
         JButton JBSave = new JButton("Save");
