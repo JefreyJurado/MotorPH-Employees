@@ -252,15 +252,72 @@ public class MS1CP2MANUAL {
         JButton JBLeave = new JButton("Leave Application");
         JBLeave.setBounds(755, 100, 200, 25);
         JBLeave.addActionListener(new ActionListener() {
+           @Override
+    public void actionPerformed(ActionEvent e) {
+        openLeaveApplicationFrame();
+    }
+
+    private void openLeaveApplicationFrame() {
+        JFrame leaveFrame = new JFrame("Leave Application");
+        leaveFrame.setSize(300, 200);
+        leaveFrame.setLayout(new GridLayout(5, 2));
+
+        JLabel empNumLabel = new JLabel("Employee Number:");
+        JTextField empNumField = new JTextField();
+
+        JLabel leaveTypeLabel = new JLabel("Leave Type:");
+        String[] leaveTypes = {"Vacation Leave", "Sick Leave", "Emergency Leave"};
+        JComboBox<String> leaveTypeComboBox = new JComboBox<>(leaveTypes);
+
+        JLabel startDateLabel = new JLabel("Start Date:");
+        JTextField startDateField = new JTextField();
+
+        JLabel endDateLabel = new JLabel("End Date:");
+        JTextField endDateField = new JTextField();
+
+        JButton submitButton = new JButton("Submit");
+
+        leaveFrame.add(empNumLabel);
+        leaveFrame.add(empNumField);
+        leaveFrame.add(leaveTypeLabel);
+        leaveFrame.add(leaveTypeComboBox);
+        leaveFrame.add(startDateLabel);
+        leaveFrame.add(startDateField);
+        leaveFrame.add(endDateLabel);
+        leaveFrame.add(endDateField);
+        leaveFrame.add(new JLabel()); // Empty label to align the button
+        leaveFrame.add(submitButton);
+
+        submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                openLeaveApplicationFrame();
-            }
+                String empNum = empNumField.getText();
+                String leaveType = (String) leaveTypeComboBox.getSelectedItem();
+                String startDate = startDateField.getText();
+                String endDate = endDateField.getText();
 
-            private void openLeaveApplicationFrame() {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                // Here you can handle the submission of the leave application
+                // For now, we'll just display the entered details in a message dialog
+                JOptionPane.showMessageDialog(leaveFrame,
+                        "Leave Application Submitted:\n" +
+                                "Employee Number: " + empNum + "\n" +
+                                "Leave Type: " + leaveType + "\n" +
+                                "Start Date: " + startDate + "\n" +
+                                "End Date: " + endDate,
+                        "Submission Successful",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                // Clear the fields after submission
+                empNumField.setText("");
+                leaveTypeComboBox.setSelectedIndex(0);
+                startDateField.setText("");
+                endDateField.setText("");
             }
         });
+
+        leaveFrame.setVisible(true);
+    }
+});
 
         // MAIN FRAME
         JFrame frame = new JFrame();
