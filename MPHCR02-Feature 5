@@ -21,8 +21,8 @@ public class MS1CP2MANUAL {
     public static void main(String[] args) {
         // Initialize user credentials (in a real application, credentials should be securely stored and managed)
         userCredentials = new HashMap<>();
-        userCredentials.put("aljohn", "jolibee");
-        userCredentials.put("michael", "mcdo");
+        userCredentials.put("aljohn", "pogi na, gwapo pa");
+        userCredentials.put("michael", "malakas and sex appeal");
 
         showLoginDialog();
     }
