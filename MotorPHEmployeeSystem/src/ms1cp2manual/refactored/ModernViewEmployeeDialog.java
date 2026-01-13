@@ -23,7 +23,7 @@ public class ModernViewEmployeeDialog extends JDialog {
     }
 
     private void initializeModernUI() {
-        setSize(700, 650);
+        setSize(700, 680);
         setLocationRelativeTo(null);
         setResizable(false);
         
@@ -48,7 +48,7 @@ public class ModernViewEmployeeDialog extends JDialog {
         headerPanel.setBackground(PRIMARY_COLOR);
         headerPanel.setLayout(null);
         
-        JLabel titleLabel = new JLabel("💰 Salary Computation");
+        JLabel titleLabel = new JLabel("Salary Computation");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         titleLabel.setForeground(WHITE);
         titleLabel.setBounds(30, 20, 400, 40);
@@ -103,7 +103,7 @@ public class ModernViewEmployeeDialog extends JDialog {
         monthComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         selectionPanel.add(monthComboBox);
         
-        JButton computeButton = createModernButton("🔢 Compute", SUCCESS_COLOR);
+        JButton computeButton = createModernButton("Compute", SUCCESS_COLOR);
         computeButton.setBounds(540, 45, 80, 35);
         selectionPanel.add(computeButton);
         

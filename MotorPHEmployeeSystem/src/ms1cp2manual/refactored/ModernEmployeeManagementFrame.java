@@ -41,9 +41,10 @@ public class ModernEmployeeManagementFrame extends JFrame {
 
     private void initializeModernUI() {
         setTitle("MotorPH Employee Management System");
-        setSize(1400, 1030);
+        setSize(1400, 850);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Start maximized
         
         // Set modern look and feel
         try {
@@ -74,6 +75,7 @@ public class ModernEmployeeManagementFrame extends JFrame {
         
         setContentPane(mainPanel);
     }
+    
 
     private void createHeaderPanel(JPanel parent) {
         JPanel headerPanel = new JPanel();
@@ -87,11 +89,11 @@ public class ModernEmployeeManagementFrame extends JFrame {
         titleLabel.setForeground(WHITE);
         headerPanel.add(titleLabel);
         
-        JLabel subtitleLabel = new JLabel("Manage your employees efficiently");
-        subtitleLabel.setBounds(30, 45, 400, 30);
-        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        subtitleLabel.setForeground(new Color(236, 240, 241));
-        headerPanel.add(subtitleLabel);
+//        JLabel subtitleLabel = new JLabel("Manage your employees efficiently");
+//        subtitleLabel.setBounds(30, 45, 400, 30);
+//        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+//        subtitleLabel.setForeground(new Color(236, 240, 241));
+//        headerPanel.add(subtitleLabel);
         
         parent.add(headerPanel);
     }
@@ -184,39 +186,39 @@ public class ModernEmployeeManagementFrame extends JFrame {
             BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
             BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
         
         // Create modern buttons
-        JButton queryBtn = createModernButton("🔍 Query", PRIMARY_COLOR);
+        JButton queryBtn = createModernButton("Query", PRIMARY_COLOR);
         queryBtn.addActionListener(e -> handleQuery());
         buttonPanel.add(queryBtn);
         
-        JButton addBtn = createModernButton("➕ Add", SUCCESS_COLOR);
+        JButton addBtn = createModernButton("Add", SUCCESS_COLOR);
         addBtn.addActionListener(e -> handleAdd());
         buttonPanel.add(addBtn);
         
-        updateButton = createModernButton("✏️ Update", WARNING_COLOR);
+        updateButton = createModernButton("Update", WARNING_COLOR);
         updateButton.setEnabled(false);
         updateButton.addActionListener(e -> handleUpdate());
         buttonPanel.add(updateButton);
         
-        JButton deleteBtn = createModernButton("🗑️ Delete", DANGER_COLOR);
+        JButton deleteBtn = createModernButton("Delete", DANGER_COLOR);
         deleteBtn.addActionListener(e -> handleDelete());
         buttonPanel.add(deleteBtn);
         
-        JButton clearBtn = createModernButton("🔄 Clear", SECONDARY_COLOR);
+        JButton clearBtn = createModernButton("Clear", SECONDARY_COLOR);
         clearBtn.addActionListener(e -> clearFields());
         buttonPanel.add(clearBtn);
         
-        JButton saveBtn = createModernButton("💾 Save", new Color(142, 68, 173));
+        JButton saveBtn = createModernButton("Save", new Color(142, 68, 173));
         saveBtn.addActionListener(e -> handleSave());
         buttonPanel.add(saveBtn);
         
-        JButton viewBtn = createModernButton("👁️ View Employee", new Color(52, 73, 94));
+        JButton viewBtn = createModernButton("View Employee", new Color(52, 73, 94));
         viewBtn.addActionListener(e -> openViewEmployeeDialog());
         buttonPanel.add(viewBtn);
         
-        JButton leaveBtn = createModernButton("📝 Leave Application", new Color(230, 126, 34));
+        JButton leaveBtn = createModernButton("Leave Application", new Color(230, 126, 34));
         leaveBtn.addActionListener(e -> openLeaveApplicationDialog());
         buttonPanel.add(leaveBtn);
         
@@ -225,12 +227,12 @@ public class ModernEmployeeManagementFrame extends JFrame {
 
         private void createModernTable(JPanel parent) {
         JPanel tablePanel = new JPanel();
-        tablePanel.setBounds(30, 660, 1320, 200);  // REDUCED HEIGHT
+        tablePanel.setBounds(30, 640, 1320, 180);  // REDUCED HEIGHT
         tablePanel.setLayout(new BorderLayout());
         tablePanel.setBackground(WHITE);
         tablePanel.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+            BorderFactory.createEmptyBorder(10, 10, 20, 10)
         ));
 
         JLabel tableTitle = new JLabel("Employee Records");

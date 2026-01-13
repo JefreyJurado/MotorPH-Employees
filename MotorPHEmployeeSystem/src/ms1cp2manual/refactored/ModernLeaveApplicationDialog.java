@@ -18,7 +18,7 @@ public class ModernLeaveApplicationDialog extends JDialog {
     }
 
     private void initializeModernUI() {
-        setSize(600, 650);
+        setSize(600, 700);
         setLocationRelativeTo(null);
         setResizable(false);
         
