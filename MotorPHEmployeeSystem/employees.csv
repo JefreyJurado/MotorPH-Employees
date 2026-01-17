@@ -1,5 +1,5 @@
 Employee Number,Last Name,First Name,Birthday,Address,Phone Number,SSS Number,Philhealth Number,TIN,Pagibig Number,Position,Status,Basic Salary,Rice Subsidy,Clothing Allowance,Semi Monthly Rate,Hourly Rate
-101,Lobo-on,Aljohn,01/01/1980,"123 Street",1234567890,SSS123,PH123,TIN123,PAG123,Manager,Active,50000.0,2000.0,1000.0,25000.0,250.0
+101,Lobo-on,Aljohn,01/01/1980,"123 Street Cloud Region",1234567890,SSS123,PH123,TIN123,PAG123,Manager,Active,50000.0,2000.0,1000.0,25000.0,250.0
 102,Sudara,Michael,02/02/1990,"456 Avenue",0987654321,SSS456,PH456,TIN456,PAG456,Software Engineer,Active,40000.0,1500.0,900.0,20000.0,200.0
 103,Jurado,Jefrey,01/03/1992,"245 Makati",09179990987,SSS246,PH478,TIN999,PAG378,Cybersecurity Head,Active,70000.0,1900.0,300.0,20555.0,244.0
 104,Garido,Mel,06/07/1980,"678 Boracay",09996667777,SSS466,PH888,TIN000,PAG456,Web Developer,Active,46666.0,1577.0,988.0,20999.0,245.0

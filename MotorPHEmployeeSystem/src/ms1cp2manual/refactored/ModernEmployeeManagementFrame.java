@@ -41,7 +41,7 @@ public class ModernEmployeeManagementFrame extends JFrame {
 
     private void initializeModernUI() {
         setTitle("MotorPH Employee Management System");
-        setSize(1400, 850);
+        setSize(1400, 950);  // INCREASED from 850 to 950
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Start maximized
@@ -64,7 +64,7 @@ public class ModernEmployeeManagementFrame extends JFrame {
         // Left Panel - Employee Information
         createEmployeeInfoPanel(mainPanel);
         
-        // Right Panel - Employment Details
+        // Right Panel - Employment Details (now includes payroll buttons)
         createEmploymentDetailsPanel(mainPanel);
         
         // Action Buttons Panel
@@ -88,12 +88,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
         titleLabel.setForeground(WHITE);
         headerPanel.add(titleLabel);
-        
-//        JLabel subtitleLabel = new JLabel("Manage your employees efficiently");
-//        subtitleLabel.setBounds(30, 45, 400, 30);
-//        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-//        subtitleLabel.setForeground(new Color(236, 240, 241));
-//        headerPanel.add(subtitleLabel);
         
         parent.add(headerPanel);
     }
@@ -174,13 +168,32 @@ public class ModernEmployeeManagementFrame extends JFrame {
         yPos += spacing;
         
         addModernField(panel, "Hourly Rate", tfHourlyR = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing + 20;  // Extra space before buttons
+        
+        // Payroll Actions Buttons - Inside Employment Details panel
+        JLabel payrollLabel = new JLabel("Payroll Actions:");
+        payrollLabel.setBounds(labelX, yPos, 150, 25);
+        payrollLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        payrollLabel.setForeground(PRIMARY_COLOR);
+        panel.add(payrollLabel);
+        yPos += 35;
+        
+        JButton weeklyPayslipBtn = createModernButton("Generate Weekly Payslip", new Color(155, 89, 182));
+        weeklyPayslipBtn.setBounds(labelX, yPos, 280, 40);
+        weeklyPayslipBtn.addActionListener(e -> openWeeklyPayslipDialog());
+        panel.add(weeklyPayslipBtn);
+        
+        JButton viewDeductionsBtn = createModernButton("View Deductions", new Color(26, 188, 156));
+        viewDeductionsBtn.setBounds(labelX + 300, yPos, 280, 40);
+        viewDeductionsBtn.addActionListener(e -> openViewDeductionsDialog());
+        panel.add(viewDeductionsBtn);
         
         parent.add(panel);
     }
 
     private void createActionButtonsPanel(JPanel parent) {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBounds(30, 590, 1320, 60);
+        buttonPanel.setBounds(30, 590, 1320, 60);  // Back to original position
         buttonPanel.setBackground(WHITE);
         buttonPanel.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
@@ -221,18 +234,18 @@ public class ModernEmployeeManagementFrame extends JFrame {
         JButton leaveBtn = createModernButton("Leave Application", new Color(230, 126, 34));
         leaveBtn.addActionListener(e -> openLeaveApplicationDialog());
         buttonPanel.add(leaveBtn);
-        
+
         parent.add(buttonPanel);
     }
 
-        private void createModernTable(JPanel parent) {
+    private void createModernTable(JPanel parent) {
         JPanel tablePanel = new JPanel();
-        tablePanel.setBounds(30, 640, 1320, 180);  // REDUCED HEIGHT
+        tablePanel.setBounds(30, 660, 1320, 180);  // Moved up to make visible
         tablePanel.setLayout(new BorderLayout());
         tablePanel.setBackground(WHITE);
         tablePanel.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(10, 10, 20, 10)
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
 
         JLabel tableTitle = new JLabel("Employee Records");
@@ -255,13 +268,13 @@ public class ModernEmployeeManagementFrame extends JFrame {
 
         employeeTable = new JTable(tableModel);
         employeeTable.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        employeeTable.setRowHeight(30);  // Slightly taller rows
+        employeeTable.setRowHeight(30);
         employeeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         employeeTable.setShowVerticalLines(true);
         employeeTable.setGridColor(new Color(189, 195, 199));
         employeeTable.setSelectionBackground(new Color(52, 152, 219, 50));
         employeeTable.setSelectionForeground(TEXT_COLOR);
-        employeeTable.setFillsViewportHeight(true);  // IMPORTANT: Fill viewport
+        employeeTable.setFillsViewportHeight(true);
 
         // Style table header
         JTableHeader header = employeeTable.getTableHeader();
@@ -279,7 +292,7 @@ public class ModernEmployeeManagementFrame extends JFrame {
             employeeTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
-        // Create scroll pane - FORCE SCROLLBAR
+        // Create scroll pane
         JScrollPane scrollPane = new JScrollPane(employeeTable);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -545,7 +558,16 @@ public class ModernEmployeeManagementFrame extends JFrame {
         new ModernLeaveApplicationDialog(this).setVisible(true);
     }
 
+    // NEW METHODS for Payroll Actions
+    private void openWeeklyPayslipDialog() {
+        new WeeklyPayslipDialog(this, employeeRepository, salaryCalculator).setVisible(true);
+    }
+
+    private void openViewDeductionsDialog() {
+        new ViewDeductionsDialog(this, employeeRepository, salaryCalculator).setVisible(true);
+    }
+
     private void showModernDialog(String message, String title, int messageType) {
-        JOptionPane.showMessageDialog(this, message, title, messageType);
+        JOptionPane.showMessageDialog(this, message, title, messageType);    
     }
 }
