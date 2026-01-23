@@ -6,7 +6,9 @@ import java.util.List;
 
 public class CSVFileHandler {
     private static final String EMPLOYEE_CSV_FILE = "employees.csv";
-    private static final String CSV_HEADER = "Employee Number,Last Name,First Name,Birthday,Address,Phone Number,SSS Number,Philhealth Number,TIN,Pagibig Number,Position,Status,Basic Salary,Rice Subsidy,Clothing Allowance,Semi Monthly Rate,Hourly Rate";
+    
+    // UPDATED: Added "Status", "Position", "Immediate Supervisor", "Phone Allowance" (now 19 fields)
+    private static final String CSV_HEADER = "Employee Number,Last Name,First Name,Birthday,Address,Phone Number,SSS Number,Philhealth Number,TIN,Pagibig Number,Status,Position,Immediate Supervisor,Basic Salary,Rice Subsidy,Phone Allowance,Clothing Allowance,Semi Monthly Rate,Hourly Rate";
 
     public void saveEmployeesToCSV(List<Employee> employees) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(EMPLOYEE_CSV_FILE))) {
@@ -16,6 +18,7 @@ public class CSVFileHandler {
 
             // Write employee data
             for (Employee emp : employees) {
+                // UPDATED: Added status, position, supervisor, phoneAllowance in correct order
                 String line = String.join(",",
                     emp.getEmployeeNumber(),
                     emp.getLastName(),
@@ -27,10 +30,12 @@ public class CSVFileHandler {
                     emp.getPhilhealthNumber(),
                     emp.getTin(),
                     emp.getPagibigNumber(),
-                    emp.getPosition(),
-                    emp.getStatus(),
+                    emp.getStatus(),                    // NEW
+                    emp.getPosition(),                  // NEW
+                    emp.getImmediateSupervisor(),       // NEW
                     String.valueOf(emp.getBasicSalary()),
                     String.valueOf(emp.getRiceSubsidy()),
+                    String.valueOf(emp.getPhoneAllowance()),    // NEW
                     String.valueOf(emp.getClothingAllowance()),
                     String.valueOf(emp.getSemiMonthlyRate()),
                     String.valueOf(emp.getHourlyRate())
@@ -68,10 +73,23 @@ public class CSVFileHandler {
             // Handle quoted fields (addresses with commas)
             List<String> values = parseCSVLine(line);
 
-            if (values.size() < 17) {
+            // UPDATED: Now expecting 19 fields (was 17)
+            if (values.size() < 19) {
+                System.err.println("ERROR: Line has only " + values.size() + " fields (expected 19)");
+                System.err.println("Line: " + line);
                 return null;
             }
 
+            // Validate required fields are not empty
+            for (int i = 0; i < 19; i++) {
+                if (values.get(i).trim().isEmpty()) {
+                    System.err.println("ERROR: Field " + i + " is empty!");
+                    System.err.println("Line: " + line);
+                    return null;
+                }
+            }
+
+            // UPDATED: Map to new field order with status, position, supervisor, phoneAllowance
             return EmployeeFactory.createEmployee(
                 values.get(0),  // employeeNumber
                 values.get(1),  // lastName
@@ -83,16 +101,22 @@ public class CSVFileHandler {
                 values.get(7),  // philhealthNumber
                 values.get(8),  // tin
                 values.get(9),  // pagibigNumber
-                values.get(10), // position
-                values.get(11), // status
-                Double.parseDouble(values.get(12)), // basicSalary
-                Double.parseDouble(values.get(13)), // riceSubsidy
-                Double.parseDouble(values.get(14)), // clothingAllowance
-                Double.parseDouble(values.get(15)), // semiMonthlyRate
-                Double.parseDouble(values.get(16))  // hourlyRate
+                values.get(10), // status                    NEW
+                values.get(11), // position                  NEW
+                values.get(12), // immediateSupervisor       NEW
+                Double.parseDouble(values.get(13)), // basicSalary
+                Double.parseDouble(values.get(14)), // riceSubsidy
+                Double.parseDouble(values.get(15)), // phoneAllowance    NEW
+                Double.parseDouble(values.get(16)), // clothingAllowance
+                Double.parseDouble(values.get(17)), // semiMonthlyRate
+                Double.parseDouble(values.get(18))  // hourlyRate
             );
+        } catch (NumberFormatException e) {
+            System.err.println("ERROR: Invalid number format in line: " + line);
+            System.err.println("Details: " + e.getMessage());
+            return null;
         } catch (Exception e) {
-            System.err.println("Error parsing line: " + line);
+            System.err.println("ERROR: Unexpected error parsing line: " + line);
             e.printStackTrace();
             return null;
         }
