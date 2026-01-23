@@ -13,19 +13,20 @@ public class ModernEmployeeManagementFrame extends JFrame {
     private SalaryCalculator salaryCalculator;
     
     // Modern Color Scheme
-    private final Color PRIMARY_COLOR = new Color(41, 128, 185);      // Blue
-    private final Color SECONDARY_COLOR = new Color(52, 152, 219);    // Light Blue
-    private final Color SUCCESS_COLOR = new Color(46, 204, 113);      // Green
-    private final Color DANGER_COLOR = new Color(231, 76, 60);        // Red
-    private final Color WARNING_COLOR = new Color(241, 196, 15);      // Yellow
-    private final Color DARK_COLOR = new Color(44, 62, 80);           // Dark Blue-Gray
-    private final Color LIGHT_BG = new Color(236, 240, 241);          // Light Gray
+    private final Color PRIMARY_COLOR = new Color(41, 128, 185);
+    private final Color SECONDARY_COLOR = new Color(52, 152, 219);
+    private final Color SUCCESS_COLOR = new Color(46, 204, 113);
+    private final Color DANGER_COLOR = new Color(231, 76, 60);
+    private final Color WARNING_COLOR = new Color(241, 196, 15);
+    private final Color DARK_COLOR = new Color(44, 62, 80);
+    private final Color LIGHT_BG = new Color(236, 240, 241);
     private final Color WHITE = Color.WHITE;
     private final Color TEXT_COLOR = new Color(44, 62, 80);
     
     private JTextField tfEmpNum, tfLastName, tfFirstName, tfBDay, tfAdd;
     private JTextField tfPhone, tfSSS, tfPhealth, tfTin, tfPag;
-    private JTextField tfPosition, tfStatus, tfSalary, tfRice;
+    private JTextField tfPosition, tfStatus, tfSupervisor;
+    private JTextField tfSalary, tfRice, tfPhoneAllow;
     private JTextField tfClothing, tfSemiMo, tfHourlyR;
     
     private DefaultTableModel tableModel;
@@ -41,42 +42,29 @@ public class ModernEmployeeManagementFrame extends JFrame {
 
     private void initializeModernUI() {
         setTitle("MotorPH Employee Management System");
-        setSize(1400, 950);  // INCREASED from 850 to 950
+        setSize(1400, 950);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Start maximized
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         
-        // Set modern look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        // Main panel with background color
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
         mainPanel.setBackground(LIGHT_BG);
         
-        // Header Panel
         createHeaderPanel(mainPanel);
-        
-        // Left Panel - Employee Information
         createEmployeeInfoPanel(mainPanel);
-        
-        // Right Panel - Employment Details (now includes payroll buttons)
         createEmploymentDetailsPanel(mainPanel);
-        
-        // Action Buttons Panel
-        createActionButtonsPanel(mainPanel);
-        
-        // Table Panel
         createModernTable(mainPanel);
         
         setContentPane(mainPanel);
     }
     
-
     private void createHeaderPanel(JPanel parent) {
         JPanel headerPanel = new JPanel();
         headerPanel.setBounds(0, 0, 1400, 80);
@@ -84,16 +72,84 @@ public class ModernEmployeeManagementFrame extends JFrame {
         headerPanel.setLayout(null);
         
         JLabel titleLabel = new JLabel("MotorPH Employee Management");
-        titleLabel.setBounds(30, 15, 500, 50);
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        titleLabel.setBounds(30, 15, 400, 50);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         titleLabel.setForeground(WHITE);
         headerPanel.add(titleLabel);
+        
+        int btnWidth = 90;
+        int btnHeight = 35;
+        int startX = 470;
+        int spacing = 5;
+        int yPos = 22;
+        
+        JButton queryBtn = createHeaderButton("Query", startX, yPos, btnWidth, btnHeight);
+        queryBtn.addActionListener(e -> handleQuery());
+        headerPanel.add(queryBtn);
+        startX += btnWidth + spacing;
+        
+        JButton addBtn = createHeaderButton("Add", startX, yPos, btnWidth, btnHeight);
+        addBtn.addActionListener(e -> handleAdd());
+        headerPanel.add(addBtn);
+        startX += btnWidth + spacing;
+        
+        updateButton = createHeaderButton("Update", startX, yPos, btnWidth, btnHeight);
+        updateButton.setEnabled(false);
+        updateButton.addActionListener(e -> handleUpdate());
+        headerPanel.add(updateButton);
+        startX += btnWidth + spacing;
+        
+        JButton deleteBtn = createHeaderButton("Delete", startX, yPos, btnWidth, btnHeight);
+        deleteBtn.addActionListener(e -> handleDelete());
+        headerPanel.add(deleteBtn);
+        startX += btnWidth + spacing;
+        
+        JButton clearBtn = createHeaderButton("Clear", startX, yPos, btnWidth, btnHeight);
+        clearBtn.addActionListener(e -> clearFields());
+        headerPanel.add(clearBtn);
+        startX += btnWidth + spacing;
+        
+        JButton saveBtn = createHeaderButton("Save", startX, yPos, btnWidth, btnHeight);
+        saveBtn.addActionListener(e -> handleSave());
+        headerPanel.add(saveBtn);
+        startX += btnWidth + spacing;
+        
+        JButton viewBtn = createHeaderButton("View", startX, yPos, btnWidth, btnHeight);
+        viewBtn.addActionListener(e -> openViewEmployeeDialog());
+        headerPanel.add(viewBtn);
+        startX += btnWidth + spacing;
+        
+        JButton leaveBtn = createHeaderButton("Leave", startX, yPos, btnWidth, btnHeight);
+        leaveBtn.addActionListener(e -> openLeaveApplicationDialog());
+        headerPanel.add(leaveBtn);
         
         parent.add(headerPanel);
     }
 
+    private JButton createHeaderButton(String text, int x, int y, int width, int height) {
+        JButton button = new JButton(text);
+        button.setBounds(x, y, width, height);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        button.setBackground(SECONDARY_COLOR);
+        button.setForeground(WHITE);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(PRIMARY_COLOR.brighter());
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(SECONDARY_COLOR);
+            }
+        });
+        
+        return button;
+    }
+
     private void createEmployeeInfoPanel(JPanel parent) {
-        JPanel panel = createModernPanel("Personal Information", 30, 100, 650, 480);
+        JPanel panel = createModernPanel("Personal Information", 30, 100, 650, 540);
         
         int yPos = 50;
         int labelX = 20;
@@ -141,106 +197,62 @@ public class ModernEmployeeManagementFrame extends JFrame {
         parent.add(panel);
     }
 
-    private void createEmploymentDetailsPanel(JPanel parent) {
-        JPanel panel = createModernPanel("Employment Details", 700, 100, 650, 480);
-        
-        int yPos = 50;
-        int labelX = 20;
-        int fieldX = 200;
-        int spacing = 45;
-        
-        addModernField(panel, "Position", tfPosition = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "Status", tfStatus = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "Basic Salary", tfSalary = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "Rice Subsidy", tfRice = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "Clothing Allowance", tfClothing = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "Semi-Monthly Rate", tfSemiMo = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "Hourly Rate", tfHourlyR = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing + 20;  // Extra space before buttons
-        
-        // Payroll Actions Buttons - Inside Employment Details panel
-        JLabel payrollLabel = new JLabel("Payroll Actions:");
-        payrollLabel.setBounds(labelX, yPos, 150, 25);
-        payrollLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        payrollLabel.setForeground(PRIMARY_COLOR);
-        panel.add(payrollLabel);
-        yPos += 35;
-        
-        JButton weeklyPayslipBtn = createModernButton("Generate Weekly Payslip", new Color(155, 89, 182));
-        weeklyPayslipBtn.setBounds(labelX, yPos, 280, 40);
-        weeklyPayslipBtn.addActionListener(e -> openWeeklyPayslipDialog());
-        panel.add(weeklyPayslipBtn);
-        
-        JButton viewDeductionsBtn = createModernButton("View Deductions", new Color(26, 188, 156));
-        viewDeductionsBtn.setBounds(labelX + 300, yPos, 280, 40);
-        viewDeductionsBtn.addActionListener(e -> openViewDeductionsDialog());
-        panel.add(viewDeductionsBtn);
-        
-        parent.add(panel);
-    }
+        private void createEmploymentDetailsPanel(JPanel parent) {
+            JPanel panel = createModernPanel("Employment Details", 700, 100, 650, 540);
 
-    private void createActionButtonsPanel(JPanel parent) {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBounds(30, 590, 1320, 60);  // Back to original position
-        buttonPanel.setBackground(WHITE);
-        buttonPanel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
-        ));
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
-        
-        // Create modern buttons
-        JButton queryBtn = createModernButton("Query", PRIMARY_COLOR);
-        queryBtn.addActionListener(e -> handleQuery());
-        buttonPanel.add(queryBtn);
-        
-        JButton addBtn = createModernButton("Add", SUCCESS_COLOR);
-        addBtn.addActionListener(e -> handleAdd());
-        buttonPanel.add(addBtn);
-        
-        updateButton = createModernButton("Update", WARNING_COLOR);
-        updateButton.setEnabled(false);
-        updateButton.addActionListener(e -> handleUpdate());
-        buttonPanel.add(updateButton);
-        
-        JButton deleteBtn = createModernButton("Delete", DANGER_COLOR);
-        deleteBtn.addActionListener(e -> handleDelete());
-        buttonPanel.add(deleteBtn);
-        
-        JButton clearBtn = createModernButton("Clear", SECONDARY_COLOR);
-        clearBtn.addActionListener(e -> clearFields());
-        buttonPanel.add(clearBtn);
-        
-        JButton saveBtn = createModernButton("Save", new Color(142, 68, 173));
-        saveBtn.addActionListener(e -> handleSave());
-        buttonPanel.add(saveBtn);
-        
-        JButton viewBtn = createModernButton("View Employee", new Color(52, 73, 94));
-        viewBtn.addActionListener(e -> openViewEmployeeDialog());
-        buttonPanel.add(viewBtn);
-        
-        JButton leaveBtn = createModernButton("Leave Application", new Color(230, 126, 34));
-        leaveBtn.addActionListener(e -> openLeaveApplicationDialog());
-        buttonPanel.add(leaveBtn);
+            int yPos = 50;
+            int labelX = 20;
+            int fieldX = 200;
+            int spacing = 45;
 
-        parent.add(buttonPanel);
-    }
+            addModernField(panel, "Position", tfPosition = createStyledTextField(), labelX, fieldX, yPos);
+            yPos += spacing;
+
+            addModernField(panel, "Status", tfStatus = createStyledTextField(), labelX, fieldX, yPos);
+            yPos += spacing;
+
+            addModernField(panel, "Immediate Supervisor", tfSupervisor = createStyledTextField(), labelX, fieldX, yPos);
+            yPos += spacing;
+
+            addModernField(panel, "Basic Salary", tfSalary = createStyledTextField(), labelX, fieldX, yPos);
+            yPos += spacing;
+
+            addModernField(panel, "Rice Subsidy", tfRice = createStyledTextField(), labelX, fieldX, yPos);
+            yPos += spacing;
+
+            addModernField(panel, "Phone Allowance", tfPhoneAllow = createStyledTextField(), labelX, fieldX, yPos);
+            yPos += spacing;
+
+            addModernField(panel, "Clothing Allowance", tfClothing = createStyledTextField(), labelX, fieldX, yPos);
+            yPos += spacing;
+
+            addModernField(panel, "Semi-Monthly Rate", tfSemiMo = createStyledTextField(), labelX, fieldX, yPos);
+            yPos += spacing;
+
+            addModernField(panel, "Hourly Rate", tfHourlyR = createStyledTextField(), labelX, fieldX, yPos);
+            yPos += spacing + 20;
+
+            // UPDATED: Payroll Actions label and buttons on same line
+            JLabel payrollLabel = new JLabel("Payroll Actions:");
+            payrollLabel.setBounds(labelX, yPos + 7, 150, 25);  // +7 to align vertically with buttons
+            payrollLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            payrollLabel.setForeground(PRIMARY_COLOR);
+            panel.add(payrollLabel);
+
+            JButton weeklyPayslipBtn = createHeaderButton("Weekly Payslip", 170, yPos, 215, 35);
+            weeklyPayslipBtn.addActionListener(e -> openWeeklyPayslipDialog());
+            panel.add(weeklyPayslipBtn);
+
+            JButton viewDeductionsBtn = createHeaderButton("View Deductions", 395, yPos, 215, 35);
+            viewDeductionsBtn.addActionListener(e -> openViewDeductionsDialog());
+            panel.add(viewDeductionsBtn);
+
+            parent.add(panel);
+        }
 
     private void createModernTable(JPanel parent) {
         JPanel tablePanel = new JPanel();
-        tablePanel.setBounds(30, 660, 1320, 180);  // Moved up to make visible
+        tablePanel.setBounds(30, 650, 1320, 280);
         tablePanel.setLayout(new BorderLayout());
         tablePanel.setBackground(WHITE);
         tablePanel.setBorder(BorderFactory.createCompoundBorder(
@@ -256,8 +268,8 @@ public class ModernEmployeeManagementFrame extends JFrame {
 
         String[] columnNames = {"Emp #", "Last Name", "First Name", 
             "Birthday", "Address", "Phone", "SSS", "PhilHealth", 
-            "TIN", "Pag-IBIG", "Position", "Status", "Salary", 
-            "Rice", "Clothing", "Semi-Monthly", "Hourly"};
+            "TIN", "Pag-IBIG", "Status", "Position", "Supervisor", 
+            "Salary", "Rice", "Phone Allow", "Clothing", "Semi-Monthly", "Hourly"};
 
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -275,8 +287,8 @@ public class ModernEmployeeManagementFrame extends JFrame {
         employeeTable.setSelectionBackground(new Color(52, 152, 219, 50));
         employeeTable.setSelectionForeground(TEXT_COLOR);
         employeeTable.setFillsViewportHeight(true);
+        employeeTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        // Style table header
         JTableHeader header = employeeTable.getTableHeader();
         header.setBackground(Color.WHITE);
         header.setForeground(DARK_COLOR);
@@ -285,22 +297,19 @@ public class ModernEmployeeManagementFrame extends JFrame {
         header.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, PRIMARY_COLOR));
         header.setOpaque(true);
 
-        // Center align cells
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < employeeTable.getColumnCount(); i++) {
             employeeTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
-        // Create scroll pane
         JScrollPane scrollPane = new JScrollPane(employeeTable);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-        // Make scrolling smooth
-        scrollPane.getVerticalScrollBar().setUnitIncrement(20);
-        scrollPane.getVerticalScrollBar().setBlockIncrement(60);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.getVerticalScrollBar().setBlockIncrement(50);
+        scrollPane.setPreferredSize(new Dimension(1300, 220));
 
         tablePanel.add(scrollPane, BorderLayout.CENTER);
 
@@ -358,31 +367,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
         ));
     }
 
-    private JButton createModernButton(String text, Color bgColor) {
-        JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(150, 40));
-        button.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        button.setBackground(bgColor);
-        button.setForeground(WHITE);
-        button.setFocusPainted(false);
-        button.setBorderPainted(false);
-        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        button.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
-        
-        // Hover effect
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(bgColor.brighter());
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(bgColor);
-            }
-        });
-        
-        return button;
-    }
-
-    // Action Handlers
     private void handleQuery() {
         String empNumber = tfEmpNum.getText().trim();
         
@@ -494,15 +478,17 @@ public class ModernEmployeeManagementFrame extends JFrame {
         tfPag.setText(employee.getPagibigNumber());
         tfPosition.setText(employee.getPosition());
         tfStatus.setText(employee.getStatus());
+        tfSupervisor.setText(employee.getImmediateSupervisor());
         tfSalary.setText(String.valueOf(employee.getBasicSalary()));
         tfRice.setText(String.valueOf(employee.getRiceSubsidy()));
+        tfPhoneAllow.setText(String.valueOf(employee.getPhoneAllowance()));
         tfClothing.setText(String.valueOf(employee.getClothingAllowance()));
         tfSemiMo.setText(String.valueOf(employee.getSemiMonthlyRate()));
         tfHourlyR.setText(String.valueOf(employee.getHourlyRate()));
     }
 
     private Employee createEmployeeFromFields() {
-        return new Employee(
+        return EmployeeFactory.createEmployee(
             tfEmpNum.getText(),
             tfLastName.getText(),
             tfFirstName.getText(),
@@ -513,10 +499,12 @@ public class ModernEmployeeManagementFrame extends JFrame {
             tfPhealth.getText(),
             tfTin.getText(),
             tfPag.getText(),
-            tfPosition.getText(),
             tfStatus.getText(),
+            tfPosition.getText(),
+            tfSupervisor.getText(),
             Double.parseDouble(tfSalary.getText()),
             Double.parseDouble(tfRice.getText()),
+            Double.parseDouble(tfPhoneAllow.getText()),
             Double.parseDouble(tfClothing.getText()),
             Double.parseDouble(tfSemiMo.getText()),
             Double.parseDouble(tfHourlyR.getText())
@@ -536,8 +524,10 @@ public class ModernEmployeeManagementFrame extends JFrame {
         tfPag.setText("");
         tfPosition.setText("");
         tfStatus.setText("");
+        tfSupervisor.setText("");
         tfSalary.setText("");
         tfRice.setText("");
+        tfPhoneAllow.setText("");
         tfClothing.setText("");
         tfSemiMo.setText("");
         tfHourlyR.setText("");
@@ -558,7 +548,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
         new ModernLeaveApplicationDialog(this).setVisible(true);
     }
 
-    // NEW METHODS for Payroll Actions
     private void openWeeklyPayslipDialog() {
         new WeeklyPayslipDialog(this, employeeRepository, salaryCalculator).setVisible(true);
     }
