@@ -1,23 +1,23 @@
 package ms1cp2manual.refactored;
 
-public class Employee {
-    private String employeeNumber;
-    private String lastName;
-    private String firstName;
-    private String birthday;
-    private String address;
-    private String phoneNumber;
-    private String sssNumber;
-    private String philhealthNumber;
-    private String tin;
-    private String pagibigNumber;
-    private String position;
-    private String status;
-    private double basicSalary;
-    private double riceSubsidy;
-    private double clothingAllowance;
-    private double semiMonthlyRate;
-    private double hourlyRate;
+public abstract class Employee {
+    protected String employeeNumber;
+    protected String lastName;
+    protected String firstName;
+    protected String birthday;
+    protected String address;
+    protected String phoneNumber;
+    protected String sssNumber;
+    protected String philhealthNumber;
+    protected String tin;
+    protected String pagibigNumber;
+    protected String position;
+    protected String status;
+    protected double basicSalary;
+    protected double riceSubsidy;
+    protected double clothingAllowance;
+    protected double semiMonthlyRate;
+    protected double hourlyRate;
 
     // Constructor - creates new employee object
     public Employee(String employeeNumber, String lastName, String firstName, 
@@ -101,4 +101,8 @@ public class Employee {
             String.valueOf(hourlyRate)
         };
     }
+    
+    // Abstract methods - subclasses must implement
+    public abstract String getDepartment();
+    public abstract String getJobDescription();
 }

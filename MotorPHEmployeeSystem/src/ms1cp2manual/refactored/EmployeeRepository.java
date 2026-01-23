@@ -43,19 +43,19 @@ public class EmployeeRepository implements IEmployeeRepository {
     }
 
     private void initializeDefaultEmployees() {
-        employees.add(new Employee("101", "Lobo-on", "Aljohn", "01/01/1980", 
+        employees.add(EmployeeFactory.createEmployee("101", "Lobo-on", "Aljohn", "01/01/1980", 
             "123 Street", "1234567890", "SSS123", "PH123", "TIN123", "PAG123", 
             "Manager", "Active", 50000, 2000, 1000, 25000, 250));
-        employees.add(new Employee("102", "Sudara", "Michael", "02/02/1990", 
+        employees.add(EmployeeFactory.createEmployee("102", "Sudara", "Michael", "02/02/1990", 
             "456 Avenue", "0987654321", "SSS456", "PH456", "TIN456", "PAG456", 
             "Software Engineer", "Active", 40000, 1500, 900, 20000, 200));
-        employees.add(new Employee("103", "Jurado", "Jefrey", "01/03/1992", 
+        employees.add(EmployeeFactory.createEmployee("103", "Jurado", "Jefrey", "01/03/1992", 
             "245 Makati", "09179990987", "SSS246", "PH478", "TIN999", "PAG378", 
             "Cybersecurity Head", "Active", 44999, 1900, 300, 20555, 244));
-        employees.add(new Employee("104", "Garido", "Mel", "06/07/1980", 
+        employees.add(EmployeeFactory.createEmployee("104", "Garido", "Mel", "06/07/1980", 
             "678 Boracay", "09996667777", "SSS466", "PH888", "TIN000", "PAG456", 
             "Web Developer", "Active", 46666, 1577, 988, 20999, 245));
-        employees.add(new Employee("105", "Bautista", "Marlon", "05/07/1970", 
+        employees.add(EmployeeFactory.createEmployee("105", "Bautista", "Marlon", "05/07/1970", 
             "678 Ireland", "09667775555", "SSS222", "PH333", "TIN444", "PAG555", 
             "Network Engineer", "Active", 46777, 1888, 978, 20999, 260));
     }

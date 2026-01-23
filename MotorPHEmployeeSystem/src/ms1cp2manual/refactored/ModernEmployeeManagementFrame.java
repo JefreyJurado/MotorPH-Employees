@@ -502,7 +502,7 @@ public class ModernEmployeeManagementFrame extends JFrame {
     }
 
     private Employee createEmployeeFromFields() {
-        return new Employee(
+        return EmployeeFactory.createEmployee(
             tfEmpNum.getText(),
             tfLastName.getText(),
             tfFirstName.getText(),

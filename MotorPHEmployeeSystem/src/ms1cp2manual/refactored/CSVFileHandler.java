@@ -72,7 +72,7 @@ public class CSVFileHandler {
                 return null;
             }
 
-            return new Employee(
+            return EmployeeFactory.createEmployee(
                 values.get(0),  // employeeNumber
                 values.get(1),  // lastName
                 values.get(2),  // firstName
