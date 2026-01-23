@@ -115,11 +115,21 @@ public class ViewDeductionsDialog extends JDialog {
         deductionTable = new JTable(tableModel);
         deductionTable.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         deductionTable.setRowHeight(35);
-        deductionTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
-        deductionTable.getTableHeader().setBackground(PRIMARY_COLOR);
-        deductionTable.getTableHeader().setForeground(WHITE);
         
-        // Center align table cells
+        // Create custom header renderer with proper colors
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(PRIMARY_COLOR);
+        headerRenderer.setForeground(WHITE);
+        headerRenderer.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        headerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        headerRenderer.setOpaque(true);
+        
+        // Apply custom renderer to each column header
+        for (int i = 0; i < deductionTable.getColumnModel().getColumnCount(); i++) {
+            deductionTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        
+        // Center align table cells (NOT the header)
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < deductionTable.getColumnCount(); i++) {
