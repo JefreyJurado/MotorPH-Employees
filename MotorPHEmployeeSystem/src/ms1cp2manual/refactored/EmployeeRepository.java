@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 public class EmployeeRepository implements IEmployeeRepository {
-    private List<Employee> employees;
-    private CSVFileHandler csvFileHandler;
+    private final List<Employee> employees;
+    private final CSVFileHandler csvFileHandler;
     
     public EmployeeRepository() {
         employees = new ArrayList<>();
@@ -39,10 +39,9 @@ public class EmployeeRepository implements IEmployeeRepository {
         }
     }
     
-    // UPDATED: Empty method - real data loaded from CSV
+    // Empty method - real data loaded from CSV
     private void initializeDefaultEmployees() {
         // Real MotorPH employees (34 total) will be loaded from employees.csv
-        // No test data needed anymore
     }
     
     @Override

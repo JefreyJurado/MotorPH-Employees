@@ -9,4 +9,5 @@ public interface IEmployeeRepository {
     Employee getEmployee(int index);
     List<Employee> getAllEmployees();
     Employee findByEmployeeNumber(String employeeNumber);
+    void saveToCSV();   
 }

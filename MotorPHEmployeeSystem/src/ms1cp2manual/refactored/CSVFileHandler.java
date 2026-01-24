@@ -6,8 +6,6 @@ import java.util.List;
 
 public class CSVFileHandler {
     private static final String EMPLOYEE_CSV_FILE = "employees.csv";
-    
-    // UPDATED: Added "Status", "Position", "Immediate Supervisor", "Phone Allowance" (now 19 fields)
     private static final String CSV_HEADER = "Employee Number,Last Name,First Name,Birthday,Address,Phone Number,SSS Number,Philhealth Number,TIN,Pagibig Number,Status,Position,Immediate Supervisor,Basic Salary,Rice Subsidy,Phone Allowance,Clothing Allowance,Semi Monthly Rate,Hourly Rate";
 
     public void saveEmployeesToCSV(List<Employee> employees) throws IOException {
@@ -18,24 +16,23 @@ public class CSVFileHandler {
 
             // Write employee data
             for (Employee emp : employees) {
-                // UPDATED: Added status, position, supervisor, phoneAllowance in correct order
                 String line = String.join(",",
                     emp.getEmployeeNumber(),
                     emp.getLastName(),
                     emp.getFirstName(),
                     emp.getBirthday(),
-                    "\"" + emp.getAddress() + "\"", // Quote address in case it contains commas
+                    "\"" + emp.getAddress() + "\"", 
                     emp.getPhoneNumber(),
                     emp.getSssNumber(),
                     emp.getPhilhealthNumber(),
                     emp.getTin(),
                     emp.getPagibigNumber(),
-                    emp.getStatus(),                    // NEW
-                    emp.getPosition(),                  // NEW
-                    emp.getImmediateSupervisor(),       // NEW
+                    emp.getStatus(),                    
+                    emp.getPosition(),                  
+                    "\"" + emp.getImmediateSupervisor() + "\"",     
                     String.valueOf(emp.getBasicSalary()),
                     String.valueOf(emp.getRiceSubsidy()),
-                    String.valueOf(emp.getPhoneAllowance()),    // NEW
+                    String.valueOf(emp.getPhoneAllowance()),    
                     String.valueOf(emp.getClothingAllowance()),
                     String.valueOf(emp.getSemiMonthlyRate()),
                     String.valueOf(emp.getHourlyRate())
@@ -73,7 +70,6 @@ public class CSVFileHandler {
             // Handle quoted fields (addresses with commas)
             List<String> values = parseCSVLine(line);
 
-            // UPDATED: Now expecting 19 fields (was 17)
             if (values.size() < 19) {
                 System.err.println("ERROR: Line has only " + values.size() + " fields (expected 19)");
                 System.err.println("Line: " + line);
@@ -89,7 +85,6 @@ public class CSVFileHandler {
                 }
             }
 
-            // UPDATED: Map to new field order with status, position, supervisor, phoneAllowance
             return EmployeeFactory.createEmployee(
                 values.get(0),  // employeeNumber
                 values.get(1),  // lastName
@@ -101,12 +96,12 @@ public class CSVFileHandler {
                 values.get(7),  // philhealthNumber
                 values.get(8),  // tin
                 values.get(9),  // pagibigNumber
-                values.get(10), // status                    NEW
-                values.get(11), // position                  NEW
-                values.get(12), // immediateSupervisor       NEW
+                values.get(10), // status                    
+                values.get(11), // position                  
+                values.get(12), // immediateSupervisor       
                 Double.parseDouble(values.get(13)), // basicSalary
                 Double.parseDouble(values.get(14)), // riceSubsidy
-                Double.parseDouble(values.get(15)), // phoneAllowance    NEW
+                Double.parseDouble(values.get(15)), // phoneAllowance   
                 Double.parseDouble(values.get(16)), // clothingAllowance
                 Double.parseDouble(values.get(17)), // semiMonthlyRate
                 Double.parseDouble(values.get(18))  // hourlyRate
