@@ -13,10 +13,10 @@ public abstract class Employee {
     protected String pagibigNumber;
     protected String status;
     protected String position;
-    protected String immediateSupervisor;  // NEW FIELD
+    protected String immediateSupervisor; 
     protected double basicSalary;
     protected double riceSubsidy;
-    protected double phoneAllowance;  // NEW FIELD
+    protected double phoneAllowance; 
     protected double clothingAllowance;
     protected double semiMonthlyRate;
     protected double hourlyRate;
@@ -25,8 +25,8 @@ public abstract class Employee {
                    String birthday, String address, String phoneNumber,
                    String sssNumber, String philhealthNumber, String tin,
                    String pagibigNumber, String status, String position,
-                   String immediateSupervisor,  // NEW PARAMETER
-                   double basicSalary, double riceSubsidy, double phoneAllowance,  // NEW PARAMETER
+                   String immediateSupervisor, 
+                   double basicSalary, double riceSubsidy, double phoneAllowance, 
                    double clothingAllowance, double semiMonthlyRate, double hourlyRate) {
         this.employeeNumber = employeeNumber;
         this.lastName = lastName;
@@ -62,10 +62,10 @@ public abstract class Employee {
     public String getPagibigNumber() { return pagibigNumber; }
     public String getStatus() { return status; }
     public String getPosition() { return position; }
-    public String getImmediateSupervisor() { return immediateSupervisor; }  // NEW
+    public String getImmediateSupervisor() { return immediateSupervisor; }  
     public double getBasicSalary() { return basicSalary; }
     public double getRiceSubsidy() { return riceSubsidy; }
-    public double getPhoneAllowance() { return phoneAllowance; }  // NEW
+    public double getPhoneAllowance() { return phoneAllowance; }  
     public double getClothingAllowance() { return clothingAllowance; }
     public double getSemiMonthlyRate() { return semiMonthlyRate; }
     public double getHourlyRate() { return hourlyRate; }
@@ -86,7 +86,7 @@ public abstract class Employee {
     public void setImmediateSupervisor(String immediateSupervisor) { this.immediateSupervisor = immediateSupervisor; }  // NEW
     public void setBasicSalary(double basicSalary) { this.basicSalary = basicSalary; }
     public void setRiceSubsidy(double riceSubsidy) { this.riceSubsidy = riceSubsidy; }
-    public void setPhoneAllowance(double phoneAllowance) { this.phoneAllowance = phoneAllowance; }  // NEW
+    public void setPhoneAllowance(double phoneAllowance) { this.phoneAllowance = phoneAllowance; }  
     public void setClothingAllowance(double clothingAllowance) { this.clothingAllowance = clothingAllowance; }
     public void setSemiMonthlyRate(double semiMonthlyRate) { this.semiMonthlyRate = semiMonthlyRate; }
     public void setHourlyRate(double hourlyRate) { this.hourlyRate = hourlyRate; }
@@ -96,16 +96,16 @@ public abstract class Employee {
     }
 
     public double calculateTotalAllowances() {
-        return riceSubsidy + phoneAllowance + clothingAllowance;  // UPDATED
+        return riceSubsidy + phoneAllowance + clothingAllowance;  
     }
 
     public Object[] toTableRow() {
         return new Object[]{
             employeeNumber, lastName, firstName, birthday, address, phoneNumber,
             sssNumber, philhealthNumber, tin, pagibigNumber, status, position,
-            immediateSupervisor,  // NEW
+            immediateSupervisor, 
             String.valueOf(basicSalary), String.valueOf(riceSubsidy), 
-            String.valueOf(phoneAllowance),  // NEW
+            String.valueOf(phoneAllowance), 
             String.valueOf(clothingAllowance), String.valueOf(semiMonthlyRate), 
             String.valueOf(hourlyRate)
         };

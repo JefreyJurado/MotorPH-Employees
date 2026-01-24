@@ -9,15 +9,12 @@ import java.awt.*;
 import java.util.List;
 
 public class ModernEmployeeManagementFrame extends JFrame {
-    private EmployeeRepository employeeRepository;
-    private SalaryCalculator salaryCalculator;
+    private final EmployeeRepository employeeRepository;
+    private final SalaryCalculator salaryCalculator;
     
     // Modern Color Scheme
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
-    private final Color SUCCESS_COLOR = new Color(46, 204, 113);
-    private final Color DANGER_COLOR = new Color(231, 76, 60);
-    private final Color WARNING_COLOR = new Color(241, 196, 15);
     private final Color DARK_COLOR = new Color(44, 62, 80);
     private final Color LIGHT_BG = new Color(236, 240, 241);
     private final Color WHITE = Color.WHITE;
@@ -397,57 +394,60 @@ public class ModernEmployeeManagementFrame extends JFrame {
     }
 
     private void handleAdd() {
-        try {
-            Employee employee = createEmployeeFromFields();
-            employeeRepository.addEmployee(employee);
-            tableModel.addRow(employee.toTableRow());
-            clearFields();
-            showModernDialog("Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception ex) {
-            showModernDialog("Error adding employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            try {
+                Employee employee = createEmployeeFromFields();
+                employeeRepository.addEmployee(employee);
+                tableModel.addRow(employee.toTableRow());
+                employeeRepository.saveToCSV();  // AUTO-SAVE
+                clearFields();
+                showModernDialog("Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                showModernDialog("Error adding employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
-    }
 
     private void handleUpdate() {
         int selectedRow = employeeTable.getSelectedRow();
-        if (selectedRow != -1) {
-            try {
-                Employee employee = createEmployeeFromFields();
-                employeeRepository.updateEmployee(selectedRow, employee);
-                
-                Object[] rowData = employee.toTableRow();
-                for (int i = 0; i < rowData.length; i++) {
-                    tableModel.setValueAt(rowData[i], selectedRow, i);
+            if (selectedRow != -1) {
+                try {
+                    Employee employee = createEmployeeFromFields();
+                    employeeRepository.updateEmployee(selectedRow, employee);
+
+                    Object[] rowData = employee.toTableRow();
+                    for (int i = 0; i < rowData.length; i++) {
+                        tableModel.setValueAt(rowData[i], selectedRow, i);
+                    }
+
+                    employeeRepository.saveToCSV();  // AUTO-SAVE
+                    clearFields();
+                    updateButton.setEnabled(false);
+                    showModernDialog("Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    showModernDialog("Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                
-                clearFields();
-                updateButton.setEnabled(false);
-                showModernDialog("Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
-                showModernDialog("Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }
 
     private void handleDelete() {
         int selectedRow = employeeTable.getSelectedRow();
-        if (selectedRow != -1) {
-            int confirm = JOptionPane.showConfirmDialog(this, 
-                "Are you sure you want to delete this employee?", 
-                "Confirm Delete", 
-                JOptionPane.YES_NO_OPTION);
-            
-            if (confirm == JOptionPane.YES_OPTION) {
-                employeeRepository.deleteEmployee(selectedRow);
-                tableModel.removeRow(selectedRow);
-                clearFields();
-                updateButton.setEnabled(false);
-                showModernDialog("Employee deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            if (selectedRow != -1) {
+                int confirm = JOptionPane.showConfirmDialog(this, 
+                    "Are you sure you want to delete this employee?", 
+                    "Confirm Delete", 
+                    JOptionPane.YES_NO_OPTION);
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    employeeRepository.deleteEmployee(selectedRow);
+                    tableModel.removeRow(selectedRow);
+                    employeeRepository.saveToCSV();  // AUTO-SAVE
+                    clearFields();
+                    updateButton.setEnabled(false);
+                    showModernDialog("Employee deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                showModernDialog("No employee selected to delete", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            showModernDialog("No employee selected to delete", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
 
     private void handleSave() {
         employeeRepository.saveToCSV();
