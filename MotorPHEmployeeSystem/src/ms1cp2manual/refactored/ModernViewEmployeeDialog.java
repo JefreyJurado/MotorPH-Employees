@@ -147,8 +147,36 @@ public class ModernViewEmployeeDialog extends JDialog {
                 String selectedMonth = (String) monthComboBox.getSelectedItem();
                 
                 if (employee != null) {
-                    String report = salaryCalculator.generateSalaryReport(employee, selectedMonth);
-                    employeeDetailsArea.setText(report);
+                    // Build complete employee report with polymorphic methods
+                    StringBuilder fullReport = new StringBuilder();
+                    
+                    // Employee Information Section
+                    fullReport.append("╔════════════════════════════════════════════════════════════╗\n");
+                    fullReport.append("║              EMPLOYEE INFORMATION                          ║\n");
+                    fullReport.append("╚════════════════════════════════════════════════════════════╝\n\n");
+                    
+                    fullReport.append(String.format("Employee Number : %s\n", employee.getEmployeeNumber()));
+                    fullReport.append(String.format("Full Name       : %s\n", employee.getFullName()));
+                    fullReport.append(String.format("Position        : %s\n", employee.getPosition()));
+                    
+                    // POLYMORPHISM DEMONSTRATION - getDepartment() returns different values
+                    // based on the actual employee subclass type at runtime
+                    fullReport.append(String.format("Department      : %s\n", employee.getDepartment()));
+                    
+                    // POLYMORPHISM DEMONSTRATION - getJobDescription() returns different values
+                    // based on the actual employee subclass type at runtime
+                    fullReport.append(String.format("Job Description : %s\n\n", employee.getJobDescription()));
+                    
+                    // Salary Computation Section
+                    fullReport.append("╔════════════════════════════════════════════════════════════╗\n");
+                    fullReport.append("║              SALARY COMPUTATION - ").append(selectedMonth).append("\n");
+                    fullReport.append("╚════════════════════════════════════════════════════════════╝\n\n");
+                    
+                    String salaryReport = salaryCalculator.generateSalaryReport(employee, selectedMonth);
+                    fullReport.append(salaryReport);
+                    
+                    employeeDetailsArea.setText(fullReport.toString());
+                    employeeDetailsArea.setCaretPosition(0); // Scroll to top
                 }
             }
         });
