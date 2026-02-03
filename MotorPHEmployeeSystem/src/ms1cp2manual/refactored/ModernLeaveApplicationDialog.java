@@ -7,18 +7,26 @@ import java.awt.*;
 public class ModernLeaveApplicationDialog extends JDialog {
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SUCCESS_COLOR = new Color(46, 204, 113);
-    private final Color WARNING_COLOR = new Color(241, 196, 15);
-    private final Color DARK_COLOR = new Color(44, 62, 80);
-    private final Color LIGHT_BG = new Color(236, 240, 241);
+    private final Color DANGER_COLOR = new Color(231, 76, 60);
     private final Color WHITE = Color.WHITE;
-
-    public ModernLeaveApplicationDialog(JFrame parent) {
+    private final Color TEXT_COLOR = new Color(44, 62, 80);
+    private final Color LIGHT_BG = new Color(236, 240, 241);
+    
+    private JTextField employeeNameField;
+    private JComboBox<String> leaveTypeCombo;
+    private JTextField startDateField;
+    private JTextField endDateField;
+    private JTextArea reasonArea;
+    private LeaveRepository leaveRepository;
+    
+    public ModernLeaveApplicationDialog(Frame parent) {
         super(parent, "Leave Application", true);
-        initializeModernUI();
+        this.leaveRepository = new LeaveRepository();
+        initializeUI();
     }
-
-    private void initializeModernUI() {
-        setSize(600, 700);
+    
+    private void initializeUI() {
+        setSize(600, 600);
         setLocationRelativeTo(null);
         setResizable(false);
         
@@ -26,202 +34,144 @@ public class ModernLeaveApplicationDialog extends JDialog {
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setBackground(LIGHT_BG);
         
-        // Header
-        JPanel headerPanel = createHeaderPanel();
+        
+        JPanel headerPanel = new JPanel(new GridBagLayout()); 
+        headerPanel.setBackground(PRIMARY_COLOR);
+        headerPanel.setPreferredSize(new Dimension(600, 60));
+
+        JLabel titleLabel = new JLabel("File Leave Application");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        titleLabel.setForeground(WHITE);
+        headerPanel.add(titleLabel); 
+
         mainPanel.add(headerPanel, BorderLayout.NORTH);
         
-        // Form
-        JPanel formPanel = createFormPanel();
-        mainPanel.add(formPanel, BorderLayout.CENTER);
-        
-        setContentPane(mainPanel);
-    }
-
-    private JPanel createHeaderPanel() {
-        JPanel headerPanel = new JPanel();
-        headerPanel.setPreferredSize(new Dimension(600, 100));
-        headerPanel.setBackground(PRIMARY_COLOR);
-        headerPanel.setLayout(null);
-        
-        JLabel iconLabel = new JLabel("📝");
-        iconLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 40));
-        iconLabel.setBounds(30, 25, 50, 50);
-        headerPanel.add(iconLabel);
-        
-        JLabel titleLabel = new JLabel("Leave Application Form");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        titleLabel.setForeground(WHITE);
-        titleLabel.setBounds(90, 25, 400, 35);
-        headerPanel.add(titleLabel);
-        
-        JLabel subtitleLabel = new JLabel("Submit your leave request");
-        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        subtitleLabel.setForeground(new Color(236, 240, 241));
-        subtitleLabel.setBounds(90, 60, 400, 20);
-        headerPanel.add(subtitleLabel);
-        
-        return headerPanel;
-    }
-
-    private JPanel createFormPanel() {
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(null);
-        formPanel.setBackground(LIGHT_BG);
-        formPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
-        
-        // Form Container
-        JPanel formContainer = new JPanel();
-        formContainer.setBounds(30, 20, 520, 460);
-        formContainer.setLayout(null);
-        formContainer.setBackground(WHITE);
-        formContainer.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(30, 30, 30, 30)
-        ));
+        // Content
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(null);
+        contentPanel.setBackground(WHITE);
+        contentPanel.setBorder(new EmptyBorder(20, 30, 20, 30));
         
         int yPos = 20;
-        int labelHeight = 20;
-        int fieldHeight = 40;
-        int spacing = 75;
+        int labelWidth = 150;
+        int fieldX = 160;
+        int fieldWidth = 350;
+        int spacing = 60;
         
-        // Employee Number
-        JLabel empNumLabel = new JLabel("Employee Number *");
-        empNumLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        empNumLabel.setForeground(DARK_COLOR);
-        empNumLabel.setBounds(20, yPos, 460, labelHeight);
-        formContainer.add(empNumLabel);
+        // Employee Name
+        JLabel nameLabel = new JLabel("Employee Name:");
+        nameLabel.setBounds(20, yPos, labelWidth, 25);
+        nameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        contentPanel.add(nameLabel);
         
-        JTextField empNumField = new JTextField();
-        empNumField.setBounds(20, yPos + 25, 460, fieldHeight);
-        styleTextField(empNumField);
-        formContainer.add(empNumField);
+        employeeNameField = new JTextField();
+        employeeNameField.setBounds(fieldX, yPos, fieldWidth, 30);
+        employeeNameField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        contentPanel.add(employeeNameField);
         yPos += spacing;
         
         // Leave Type
-        JLabel leaveTypeLabel = new JLabel("Leave Type *");
-        leaveTypeLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        leaveTypeLabel.setForeground(DARK_COLOR);
-        leaveTypeLabel.setBounds(20, yPos, 460, labelHeight);
-        formContainer.add(leaveTypeLabel);
+        JLabel typeLabel = new JLabel("Leave Type:");
+        typeLabel.setBounds(20, yPos, labelWidth, 25);
+        typeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        contentPanel.add(typeLabel);
         
-        String[] leaveTypes = {"Vacation Leave", "Sick Leave", "Emergency Leave", 
-                              "Maternity Leave", "Paternity Leave"};
-        JComboBox<String> leaveTypeComboBox = new JComboBox<>(leaveTypes);
-        leaveTypeComboBox.setBounds(20, yPos + 25, 460, fieldHeight);
-        leaveTypeComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        leaveTypeComboBox.setBackground(WHITE);
-        formContainer.add(leaveTypeComboBox);
+        String[] leaveTypes = {"Sick Leave", "Vacation Leave", "Emergency Leave", "Personal Leave"};
+        leaveTypeCombo = new JComboBox<>(leaveTypes);
+        leaveTypeCombo.setBounds(fieldX, yPos, fieldWidth, 30);
+        leaveTypeCombo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        contentPanel.add(leaveTypeCombo);
         yPos += spacing;
         
         // Start Date
-        JLabel startDateLabel = new JLabel("Start Date * (MM/DD/YYYY)");
-        startDateLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        startDateLabel.setForeground(DARK_COLOR);
-        startDateLabel.setBounds(20, yPos, 460, labelHeight);
-        formContainer.add(startDateLabel);
+        JLabel startLabel = new JLabel("Start Date:");
+        startLabel.setBounds(20, yPos, labelWidth, 25);
+        startLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        contentPanel.add(startLabel);
         
-        JTextField startDateField = new JTextField();
-        startDateField.setBounds(20, yPos + 25, 460, fieldHeight);
-        styleTextField(startDateField);
-        formContainer.add(startDateField);
+        startDateField = new JTextField("YYYY-MM-DD");
+        startDateField.setBounds(fieldX, yPos, fieldWidth, 30);
+        startDateField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        contentPanel.add(startDateField);
         yPos += spacing;
         
         // End Date
-        JLabel endDateLabel = new JLabel("End Date * (MM/DD/YYYY)");
-        endDateLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        endDateLabel.setForeground(DARK_COLOR);
-        endDateLabel.setBounds(20, yPos, 460, labelHeight);
-        formContainer.add(endDateLabel);
+        JLabel endLabel = new JLabel("End Date:");
+        endLabel.setBounds(20, yPos, labelWidth, 25);
+        endLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        contentPanel.add(endLabel);
         
-        JTextField endDateField = new JTextField();
-        endDateField.setBounds(20, yPos + 25, 460, fieldHeight);
-        styleTextField(endDateField);
-        formContainer.add(endDateField);
+        endDateField = new JTextField("YYYY-MM-DD");
+        endDateField.setBounds(fieldX, yPos, fieldWidth, 30);
+        endDateField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        contentPanel.add(endDateField);
         yPos += spacing;
         
         // Reason
-        JLabel reasonLabel = new JLabel("Reason");
-        reasonLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        reasonLabel.setForeground(DARK_COLOR);
-        reasonLabel.setBounds(20, yPos, 460, labelHeight);
-        formContainer.add(reasonLabel);
+        JLabel reasonLabel = new JLabel("Reason:");
+        reasonLabel.setBounds(20, yPos, labelWidth, 25);
+        reasonLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        contentPanel.add(reasonLabel);
         
-        JTextArea reasonArea = new JTextArea();
+        reasonArea = new JTextArea();
         reasonArea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         reasonArea.setLineWrap(true);
         reasonArea.setWrapStyleWord(true);
-        reasonArea.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
-        ));
         
-        JScrollPane reasonScrollPane = new JScrollPane(reasonArea);
-        reasonScrollPane.setBounds(20, yPos + 25, 460, 80);
-        reasonScrollPane.setBorder(BorderFactory.createLineBorder(new Color(189, 195, 199), 1));
-        formContainer.add(reasonScrollPane);
+        JScrollPane scrollPane = new JScrollPane(reasonArea);
+        scrollPane.setBounds(fieldX, yPos, fieldWidth, 100);
+        contentPanel.add(scrollPane);
+        yPos += 120;
         
-        formPanel.add(formContainer);
+        // Buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        buttonPanel.setBackground(WHITE);
+        buttonPanel.setBounds(20, yPos, 520, 50);
         
-        // Buttons Panel
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBounds(30, 490, 520, 50);
-        buttonsPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        buttonsPanel.setBackground(LIGHT_BG);
+        JButton submitButton = createStyledButton("Submit", SUCCESS_COLOR);
+        submitButton.addActionListener(e -> handleSubmit());
+        buttonPanel.add(submitButton);
         
-        JButton cancelButton = createModernButton("Cancel", new Color(149, 165, 166));
+        JButton cancelButton = createStyledButton("Cancel", DANGER_COLOR);
         cancelButton.addActionListener(e -> dispose());
-        buttonsPanel.add(cancelButton);
+        buttonPanel.add(cancelButton);
         
-        JButton submitButton = createModernButton("Submit Application", SUCCESS_COLOR);
-        submitButton.setPreferredSize(new Dimension(180, 45));
-        submitButton.addActionListener(e -> {
-            if (empNumField.getText().trim().isEmpty() || 
-                startDateField.getText().trim().isEmpty() || 
-                endDateField.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, 
-                    "Please fill in all required fields (*)", 
-                    "Validation Error", 
-                    JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            LeaveApplication leave = new LeaveApplication(
-                empNumField.getText(),
-                (String) leaveTypeComboBox.getSelectedItem(),
-                startDateField.getText(),
-                endDateField.getText()
-            );
-            
-            JOptionPane.showMessageDialog(this, 
-                "Leave Application Submitted Successfully!\n\n" + leave.toString(), 
-                "Success", 
-                JOptionPane.INFORMATION_MESSAGE);
-            
-            empNumField.setText("");
-            leaveTypeComboBox.setSelectedIndex(0);
-            startDateField.setText("");
-            endDateField.setText("");
-            reasonArea.setText("");
-        });
-        buttonsPanel.add(submitButton);
+        contentPanel.add(buttonPanel);
         
-        formPanel.add(buttonsPanel);
-        
-        return formPanel;
+        mainPanel.add(contentPanel, BorderLayout.CENTER);
+        setContentPane(mainPanel);
     }
-
-    private void styleTextField(JTextField textField) {
-        textField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        textField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(10, 15, 10, 15)
-        ));
+    
+    private void handleSubmit() {
+        String employeeName = employeeNameField.getText().trim();
+        String leaveType = (String) leaveTypeCombo.getSelectedItem();
+        String startDate = startDateField.getText().trim();
+        String endDate = endDateField.getText().trim();
+        String reason = reasonArea.getText().trim();
+        
+        if (employeeName.isEmpty() || startDate.isEmpty() || endDate.isEmpty() || reason.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Please fill in all fields",
+                "Validation Error",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        LeaveApplication leave = new LeaveApplication(employeeName, leaveType, startDate, endDate, reason);
+        leaveRepository.addLeave(leave);
+        
+        JOptionPane.showMessageDialog(this,
+            "Leave application submitted successfully!\nStatus: Pending\nLeave ID: " + leave.getLeaveId(),
+            "Success",
+            JOptionPane.INFORMATION_MESSAGE);
+        
+        dispose();
     }
-
-    private JButton createModernButton(String text, Color bgColor) {
+    
+    private JButton createStyledButton(String text, Color bgColor) {
         JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(120, 45));
-        button.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        button.setPreferredSize(new Dimension(120, 35));
+        button.setFont(new Font("Segoe UI", Font.BOLD, 12));
         button.setBackground(bgColor);
         button.setForeground(WHITE);
         button.setFocusPainted(false);

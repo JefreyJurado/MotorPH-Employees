@@ -4,24 +4,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AuthenticationService {
-    private Map<String, String> userCredentials;
-
+    private Map<String, User> users;
+    
     public AuthenticationService() {
-        userCredentials = new HashMap<>();
-        initializeCredentials();
+        users = new HashMap<>();
+        initializeUsers();
     }
-
-    private void initializeCredentials() {
-        userCredentials.put("aljohn", "aljohn123");
-        userCredentials.put("michael", "michael123");
+    
+    private void initializeUsers() {
+        // Admin user - full access
+        users.put("admin", new User("admin", "admin123", "Admin"));
+        
+        // HR users - can modify employees
+        users.put("aljohn", new User("aljohn", "aljohn123", "HR"));
+        users.put("michael", new User("michael", "michael123", "HR"));
+        
+        // Regular employees - read only
+        users.put("employee1", new User("employee1", "emp123", "Employee"));
+        users.put("employee2", new User("employee2", "emp123", "Employee"));
     }
-    // Check if credentials are valid
-    public boolean authenticate(String username, String password) {
-        return userCredentials.containsKey(username) 
-            && userCredentials.get(username).equals(password);
+    
+    // Returns User object if authenticated, null otherwise
+    public User authenticate(String username, String password) {
+        User user = users.get(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
     }
-
-    public void addUser(String username, String password) {
-        userCredentials.put(username, password);
+    
+    public void addUser(String username, String password, String role) {
+        users.put(username, new User(username, password, role));
     }
 }

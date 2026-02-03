@@ -11,6 +11,7 @@ import java.util.List;
 public class ModernEmployeeManagementFrame extends JFrame {
     private final EmployeeRepository employeeRepository;
     private final SalaryCalculator salaryCalculator;
+    private User currentUser; 
     
     // Modern Color Scheme
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
@@ -30,11 +31,48 @@ public class ModernEmployeeManagementFrame extends JFrame {
     private JTable employeeTable;
     private JButton updateButton;
 
-    public ModernEmployeeManagementFrame(EmployeeRepository repository) {
+    // FIXED CONSTRUCTOR - Added User parameter
+    public ModernEmployeeManagementFrame(EmployeeRepository repository, User user) {
         this.employeeRepository = repository;
         this.salaryCalculator = new SalaryCalculator();
+        this.currentUser = user;  // FIXED: Now uses the parameter
         initializeModernUI();
         loadEmployeeData();
+        applyAccessControl();
+    }
+    
+    private void applyAccessControl() {
+        // Show role in title
+        setTitle("MotorPH Employee Management System - " + currentUser.getRole() + ": " + currentUser.getUsername());
+
+        // If employee (not Admin or HR), disable modification buttons
+        if (currentUser.isEmployee()) {
+            // Find all buttons and disable them except View, Save, Clear, Query
+            Component[] components = getContentPane().getComponents();
+            disableModificationButtons(components);
+
+            JOptionPane.showMessageDialog(this,
+                "You are logged in as an Employee.\nYou have READ-ONLY access.",
+                "Access Level: Employee",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void disableModificationButtons(Component[] components) {
+        for (Component comp : components) {
+            if (comp instanceof JPanel) {
+                disableModificationButtons(((JPanel) comp).getComponents());
+            } else if (comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                String buttonText = button.getText();
+
+                // Disable Add, Update, Delete buttons for employees
+                if ("Add".equals(buttonText) || "Update".equals(buttonText) || "Delete".equals(buttonText)) {
+                    button.setEnabled(false);
+                    button.setToolTipText("Access Denied: Admin/HR only");
+                }
+            }
+        }
     }
 
     private void initializeModernUI() {
@@ -117,7 +155,15 @@ public class ModernEmployeeManagementFrame extends JFrame {
         startX += btnWidth + spacing;
         
         JButton leaveBtn = createHeaderButton("Leave", startX, yPos, btnWidth, btnHeight);
-        leaveBtn.addActionListener(e -> openLeaveApplicationDialog());
+        leaveBtn.addActionListener(e -> {
+            if (currentUser.isEmployee()) {
+                // Employees file leave
+                openLeaveApplicationDialog();
+            } else {
+                // Admin/HR approve leave
+                openApproveLeaveDialog();
+            }
+        });
         headerPanel.add(leaveBtn);
         
         parent.add(headerPanel);
@@ -194,58 +240,58 @@ public class ModernEmployeeManagementFrame extends JFrame {
         parent.add(panel);
     }
 
-        private void createEmploymentDetailsPanel(JPanel parent) {
-            JPanel panel = createModernPanel("Employment Details", 700, 100, 650, 540);
+    private void createEmploymentDetailsPanel(JPanel parent) {
+        JPanel panel = createModernPanel("Employment Details", 700, 100, 650, 540);
 
-            int yPos = 50;
-            int labelX = 20;
-            int fieldX = 200;
-            int spacing = 45;
+        int yPos = 50;
+        int labelX = 20;
+        int fieldX = 200;
+        int spacing = 45;
 
-            addModernField(panel, "Position", tfPosition = createStyledTextField(), labelX, fieldX, yPos);
-            yPos += spacing;
+        addModernField(panel, "Position", tfPosition = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing;
 
-            addModernField(panel, "Status", tfStatus = createStyledTextField(), labelX, fieldX, yPos);
-            yPos += spacing;
+        addModernField(panel, "Status", tfStatus = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing;
 
-            addModernField(panel, "Immediate Supervisor", tfSupervisor = createStyledTextField(), labelX, fieldX, yPos);
-            yPos += spacing;
+        addModernField(panel, "Immediate Supervisor", tfSupervisor = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing;
 
-            addModernField(panel, "Basic Salary", tfSalary = createStyledTextField(), labelX, fieldX, yPos);
-            yPos += spacing;
+        addModernField(panel, "Basic Salary", tfSalary = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing;
 
-            addModernField(panel, "Rice Subsidy", tfRice = createStyledTextField(), labelX, fieldX, yPos);
-            yPos += spacing;
+        addModernField(panel, "Rice Subsidy", tfRice = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing;
 
-            addModernField(panel, "Phone Allowance", tfPhoneAllow = createStyledTextField(), labelX, fieldX, yPos);
-            yPos += spacing;
+        addModernField(panel, "Phone Allowance", tfPhoneAllow = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing;
 
-            addModernField(panel, "Clothing Allowance", tfClothing = createStyledTextField(), labelX, fieldX, yPos);
-            yPos += spacing;
+        addModernField(panel, "Clothing Allowance", tfClothing = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing;
 
-            addModernField(panel, "Semi-Monthly Rate", tfSemiMo = createStyledTextField(), labelX, fieldX, yPos);
-            yPos += spacing;
+        addModernField(panel, "Semi-Monthly Rate", tfSemiMo = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing;
 
-            addModernField(panel, "Hourly Rate", tfHourlyR = createStyledTextField(), labelX, fieldX, yPos);
-            yPos += spacing + 20;
+        addModernField(panel, "Hourly Rate", tfHourlyR = createStyledTextField(), labelX, fieldX, yPos);
+        yPos += spacing + 20;
 
-            // UPDATED: Payroll Actions label and buttons on same line
-            JLabel payrollLabel = new JLabel("Payroll Actions:");
-            payrollLabel.setBounds(labelX, yPos + 7, 150, 25);  // +7 to align vertically with buttons
-            payrollLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-            payrollLabel.setForeground(PRIMARY_COLOR);
-            panel.add(payrollLabel);
+        // Payroll Actions label and buttons on same line
+        JLabel payrollLabel = new JLabel("Payroll Actions:");
+        payrollLabel.setBounds(labelX, yPos + 7, 150, 25);
+        payrollLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        payrollLabel.setForeground(PRIMARY_COLOR);
+        panel.add(payrollLabel);
 
-            JButton weeklyPayslipBtn = createHeaderButton("Weekly Payslip", 170, yPos, 215, 35);
-            weeklyPayslipBtn.addActionListener(e -> openWeeklyPayslipDialog());
-            panel.add(weeklyPayslipBtn);
+        JButton weeklyPayslipBtn = createHeaderButton("Weekly Payslip", 170, yPos, 215, 35);
+        weeklyPayslipBtn.addActionListener(e -> openWeeklyPayslipDialog());
+        panel.add(weeklyPayslipBtn);
 
-            JButton viewDeductionsBtn = createHeaderButton("View Deductions", 395, yPos, 215, 35);
-            viewDeductionsBtn.addActionListener(e -> openViewDeductionsDialog());
-            panel.add(viewDeductionsBtn);
+        JButton viewDeductionsBtn = createHeaderButton("View Deductions", 395, yPos, 215, 35);
+        viewDeductionsBtn.addActionListener(e -> openViewDeductionsDialog());
+        panel.add(viewDeductionsBtn);
 
-            parent.add(panel);
-        }
+        parent.add(panel);
+    }
 
     private void createModernTable(JPanel parent) {
         JPanel tablePanel = new JPanel();
@@ -394,60 +440,60 @@ public class ModernEmployeeManagementFrame extends JFrame {
     }
 
     private void handleAdd() {
-            try {
-                Employee employee = createEmployeeFromFields();
-                employeeRepository.addEmployee(employee);
-                tableModel.addRow(employee.toTableRow());
-                employeeRepository.saveToCSV();  // AUTO-SAVE
-                clearFields();
-                showModernDialog("Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
-                showModernDialog("Error adding employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+        try {
+            Employee employee = createEmployeeFromFields();
+            employeeRepository.addEmployee(employee);
+            tableModel.addRow(employee.toTableRow());
+            employeeRepository.saveToCSV();
+            clearFields();
+            showModernDialog("Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
+            showModernDialog("Error adding employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
     private void handleUpdate() {
         int selectedRow = employeeTable.getSelectedRow();
-            if (selectedRow != -1) {
-                try {
-                    Employee employee = createEmployeeFromFields();
-                    employeeRepository.updateEmployee(selectedRow, employee);
+        if (selectedRow != -1) {
+            try {
+                Employee employee = createEmployeeFromFields();
+                employeeRepository.updateEmployee(selectedRow, employee);
 
-                    Object[] rowData = employee.toTableRow();
-                    for (int i = 0; i < rowData.length; i++) {
-                        tableModel.setValueAt(rowData[i], selectedRow, i);
-                    }
-
-                    employeeRepository.saveToCSV();  // AUTO-SAVE
-                    clearFields();
-                    updateButton.setEnabled(false);
-                    showModernDialog("Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                } catch (Exception ex) {
-                    showModernDialog("Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                Object[] rowData = employee.toTableRow();
+                for (int i = 0; i < rowData.length; i++) {
+                    tableModel.setValueAt(rowData[i], selectedRow, i);
                 }
+
+                employeeRepository.saveToCSV();
+                clearFields();
+                updateButton.setEnabled(false);
+                showModernDialog("Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                showModernDialog("Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
 
     private void handleDelete() {
         int selectedRow = employeeTable.getSelectedRow();
-            if (selectedRow != -1) {
-                int confirm = JOptionPane.showConfirmDialog(this, 
-                    "Are you sure you want to delete this employee?", 
-                    "Confirm Delete", 
-                    JOptionPane.YES_NO_OPTION);
+        if (selectedRow != -1) {
+            int confirm = JOptionPane.showConfirmDialog(this, 
+                "Are you sure you want to delete this employee?", 
+                "Confirm Delete", 
+                JOptionPane.YES_NO_OPTION);
 
-                if (confirm == JOptionPane.YES_OPTION) {
-                    employeeRepository.deleteEmployee(selectedRow);
-                    tableModel.removeRow(selectedRow);
-                    employeeRepository.saveToCSV();  // AUTO-SAVE
-                    clearFields();
-                    updateButton.setEnabled(false);
-                    showModernDialog("Employee deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                }
-            } else {
-                showModernDialog("No employee selected to delete", "Error", JOptionPane.ERROR_MESSAGE);
+            if (confirm == JOptionPane.YES_OPTION) {
+                employeeRepository.deleteEmployee(selectedRow);
+                tableModel.removeRow(selectedRow);
+                employeeRepository.saveToCSV();
+                clearFields();
+                updateButton.setEnabled(false);
+                showModernDialog("Employee deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
+        } else {
+            showModernDialog("No employee selected to delete", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
     private void handleSave() {
         employeeRepository.saveToCSV();
@@ -554,6 +600,10 @@ public class ModernEmployeeManagementFrame extends JFrame {
 
     private void openViewDeductionsDialog() {
         new ViewDeductionsDialog(this, employeeRepository, salaryCalculator).setVisible(true);
+    }
+
+    private void openApproveLeaveDialog() {
+        new ApproveLeaveDialog(this, currentUser).setVisible(true);
     }
 
     private void showModernDialog(String message, String title, int messageType) {

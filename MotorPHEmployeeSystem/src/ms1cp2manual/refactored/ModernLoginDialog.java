@@ -1,232 +1,115 @@
 package ms1cp2manual.refactored;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class ModernLoginDialog extends JDialog {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private AuthenticationService authService;
-    private boolean authenticated;
-    
-    // Modern Colors
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SUCCESS_COLOR = new Color(46, 204, 113);
-    private final Color DARK_COLOR = new Color(44, 62, 80);
     private final Color WHITE = Color.WHITE;
-
-    public ModernLoginDialog(JFrame parent, AuthenticationService authService) {
-        super(parent, "Login - MotorPH", true);
-        this.authService = authService;
-        this.authenticated = false;
-        initializeModernUI();
+    private final Color TEXT_COLOR = new Color(44, 62, 80);
+    
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+    private final AuthenticationService authService;
+    private User authenticatedUser; // Store authenticated user
+    
+    public ModernLoginDialog(Frame parent) {
+        super(parent, "MotorPH Login", true);
+        this.authService = new AuthenticationService();
+        initializeUI();
     }
-
-        private void initializeModernUI() {
-        setSize(450, 600);  // INCREASED HEIGHT
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    
+    private void initializeUI() {
+        setSize(450, 450);
         setLocationRelativeTo(null);
         setResizable(false);
-
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setBackground(WHITE);
-
-        JPanel headerPanel = createHeaderPanel();
+        
+        // Header
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(PRIMARY_COLOR);
+        headerPanel.setPreferredSize(new Dimension(450, 80));
+        headerPanel.setLayout(new GridBagLayout());
+        
+        JLabel titleLabel = new JLabel("MotorPH Payroll System");
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        titleLabel.setForeground(WHITE);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.CENTER;
+        headerPanel.add(titleLabel, gbc);
+        
         mainPanel.add(headerPanel, BorderLayout.NORTH);
-
-        JPanel formPanel = createFormPanel();
-        mainPanel.add(formPanel, BorderLayout.CENTER);
-
-        JPanel footerPanel = createFooterPanel();
-        mainPanel.add(footerPanel, BorderLayout.SOUTH);
-
+        
+        // Content
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(null);
+        contentPanel.setBackground(WHITE);
+        
+        JLabel usernameLabel = new JLabel("Username:");
+        usernameLabel.setBounds(70, 40, 100, 25);
+        usernameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        usernameLabel.setForeground(TEXT_COLOR);
+        contentPanel.add(usernameLabel);
+        
+        usernameField = new JTextField();
+        usernameField.setBounds(70, 70, 300, 35);
+        usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        contentPanel.add(usernameField);
+        
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(70, 120, 100, 25);
+        passwordLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        passwordLabel.setForeground(TEXT_COLOR);
+        contentPanel.add(passwordLabel);
+        
+        passwordField = new JPasswordField();
+        passwordField.setBounds(70, 150, 300, 35);
+        passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        contentPanel.add(passwordField);
+        
+        JButton loginButton = new JButton("Login");
+        loginButton.setBounds(70, 210, 300, 40);
+        loginButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        loginButton.setBackground(SUCCESS_COLOR);
+        loginButton.setForeground(WHITE);
+        loginButton.setFocusPainted(false);
+        loginButton.setBorderPainted(false);
+        loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        loginButton.addActionListener(e -> handleLogin());
+        contentPanel.add(loginButton);
+        
+        mainPanel.add(contentPanel, BorderLayout.CENTER);
+        
         setContentPane(mainPanel);
     }
-
-    private JPanel createHeaderPanel() {
-        JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(null);
-        headerPanel.setPreferredSize(new Dimension(450, 180));
-        headerPanel.setBackground(PRIMARY_COLOR);
-        
-        JLabel iconLabel = new JLabel("🏢");
-        iconLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 60));
-        iconLabel.setBounds(0, 30, 450, 70);
-        iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        headerPanel.add(iconLabel);
-        
-        JLabel titleLabel = new JLabel("MotorPH");
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 32));
-        titleLabel.setForeground(WHITE);
-        titleLabel.setBounds(0, 100, 450, 40);
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        headerPanel.add(titleLabel);
-        
-        JLabel subtitleLabel = new JLabel("Employee Management System");
-        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        subtitleLabel.setForeground(new Color(236, 240, 241));
-        subtitleLabel.setBounds(0, 140, 450, 25);
-        subtitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        headerPanel.add(subtitleLabel);
-        
-        return headerPanel;
-    }
-
-    private JPanel createFormPanel() {
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(null);
-        formPanel.setBackground(WHITE);
-        formPanel.setBorder(new EmptyBorder(30, 40, 30, 40));
-        
-        // Welcome Label - CENTERED
-        JLabel welcomeLabel = new JLabel("Welcome Back!", SwingConstants.CENTER);
-        welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
-        welcomeLabel.setForeground(DARK_COLOR);
-        welcomeLabel.setBounds(0, 20, 430, 30);
-        formPanel.add(welcomeLabel);
-        
-        // Instruction Label - CENTERED
-        JLabel instructionLabel = new JLabel("Please login to continue", SwingConstants.CENTER);
-        instructionLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        instructionLabel.setForeground(new Color(127, 140, 141));
-        instructionLabel.setBounds(0, 50, 430, 20);
-        formPanel.add(instructionLabel);
-        
-        // Username Label
-        JLabel usernameLabel = new JLabel("Username");
-        usernameLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        usernameLabel.setForeground(DARK_COLOR);
-        usernameLabel.setBounds(40, 90, 350, 20);
-        formPanel.add(usernameLabel);
-        
-        // Username Field
-        usernameField = new JTextField();
-        usernameField.setBounds(40, 115, 350, 45);
-        usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        usernameField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(5, 15, 5, 15)
-        ));
-        formPanel.add(usernameField);
-        
-        // Password Label
-        JLabel passwordLabel = new JLabel("Password");
-        passwordLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        passwordLabel.setForeground(DARK_COLOR);
-        passwordLabel.setBounds(40, 175, 350, 20);
-        formPanel.add(passwordLabel);
-        
-        // Password Field
-        passwordField = new JPasswordField();
-        passwordField.setBounds(40, 200, 350, 45);
-        passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        passwordField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(5, 15, 5, 15)
-        ));
-        formPanel.add(passwordField);
-        
-        // Enter key listener
-        passwordField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    handleLogin();
-                }
-            }
-        });
-        
-        // LOGIN BUTTON - USING PANEL (GUARANTEED TO WORK)
-        JPanel loginButtonPanel = new JPanel();
-        loginButtonPanel.setBounds(40, 265, 350, 45);
-        loginButtonPanel.setBackground(SUCCESS_COLOR);
-        loginButtonPanel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(SUCCESS_COLOR.darker(), 2),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
-        ));
-        loginButtonPanel.setLayout(new GridBagLayout());
-        loginButtonPanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        JLabel loginLabel = new JLabel("LOGIN");
-        loginLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        loginLabel.setForeground(Color.WHITE);
-        loginButtonPanel.add(loginLabel);
-
-        // Make it clickable
-        loginButtonPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                handleLogin();
-            }
-            
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginButtonPanel.setBackground(new Color(57, 230, 126));
-                loginButtonPanel.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(new Color(40, 180, 99), 2),
-                    BorderFactory.createEmptyBorder(10, 10, 10, 10)
-                ));
-            }
-            
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginButtonPanel.setBackground(SUCCESS_COLOR);
-                loginButtonPanel.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(SUCCESS_COLOR.darker(), 2),
-                    BorderFactory.createEmptyBorder(10, 10, 10, 10)
-                ));
-            }
-        });
-
-        formPanel.add(loginButtonPanel);
-        
-        return formPanel;
-    }
-
-    private JPanel createFooterPanel() {
-        JPanel footerPanel = new JPanel();
-        footerPanel.setPreferredSize(new Dimension(450, 60));
-        footerPanel.setBackground(new Color(250, 250, 250));
-        footerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        
-        JLabel footerLabel = new JLabel("© 2025 MotorPH. All rights reserved.");
-        footerLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        footerLabel.setForeground(new Color(127, 140, 141));
-        footerPanel.add(footerLabel);
-        
-        return footerPanel;
-    }
-
+    
     private void handleLogin() {
         String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword());
         
-        if (username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "Please enter both username and password", 
-                "Login Error", 
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        authenticatedUser = authService.authenticate(username, password);
         
-        if (authService.authenticate(username, password)) {
-            authenticated = true;
+        if (authenticatedUser != null) {
+            JOptionPane.showMessageDialog(this, 
+                "Welcome, " + authenticatedUser.getUsername() + "!\nRole: " + authenticatedUser.getRole(),
+                "Login Successful", 
+                JOptionPane.INFORMATION_MESSAGE);
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, 
-                "Incorrect username or password", 
+                "Invalid username or password", 
                 "Login Failed", 
                 JOptionPane.ERROR_MESSAGE);
             passwordField.setText("");
-            passwordField.requestFocus();
         }
     }
-
-    public boolean isAuthenticated() {
-        return authenticated;
+    
+    public User getAuthenticatedUser() {
+        return authenticatedUser;
     }
 }

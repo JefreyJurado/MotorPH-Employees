@@ -1,0 +1,3 @@
+LeaveID,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ApprovedBy
+LV1770027897919,Manuel Garcia III,Sick Leave,2026-02-26,2026-02-28,"I was hospitalized due to Dengue Fever",Approved,2026-02-02 18:24:57,admin
+LV1770028405446,Antonio Lim,Sick Leave,2026-03-01,2026-03-20,"I have a Dengue Fever and need to be confined for at least 20 days in the hospital",Pending,2026-02-02 18:33:25,

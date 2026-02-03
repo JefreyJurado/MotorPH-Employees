@@ -1,19 +1,20 @@
 package ms1cp2manual.refactored;
 
-import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 public class MainApplication {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            AuthenticationService authService = new AuthenticationService();
-            
-            ModernLoginDialog loginDialog = new ModernLoginDialog(null, authService);
+            ModernLoginDialog loginDialog = new ModernLoginDialog(null);
             loginDialog.setVisible(true);
-
-            if (loginDialog.isAuthenticated()) {
+            
+            User authenticatedUser = loginDialog.getAuthenticatedUser();
+            
+            if (authenticatedUser != null) {
                 EmployeeRepository repository = new EmployeeRepository();
-                ModernEmployeeManagementFrame mainFrame = new ModernEmployeeManagementFrame(repository);
-                mainFrame.setVisible(true);
+                ModernEmployeeManagementFrame frame = 
+                    new ModernEmployeeManagementFrame(repository, authenticatedUser);
+                frame.setVisible(true);
             } else {
                 System.exit(0);
             }
