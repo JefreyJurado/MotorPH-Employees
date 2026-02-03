@@ -31,28 +31,24 @@ public class ModernEmployeeManagementFrame extends JFrame {
     private JTable employeeTable;
     private JButton updateButton;
 
-    // FIXED CONSTRUCTOR - Added User parameter
     public ModernEmployeeManagementFrame(EmployeeRepository repository, User user) {
         this.employeeRepository = repository;
         this.salaryCalculator = new SalaryCalculator();
-        this.currentUser = user;  // FIXED: Now uses the parameter
+        this.currentUser = user;
         initializeModernUI();
         loadEmployeeData();
         applyAccessControl();
     }
     
     private void applyAccessControl() {
-        // Show role in title
         setTitle("MotorPH Employee Management System - " + currentUser.getRole() + ": " + currentUser.getUsername());
 
-        // If employee (not Admin or HR), disable modification buttons
         if (currentUser.isEmployee()) {
-            // Find all buttons and disable them except View, Save, Clear, Query
             Component[] components = getContentPane().getComponents();
             disableModificationButtons(components);
 
             JOptionPane.showMessageDialog(this,
-                "You are logged in as an Employee.\nYou have READ-ONLY access.",
+                "You are logged in as an Employee.\nYou can only view your own employee record.",
                 "Access Level: Employee",
                 JOptionPane.INFORMATION_MESSAGE);
         }
@@ -66,7 +62,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
                 JButton button = (JButton) comp;
                 String buttonText = button.getText();
 
-                // Disable Add, Update, Delete buttons for employees
                 if ("Add".equals(buttonText) || "Update".equals(buttonText) || "Delete".equals(buttonText)) {
                     button.setEnabled(false);
                     button.setToolTipText("Access Denied: Admin/HR only");
@@ -157,10 +152,8 @@ public class ModernEmployeeManagementFrame extends JFrame {
         JButton leaveBtn = createHeaderButton("Leave", startX, yPos, btnWidth, btnHeight);
         leaveBtn.addActionListener(e -> {
             if (currentUser.isEmployee()) {
-                // Employees file leave
                 openLeaveApplicationDialog();
             } else {
-                // Admin/HR approve leave
                 openApproveLeaveDialog();
             }
         });
@@ -275,7 +268,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
         addModernField(panel, "Hourly Rate", tfHourlyR = createStyledTextField(), labelX, fieldX, yPos);
         yPos += spacing + 20;
 
-        // Payroll Actions label and buttons on same line
         JLabel payrollLabel = new JLabel("Payroll Actions:");
         payrollLabel.setBounds(labelX, yPos + 7, 150, 25);
         payrollLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -418,11 +410,22 @@ public class ModernEmployeeManagementFrame extends JFrame {
             return;
         }
 
+        // If Employee role, can only query their own number
+        if (currentUser.isEmployee()) {
+            if (currentUser.getEmployeeNumber() != null && 
+                !empNumber.equals(currentUser.getEmployeeNumber())) {
+                showModernDialog("Access Denied: You can only view your own employee record", 
+                    "Access Denied", JOptionPane.ERROR_MESSAGE);
+                tfEmpNum.setText(currentUser.getEmployeeNumber());
+                return;
+            }
+        }
+
         Employee employee = employeeRepository.findByEmployeeNumber(empNumber);
-        
+
         if (employee != null) {
             populateFields(employee);
-            
+
             for (int i = 0; i < tableModel.getRowCount(); i++) {
                 if (tableModel.getValueAt(i, 0).equals(empNumber)) {
                     employeeTable.setRowSelectionInterval(i, i);
@@ -430,7 +433,7 @@ public class ModernEmployeeManagementFrame extends JFrame {
                     break;
                 }
             }
-            
+
             updateButton.setEnabled(true);
             showModernDialog("Employee found!", "Query Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -579,27 +582,45 @@ public class ModernEmployeeManagementFrame extends JFrame {
         tfHourlyR.setText("");
     }
 
+    // FIXED: Only ONE loadEmployeeData() method with filtering
     private void loadEmployeeData() {
         List<Employee> employees = employeeRepository.getAllEmployees();
+
         for (Employee employee : employees) {
-            tableModel.addRow(employee.toTableRow());
+            if (currentUser.isEmployee()) {
+                // Employee can only see their own record
+                if (currentUser.getEmployeeNumber() != null && 
+                    employee.getEmployeeNumber().equals(currentUser.getEmployeeNumber())) {
+                    tableModel.addRow(employee.toTableRow());
+                }
+            } else {
+                // Admin/HR can see all employees
+                tableModel.addRow(employee.toTableRow());
+            }
         }
     }
 
     private void openViewEmployeeDialog() {
-        new ModernViewEmployeeDialog(this, employeeRepository, salaryCalculator).setVisible(true);
+        new ModernViewEmployeeDialog(this, employeeRepository, salaryCalculator, currentUser).setVisible(true);
     }
 
     private void openLeaveApplicationDialog() {
-        new ModernLeaveApplicationDialog(this).setVisible(true);
+        // Get the current employee object
+        Employee currentEmployee = employeeRepository.findByEmployeeNumber(currentUser.getEmployeeNumber());
+
+        if (currentEmployee != null) {
+            new ModernLeaveApplicationDialog(this, currentEmployee).setVisible(true);
+        } else {
+            showModernDialog("Error: Employee record not found", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void openWeeklyPayslipDialog() {
-        new WeeklyPayslipDialog(this, employeeRepository, salaryCalculator).setVisible(true);
+        new WeeklyPayslipDialog(this, employeeRepository, salaryCalculator, currentUser).setVisible(true);
     }
 
     private void openViewDeductionsDialog() {
-        new ViewDeductionsDialog(this, employeeRepository, salaryCalculator).setVisible(true);
+        new ViewDeductionsDialog(this, employeeRepository, salaryCalculator, currentUser).setVisible(true);
     }
 
     private void openApproveLeaveDialog() {

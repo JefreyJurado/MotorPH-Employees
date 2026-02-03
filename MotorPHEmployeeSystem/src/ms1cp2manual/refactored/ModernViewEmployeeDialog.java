@@ -3,10 +3,13 @@ package ms1cp2manual.refactored;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 public class ModernViewEmployeeDialog extends JDialog {
     private EmployeeRepository employeeRepository;
     private SalaryCalculator salaryCalculator;
+    private User currentUser;
+    private JComboBox<String> employeeComboBox;
     
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SUCCESS_COLOR = new Color(46, 204, 113);
@@ -14,11 +17,12 @@ public class ModernViewEmployeeDialog extends JDialog {
     private final Color LIGHT_BG = new Color(236, 240, 241);
     private final Color WHITE = Color.WHITE;
 
-    public ModernViewEmployeeDialog(JFrame parent, EmployeeRepository repository, 
-                                   SalaryCalculator calculator) {
-        super(parent, "View Employee Salary Details", true);
+    public ModernViewEmployeeDialog(Frame parent, EmployeeRepository repository, 
+                                   SalaryCalculator calculator, User currentUser) {
+        super(parent, "View Employee Details", true);
         this.employeeRepository = repository;
         this.salaryCalculator = calculator;
+        this.currentUser = currentUser;
         initializeModernUI();
     }
 
@@ -80,14 +84,13 @@ public class ModernViewEmployeeDialog extends JDialog {
         selectionPanel.add(empLabel);
         
         // Create employee combo box
-        JComboBox<String> employeeComboBox = new JComboBox<>();
+        employeeComboBox = new JComboBox<>();
         employeeComboBox.setBounds(15, 45, 300, 35);
         employeeComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         
-        // Populate with employees
-        for (Employee emp : employeeRepository.getAllEmployees()) {
-            employeeComboBox.addItem(emp.getEmployeeNumber() + " - " + emp.getFullName());
-        }
+        // Load employees with filtering
+        loadEmployees();
+        
         selectionPanel.add(employeeComboBox);
         
         JLabel monthLabel = new JLabel("Select Month:");
@@ -158,13 +161,7 @@ public class ModernViewEmployeeDialog extends JDialog {
                     fullReport.append(String.format("Employee Number : %s\n", employee.getEmployeeNumber()));
                     fullReport.append(String.format("Full Name       : %s\n", employee.getFullName()));
                     fullReport.append(String.format("Position        : %s\n", employee.getPosition()));
-                    
-                    // POLYMORPHISM DEMONSTRATION - getDepartment() returns different values
-                    // based on the actual employee subclass type at runtime
                     fullReport.append(String.format("Department      : %s\n", employee.getDepartment()));
-                    
-                    // POLYMORPHISM DEMONSTRATION - getJobDescription() returns different values
-                    // based on the actual employee subclass type at runtime
                     fullReport.append(String.format("Job Description : %s\n\n", employee.getJobDescription()));
                     
                     // Salary Computation Section
@@ -176,12 +173,29 @@ public class ModernViewEmployeeDialog extends JDialog {
                     fullReport.append(salaryReport);
                     
                     employeeDetailsArea.setText(fullReport.toString());
-                    employeeDetailsArea.setCaretPosition(0); // Scroll to top
+                    employeeDetailsArea.setCaretPosition(0);
                 }
             }
         });
         
         return contentPanel;
+    }
+
+    private void loadEmployees() {
+        List<Employee> employees = employeeRepository.getAllEmployees();
+        
+        for (Employee employee : employees) {
+            if (currentUser.isEmployee()) {
+                // Employee can only see their own record
+                if (currentUser.getEmployeeNumber() != null && 
+                    employee.getEmployeeNumber().equals(currentUser.getEmployeeNumber())) {
+                    employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
+                }
+            } else {
+                // Admin/HR can see all
+                employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
+            }
+        }
     }
 
     private JButton createModernButton(String text, Color bgColor) {

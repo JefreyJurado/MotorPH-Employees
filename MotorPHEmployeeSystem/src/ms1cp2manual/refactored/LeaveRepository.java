@@ -3,78 +3,78 @@ package ms1cp2manual.refactored;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LeaveRepository {
-    private static final String CSV_FILE = "leaves.csv";
-    private static final String CSV_HEADER = "LeaveID,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ApprovedBy";
-    private final List<LeaveApplication> leaves;
+    private static final String LEAVE_FILE = "leaves.csv";
+    private List<LeaveApplication> leaves;
     
     public LeaveRepository() {
-        leaves = new ArrayList<>();
+        this.leaves = new ArrayList<>();
         loadFromCSV();
     }
     
     private void loadFromCSV() {
-        File file = new File(CSV_FILE);
+        File file = new File(LEAVE_FILE);
         if (!file.exists()) {
             createCSVFile();
             return;
         }
         
-        try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE))) {
-            String line = reader.readLine();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String header = br.readLine();
+            String line;
             
-            while ((line = reader.readLine()) != null) {
-                LeaveApplication leave = parseLeaveFromCSV(line);
-                if (leave != null) {
-                    leaves.add(leave);
+            while ((line = br.readLine()) != null) {
+                if (!line.trim().isEmpty()) {
+                    try {
+                        leaves.add(parseCSVLine(line));
+                    } catch (Exception e) {
+                        System.err.println("Error parsing leave line: " + line);
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (IOException e) {
-            System.err.println("Error loading leaves from CSV: " + e.getMessage());
+            e.printStackTrace();
         }
-    }
-    
-    private LeaveApplication parseLeaveFromCSV(String csvLine) {
-        try {
-            String[] parts = csvLine.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-            
-            if (parts.length >= 9) {
-                String leaveId = parts[0].trim();
-                String employeeName = parts[1].trim();
-                String leaveType = parts[2].trim();
-                String startDate = parts[3].trim();
-                String endDate = parts[4].trim();
-                String reason = parts[5].trim().replace("\"", "");
-                String status = parts[6].trim();
-                String submittedDate = parts[7].trim();
-                String approvedBy = parts[8].trim();
-                
-                return new LeaveApplication(leaveId, employeeName, leaveType, 
-                    startDate, endDate, reason, status, submittedDate, approvedBy);
-            }
-        } catch (Exception e) {
-            System.err.println("Error parsing leave: " + e.getMessage());
-        }
-        return null;
     }
     
     private void createCSVFile() {
-        try (FileWriter writer = new FileWriter(CSV_FILE)) {
-            writer.write(CSV_HEADER + "\n");
+        try (PrintWriter writer = new PrintWriter(new FileWriter(LEAVE_FILE))) {
+            writer.println("LeaveID,EmployeeNumber,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ApprovedBy");
         } catch (IOException e) {
-            System.err.println("Error creating CSV file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
-    private void saveToCSV() {
-        try (FileWriter writer = new FileWriter(CSV_FILE)) {
-            writer.write(CSV_HEADER + "\n");
+    private LeaveApplication parseCSVLine(String line) {
+        String[] parts = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+        
+        String leaveId = parts[0];
+        String employeeNumber = parts[1];
+        String employeeName = parts[2];
+        String leaveType = parts[3];
+        String startDate = parts[4];
+        String endDate = parts[5];
+        String reason = parts[6].replace("\"\"", "\"").replaceAll("^\"|\"$", "");
+        String status = parts[7];
+        String submittedDate = parts[8];
+        String approvedBy = parts[9].equals("N/A") ? "" : parts[9];
+        
+        return new LeaveApplication(leaveId, employeeNumber, employeeName, leaveType, 
+                                   startDate, endDate, reason, status, submittedDate, approvedBy);
+    }
+    
+    public void saveToCSV() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(LEAVE_FILE))) {
+            writer.println("LeaveID,EmployeeNumber,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ApprovedBy");
+            
             for (LeaveApplication leave : leaves) {
-                writer.write(leave.toCSV() + "\n");
+                writer.println(leave.toCSV());
             }
         } catch (IOException e) {
-            System.err.println("Error saving leaves to CSV: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -83,8 +83,14 @@ public class LeaveRepository {
         saveToCSV();
     }
     
-    public void updateLeave(LeaveApplication leave) {
-        saveToCSV();
+    public void updateLeave(LeaveApplication updatedLeave) {
+        for (int i = 0; i < leaves.size(); i++) {
+            if (leaves.get(i).getLeaveId().equals(updatedLeave.getLeaveId())) {
+                leaves.set(i, updatedLeave);
+                saveToCSV();
+                return;
+            }
+        }
     }
     
     public List<LeaveApplication> getAllLeaves() {
@@ -92,22 +98,22 @@ public class LeaveRepository {
     }
     
     public List<LeaveApplication> getPendingLeaves() {
-        List<LeaveApplication> pending = new ArrayList<>();
-        for (LeaveApplication leave : leaves) {
-            if (leave.isPending()) {
-                pending.add(leave);
-            }
-        }
-        return pending;
+        return leaves.stream()
+            .filter(leave -> "Pending".equals(leave.getStatus()))
+            .collect(Collectors.toList());
     }
     
+    // NEW: Search by employee NUMBER instead of name
+    public List<LeaveApplication> getLeavesByEmployeeNumber(String employeeNumber) {
+        return leaves.stream()
+            .filter(leave -> leave.getEmployeeNumber().equals(employeeNumber))
+            .collect(Collectors.toList());
+    }
+    
+    // KEEP this for backward compatibility
     public List<LeaveApplication> getLeavesByEmployee(String employeeName) {
-        List<LeaveApplication> employeeLeaves = new ArrayList<>();
-        for (LeaveApplication leave : leaves) {
-            if (leave.getEmployeeName().equalsIgnoreCase(employeeName)) {
-                employeeLeaves.add(leave);
-            }
-        }
-        return employeeLeaves;
+        return leaves.stream()
+            .filter(leave -> leave.getEmployeeName().equalsIgnoreCase(employeeName.trim()))
+            .collect(Collectors.toList());
     }
 }

@@ -7,10 +7,12 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.List;
 
 public class WeeklyPayslipDialog extends JDialog {
     private EmployeeRepository employeeRepository;
     private SalaryCalculator salaryCalculator;
+    private User currentUser;
     
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color WHITE = Color.WHITE;
@@ -22,11 +24,12 @@ public class WeeklyPayslipDialog extends JDialog {
     private JSpinner weekEndSpinner;
     private JTextArea payslipArea;
     
-    public WeeklyPayslipDialog(Frame parent, EmployeeRepository repository, SalaryCalculator calculator) {
+    public WeeklyPayslipDialog(Frame parent, EmployeeRepository repository, 
+                              SalaryCalculator calculator, User currentUser) {
         super(parent, "Generate Weekly Payslip", true);
         this.employeeRepository = repository;
         this.salaryCalculator = calculator;
-        
+        this.currentUser = currentUser;
         initializeUI();
         loadEmployees();
     }
@@ -80,7 +83,6 @@ public class WeeklyPayslipDialog extends JDialog {
         inputPanel.add(startLabel, gbc);
         
         gbc.gridx = 1;
-        // Create date spinner for start date (default: 7 days ago)
         Calendar startCal = Calendar.getInstance();
         startCal.add(Calendar.DAY_OF_MONTH, -7);
         SpinnerDateModel startModel = new SpinnerDateModel(startCal.getTime(), null, null, Calendar.DAY_OF_MONTH);
@@ -98,7 +100,6 @@ public class WeeklyPayslipDialog extends JDialog {
         inputPanel.add(endLabel, gbc);
         
         gbc.gridx = 1;
-        // Create date spinner for end date (default: today)
         SpinnerDateModel endModel = new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH);
         weekEndSpinner = new JSpinner(endModel);
         JSpinner.DateEditor endEditor = new JSpinner.DateEditor(weekEndSpinner, "yyyy-MM-dd");
@@ -139,6 +140,10 @@ public class WeeklyPayslipDialog extends JDialog {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         buttonPanel.setBackground(LIGHT_BG);
         
+        JButton savePayslipBtn = createStyledButton("Save Payslip", new Color(52, 152, 219));
+        savePayslipBtn.addActionListener(e -> savePayslipToRepository());
+        buttonPanel.add(savePayslipBtn);
+        
         JButton printBtn = createStyledButton("Print Payslip", new Color(46, 204, 113));
         printBtn.addActionListener(e -> printPayslip());
         buttonPanel.add(printBtn);
@@ -152,8 +157,17 @@ public class WeeklyPayslipDialog extends JDialog {
     
     private void loadEmployees() {
         employeeComboBox.removeAllItems();
-        for (Employee emp : employeeRepository.getAllEmployees()) {
-            employeeComboBox.addItem(emp.getEmployeeNumber() + " - " + emp.getFullName());
+        List<Employee> employees = employeeRepository.getAllEmployees();
+        
+        for (Employee employee : employees) {
+            if (currentUser.isEmployee()) {
+                if (currentUser.getEmployeeNumber() != null && 
+                    employee.getEmployeeNumber().equals(currentUser.getEmployeeNumber())) {
+                    employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
+                }
+            } else {
+                employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
+            }
         }
     }
     
@@ -171,17 +185,14 @@ public class WeeklyPayslipDialog extends JDialog {
         Employee employee = employeeRepository.findByEmployeeNumber(empNumber);
         
         if (employee != null) {
-            // Get dates from spinners
             Date startDate = (Date) weekStartSpinner.getValue();
             Date endDate = (Date) weekEndSpinner.getValue();
             
-            // Convert Date to LocalDate
             LocalDate startLocalDate = startDate.toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDate();
             LocalDate endLocalDate = endDate.toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDate();
             
-            // Validate date range
             if (startLocalDate.isAfter(endLocalDate)) {
                 JOptionPane.showMessageDialog(this, 
                     "Start date must be before end date", 
@@ -195,6 +206,61 @@ public class WeeklyPayslipDialog extends JDialog {
             
             payslipArea.setText(payslip.generatePayslipText());
             payslipArea.setCaretPosition(0);
+        }
+    }
+    
+    private void savePayslipToRepository() {
+        if (payslipArea.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Please generate a payslip first",
+                "No Payslip",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String selectedItem = (String) employeeComboBox.getSelectedItem();
+        if (selectedItem == null) return;
+
+        String empNumber = selectedItem.split(" - ")[0];
+        Employee employee = employeeRepository.findByEmployeeNumber(empNumber);
+
+        if (employee != null) {
+            Date startDate = (Date) weekStartSpinner.getValue();
+            Date endDate = (Date) weekEndSpinner.getValue();
+
+            LocalDate startLocalDate = startDate.toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate endLocalDate = endDate.toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+
+            SalaryCalculator.WeeklyPayslip weeklyPayslip = 
+                salaryCalculator.generateWeeklyPayslip(employee, startLocalDate, endLocalDate);
+
+            // Create payslip ID
+            String payslipId = "PS" + System.currentTimeMillis();
+
+            // Create Payslip object - FIXED: Use correct getter method names
+            Payslip payslip = new Payslip(
+                payslipId,
+                employee.getEmployeeNumber(),
+                employee.getFullName(),
+                startLocalDate,
+                endLocalDate,
+                LocalDate.now(),
+                currentUser.getUsername(),
+                weeklyPayslip.getGrossWeekly(),          // FIXED!
+                weeklyPayslip.getNetWeekly(),            // FIXED!
+                weeklyPayslip.getTotalDeductionsWeekly(), // FIXED!
+                payslipArea.getText()
+            );
+
+            PayslipRepository payslipRepo = new PayslipRepository();
+            payslipRepo.addPayslip(payslip);
+
+            JOptionPane.showMessageDialog(this,
+                "Payslip saved successfully!\nEmployees can now view this payslip in their dashboard.",
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE);
         }
     }
     

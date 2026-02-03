@@ -12,16 +12,17 @@ public class AuthenticationService {
     }
     
     private void initializeUsers() {
-        // Admin user - full access
-        users.put("admin", new User("admin", "admin123", "Admin"));
+        // Admin user - full access (no specific employee number needed)
+        users.put("admin", new User("admin", "admin123", "Admin", null));
         
-        // HR users - can modify employees
-        users.put("aljohn", new User("aljohn", "aljohn123", "HR"));
-        users.put("michael", new User("michael", "michael123", "HR"));
+        // HR users - can view all employees (example: link to HR employee numbers)
+        users.put("aljohn", new User("aljohn", "aljohn123", "HR", "10001")); // HR Manager
+        users.put("michael", new User("michael", "michael123", "HR", "10002")); // HR Staff
         
-        // Regular employees - read only
-        users.put("employee1", new User("employee1", "emp123", "Employee"));
-        users.put("employee2", new User("employee2", "emp123", "Employee"));
+        // Regular employees - can only view their own data
+        // Link to actual employee numbers in your CSV
+        users.put("employee1", new User("employee1", "emp123", "Employee", "1")); // Links to Emp #1
+        users.put("employee2", new User("employee2", "emp123", "Employee", "2")); // Links to Emp #2
     }
     
     // Returns User object if authenticated, null otherwise
@@ -33,7 +34,7 @@ public class AuthenticationService {
         return null;
     }
     
-    public void addUser(String username, String password, String role) {
-        users.put(username, new User(username, password, role));
+    public void addUser(String username, String password, String role, String employeeNumber) {
+        users.put(username, new User(username, password, role, employeeNumber));
     }
 }

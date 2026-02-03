@@ -12,9 +12,18 @@ public class MainApplication {
             
             if (authenticatedUser != null) {
                 EmployeeRepository repository = new EmployeeRepository();
-                ModernEmployeeManagementFrame frame = 
-                    new ModernEmployeeManagementFrame(repository, authenticatedUser);
-                frame.setVisible(true);
+                
+                if (authenticatedUser.isEmployee()) {
+                    // Show Employee Dashboard
+                    EmployeeDashboardFrame empFrame = 
+                        new EmployeeDashboardFrame(repository, authenticatedUser);
+                    empFrame.setVisible(true);
+                } else {
+                    // Show Admin/HR Dashboard
+                    ModernEmployeeManagementFrame frame = 
+                        new ModernEmployeeManagementFrame(repository, authenticatedUser);
+                    frame.setVisible(true);
+                }
             } else {
                 System.exit(0);
             }

@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.List;
 
@@ -38,14 +41,14 @@ public class ApproveLeaveDialog extends JDialog {
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
         // Header Panel with centered title
-        JPanel headerPanel = new JPanel(new GridBagLayout());  // Changed to GridBagLayout for centering
+        JPanel headerPanel = new JPanel(new GridBagLayout());
         headerPanel.setBackground(PRIMARY_COLOR);
         headerPanel.setPreferredSize(new Dimension(1200, 60));
         
         JLabel titleLabel = new JLabel("Pending Leave Applications");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
         titleLabel.setForeground(WHITE);
-        headerPanel.add(titleLabel);  // GridBagLayout centers by default
+        headerPanel.add(titleLabel);
         
         mainPanel.add(headerPanel, BorderLayout.NORTH);
         
@@ -73,7 +76,7 @@ public class ApproveLeaveDialog extends JDialog {
         leaveTable.getColumnModel().getColumn(6).setPreferredWidth(150);
         leaveTable.getColumnModel().getColumn(7).setPreferredWidth(80);
 
-        // FIXED: Custom header renderer
+        // Custom header renderer
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(PRIMARY_COLOR);
         headerRenderer.setForeground(WHITE);
@@ -88,36 +91,53 @@ public class ApproveLeaveDialog extends JDialog {
         // Center align for all columns EXCEPT Reason
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        centerRenderer.setVerticalAlignment(JLabel.CENTER);  // Added vertical centering
+        centerRenderer.setVerticalAlignment(JLabel.CENTER);
         for (int i = 0; i < leaveTable.getColumnCount(); i++) {
             if (i != 5) {
                 leaveTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
             }
         }
 
-        // Multi-line text renderer for Reason column with proper alignment
+        // FIXED: Multi-line text renderer for Reason column - CENTERED horizontally AND vertically
         leaveTable.getColumnModel().getColumn(5).setCellRenderer(new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
 
-                JTextArea textArea = new JTextArea();
-                textArea.setText(value != null ? value.toString() : "");
-                textArea.setWrapStyleWord(true);
-                textArea.setLineWrap(true);
-                textArea.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-                textArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));  // Padding for centering effect
-                textArea.setOpaque(true);
+                // Outer panel with GridBagLayout for vertical centering
+                JPanel outerPanel = new JPanel(new GridBagLayout());
+                outerPanel.setOpaque(true);
 
                 if (isSelected) {
-                    textArea.setBackground(table.getSelectionBackground());
-                    textArea.setForeground(table.getSelectionForeground());
+                    outerPanel.setBackground(table.getSelectionBackground());
                 } else {
-                    textArea.setBackground(table.getBackground());
-                    textArea.setForeground(table.getForeground());
+                    outerPanel.setBackground(table.getBackground());
                 }
 
-                return textArea;  // Return JTextArea directly without wrapper
+                // Create text pane with centered text
+                JTextPane textPane = new JTextPane();
+                textPane.setText(value != null ? value.toString() : "");
+                textPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                textPane.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                textPane.setOpaque(false);
+                textPane.setEditable(false);
+
+                // CENTER alignment for text pane
+                StyledDocument doc = textPane.getStyledDocument();
+                SimpleAttributeSet center = new SimpleAttributeSet();
+                StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+                doc.setParagraphAttributes(0, doc.getLength(), center, false);
+
+                if (isSelected) {
+                    textPane.setForeground(table.getSelectionForeground());
+                } else {
+                    textPane.setForeground(table.getForeground());
+                }
+
+                // Add text pane to outer panel (GridBagLayout centers it vertically)
+                outerPanel.add(textPane);
+
+                return outerPanel;
             }
         });
 

@@ -12,6 +12,7 @@ public class ModernLeaveApplicationDialog extends JDialog {
     private final Color TEXT_COLOR = new Color(44, 62, 80);
     private final Color LIGHT_BG = new Color(236, 240, 241);
     
+    private Employee currentEmployee;  // ADDED
     private JTextField employeeNameField;
     private JComboBox<String> leaveTypeCombo;
     private JTextField startDateField;
@@ -19,8 +20,10 @@ public class ModernLeaveApplicationDialog extends JDialog {
     private JTextArea reasonArea;
     private LeaveRepository leaveRepository;
     
-    public ModernLeaveApplicationDialog(Frame parent) {
+    // UPDATED constructor to accept Employee
+    public ModernLeaveApplicationDialog(Frame parent, Employee employee) {
         super(parent, "Leave Application", true);
+        this.currentEmployee = employee;  // ADDED
         this.leaveRepository = new LeaveRepository();
         initializeUI();
     }
@@ -33,7 +36,6 @@ public class ModernLeaveApplicationDialog extends JDialog {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setBackground(LIGHT_BG);
-        
         
         JPanel headerPanel = new JPanel(new GridBagLayout()); 
         headerPanel.setBackground(PRIMARY_COLOR);
@@ -58,7 +60,7 @@ public class ModernLeaveApplicationDialog extends JDialog {
         int fieldWidth = 350;
         int spacing = 60;
         
-        // Employee Name
+        // Employee Name (Read-only, pre-filled)
         JLabel nameLabel = new JLabel("Employee Name:");
         nameLabel.setBounds(20, yPos, labelWidth, 25);
         nameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -67,6 +69,9 @@ public class ModernLeaveApplicationDialog extends JDialog {
         employeeNameField = new JTextField();
         employeeNameField.setBounds(fieldX, yPos, fieldWidth, 30);
         employeeNameField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        employeeNameField.setText(currentEmployee.getFullName());  // ADDED: Pre-fill
+        employeeNameField.setEditable(false);  // ADDED: Make read-only
+        employeeNameField.setBackground(new Color(240, 240, 240));  // ADDED: Gray background
         contentPanel.add(employeeNameField);
         yPos += spacing;
         
@@ -143,13 +148,13 @@ public class ModernLeaveApplicationDialog extends JDialog {
     }
     
     private void handleSubmit() {
-        String employeeName = employeeNameField.getText().trim();
         String leaveType = (String) leaveTypeCombo.getSelectedItem();
         String startDate = startDateField.getText().trim();
         String endDate = endDateField.getText().trim();
         String reason = reasonArea.getText().trim();
         
-        if (employeeName.isEmpty() || startDate.isEmpty() || endDate.isEmpty() || reason.isEmpty()) {
+        if (startDate.isEmpty() || endDate.isEmpty() || reason.isEmpty() || 
+            startDate.equals("YYYY-MM-DD") || endDate.equals("YYYY-MM-DD")) {
             JOptionPane.showMessageDialog(this,
                 "Please fill in all fields",
                 "Validation Error",
@@ -157,7 +162,16 @@ public class ModernLeaveApplicationDialog extends JDialog {
             return;
         }
         
-        LeaveApplication leave = new LeaveApplication(employeeName, leaveType, startDate, endDate, reason);
+        // CREATE leave with employee NUMBER - FIXED
+        LeaveApplication leave = new LeaveApplication(
+            currentEmployee.getEmployeeNumber(),  // ADDED: Use employee number
+            currentEmployee.getFullName(),         // Use full name from employee object
+            leaveType, 
+            startDate, 
+            endDate, 
+            reason
+        );
+        
         leaveRepository.addLeave(leave);
         
         JOptionPane.showMessageDialog(this,

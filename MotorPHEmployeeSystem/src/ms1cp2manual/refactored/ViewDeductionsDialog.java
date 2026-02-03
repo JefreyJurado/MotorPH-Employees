@@ -4,10 +4,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
 public class ViewDeductionsDialog extends JDialog {
     private EmployeeRepository employeeRepository;
     private SalaryCalculator salaryCalculator;
+    private User currentUser;
     
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SUCCESS_COLOR = new Color(46, 204, 113);
@@ -21,11 +23,12 @@ public class ViewDeductionsDialog extends JDialog {
     private JTable deductionTable;
     private DefaultTableModel tableModel;
     
-    public ViewDeductionsDialog(Frame parent, EmployeeRepository repository, SalaryCalculator calculator) {
-        super(parent, "View Employee Deductions", true);
+    public ViewDeductionsDialog(Frame parent, EmployeeRepository repository, 
+                               SalaryCalculator calculator, User currentUser) {
+        super(parent, "View Deductions", true);
         this.employeeRepository = repository;
         this.salaryCalculator = calculator;
-        
+        this.currentUser = currentUser;
         initializeUI();
         loadEmployees();
     }
@@ -159,10 +162,22 @@ public class ViewDeductionsDialog extends JDialog {
         add(buttonPanel, BorderLayout.SOUTH);
     }
     
+    // FIXED: Only ONE loadEmployees() method with filtering
     private void loadEmployees() {
         employeeComboBox.removeAllItems();
-        for (Employee emp : employeeRepository.getAllEmployees()) {
-            employeeComboBox.addItem(emp.getEmployeeNumber() + " - " + emp.getFullName());
+        List<Employee> employees = employeeRepository.getAllEmployees();
+        
+        for (Employee employee : employees) {
+            if (currentUser.isEmployee()) {
+                // Employee can only see their own record
+                if (currentUser.getEmployeeNumber() != null && 
+                    employee.getEmployeeNumber().equals(currentUser.getEmployeeNumber())) {
+                    employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
+                }
+            } else {
+                // Admin/HR can see all
+                employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
+            }
         }
     }
     
