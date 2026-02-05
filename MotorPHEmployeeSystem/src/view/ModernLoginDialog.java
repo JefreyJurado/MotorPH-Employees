@@ -1,7 +1,9 @@
-package ms1cp2manual.refactored;
+package view;
 
+import model.User;
 import javax.swing.*;
 import java.awt.*;
+import service.AuthenticationService;
 
 public class ModernLoginDialog extends JDialog {
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);

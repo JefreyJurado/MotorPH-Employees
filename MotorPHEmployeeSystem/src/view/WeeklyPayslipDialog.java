@@ -1,5 +1,8 @@
-package ms1cp2manual.refactored;
+package view;
 
+import model.Payslip;
+import model.User;
+import model.Employee;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -8,15 +11,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
+import repository.EmployeeRepository;
+import repository.PayslipRepository;
+import service.SalaryCalculator;
 
 public class WeeklyPayslipDialog extends JDialog {
-    private EmployeeRepository employeeRepository;
-    private SalaryCalculator salaryCalculator;
-    private User currentUser;
+    private final EmployeeRepository employeeRepository;
+    private final SalaryCalculator salaryCalculator;
+    private final User currentUser;
     
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color WHITE = Color.WHITE;
-    private final Color TEXT_COLOR = new Color(44, 62, 80);
     private final Color LIGHT_BG = new Color(236, 240, 241);
     
     private JComboBox<String> employeeComboBox;
@@ -305,9 +310,11 @@ public class WeeklyPayslipDialog extends JDialog {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor.brighter());
             }
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor);
             }

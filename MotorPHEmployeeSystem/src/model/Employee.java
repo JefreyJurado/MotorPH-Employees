@@ -1,4 +1,4 @@
-package ms1cp2manual.refactored;
+package model;
 
 public abstract class Employee {
     protected String employeeNumber;

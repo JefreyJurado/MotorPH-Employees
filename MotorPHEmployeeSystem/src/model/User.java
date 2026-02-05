@@ -1,10 +1,10 @@
-package ms1cp2manual.refactored;
+package model;
 
 public class User {
-    private String username;
-    private String password;
-    private String role;
-    private String employeeNumber;
+    private final String username;
+    private final String password;
+    private final String role;
+    private final String employeeNumber;
     
     public User(String username, String password, String role, String employeeNumber) {
         this.username = username;

@@ -1,10 +1,10 @@
-package ms1cp2manual.refactored;
+package model;
 
 import java.time.LocalDate;
 
 public class LeaveApplication {
     private String leaveId;
-    private String employeeNumber;  // ADD THIS
+    private String employeeNumber; 
     private String employeeName;
     private String leaveType;
     private String startDate;
@@ -18,7 +18,7 @@ public class LeaveApplication {
     public LeaveApplication(String employeeNumber, String employeeName, String leaveType, 
                           String startDate, String endDate, String reason) {
         this.leaveId = "LV" + System.currentTimeMillis();
-        this.employeeNumber = employeeNumber;  // ADD THIS
+        this.employeeNumber = employeeNumber;
         this.employeeName = employeeName;
         this.leaveType = leaveType;
         this.startDate = startDate;
@@ -34,7 +34,7 @@ public class LeaveApplication {
                           String leaveType, String startDate, String endDate, 
                           String reason, String status, String submittedDate, String approvedBy) {
         this.leaveId = leaveId;
-        this.employeeNumber = employeeNumber;  // ADD THIS
+        this.employeeNumber = employeeNumber;
         this.employeeName = employeeName;
         this.leaveType = leaveType;
         this.startDate = startDate;
@@ -47,7 +47,7 @@ public class LeaveApplication {
     
     // Getters
     public String getLeaveId() { return leaveId; }
-    public String getEmployeeNumber() { return employeeNumber; }  // ADD THIS
+    public String getEmployeeNumber() { return employeeNumber; }
     public String getEmployeeName() { return employeeName; }
     public String getLeaveType() { return leaveType; }
     public String getStartDate() { return startDate; }
@@ -72,7 +72,7 @@ public class LeaveApplication {
     public String toCSV() {
         return String.format("%s,%s,%s,%s,%s,%s,\"%s\",%s,%s,%s",
             leaveId,
-            employeeNumber,  // ADD THIS
+            employeeNumber,
             employeeName,
             leaveType,
             startDate,

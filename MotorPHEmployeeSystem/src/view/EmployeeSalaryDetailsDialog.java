@@ -1,11 +1,13 @@
-package ms1cp2manual.refactored;
+package view;
 
+import model.Employee;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Locale;
+import service.SalaryCalculator;
 
 public class EmployeeSalaryDetailsDialog extends JDialog {
     private final Employee employee;

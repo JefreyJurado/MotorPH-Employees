@@ -1,4 +1,5 @@
-package ms1cp2manual.refactored;
+package repository;
+import model.Employee;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class EmployeeRepository implements IEmployeeRepository {
         }
     }
     
+    @Override
     public void saveToCSV() {
         try {
             csvFileHandler.saveEmployeesToCSV(employees);
@@ -41,7 +43,7 @@ public class EmployeeRepository implements IEmployeeRepository {
     
     // Empty method - real data loaded from CSV
     private void initializeDefaultEmployees() {
-        // Real MotorPH employees (34 total) will be loaded from employees.csv
+    // Real MotorPH employees (34 total) will be loaded from employees.csv
     }
     
     @Override

@@ -1,5 +1,9 @@
-package ms1cp2manual.refactored;
 
+import repository.EmployeeRepository;
+import view.EmployeeDashboardFrame;
+import view.ModernEmployeeManagementFrame;
+import view.ModernLoginDialog;
+import model.User;
 import javax.swing.SwingUtilities;
 
 public class MainApplication {

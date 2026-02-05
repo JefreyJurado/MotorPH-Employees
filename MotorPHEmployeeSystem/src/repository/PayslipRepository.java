@@ -1,7 +1,7 @@
-package ms1cp2manual.refactored;
+package repository;
 
+import model.Payslip;
 import java.io.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,22 +22,18 @@ public class PayslipRepository {
             return;
         }
         
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String header = br.readLine(); // Skip header
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) { 
             String line;
-            
             while ((line = br.readLine()) != null) {
                 if (!line.trim().isEmpty()) {
                     try {
                         payslips.add(Payslip.fromCSV(line));
                     } catch (Exception e) {
                         System.err.println("Error parsing payslip line: " + line);
-                        e.printStackTrace();
                     }
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -45,7 +41,6 @@ public class PayslipRepository {
         try (PrintWriter writer = new PrintWriter(new FileWriter(PAYSLIP_FILE))) {
             writer.println("PayslipID,EmployeeNumber,EmployeeName,PayPeriodStart,PayPeriodEnd,GeneratedDate,GeneratedBy,GrossPay,NetPay,TotalDeductions,PayslipContent");
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -57,7 +52,6 @@ public class PayslipRepository {
                 writer.println(payslip.toCSV());
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     

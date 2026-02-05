@@ -1,0 +1,7 @@
+Username,Password,Role,EmployeeNumber
+admin,admin123,Admin,
+hruser,hr123,HR,10001
+manager,manager123,HR,10002
+employee1,emp123,Employee,1
+employee2,emp456,Employee,2
+employee3,emp789,Employee,3

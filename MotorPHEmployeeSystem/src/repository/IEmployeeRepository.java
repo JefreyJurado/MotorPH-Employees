@@ -1,5 +1,6 @@
-package ms1cp2manual.refactored;
+package repository;
 
+import model.Employee;
 import java.util.List;
 
 public interface IEmployeeRepository {

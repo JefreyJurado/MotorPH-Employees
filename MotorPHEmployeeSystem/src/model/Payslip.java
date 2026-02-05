@@ -1,4 +1,4 @@
-package ms1cp2manual.refactored;
+package model;
 
 import java.time.LocalDate;
 
@@ -13,7 +13,7 @@ public class Payslip {
     private final double grossPay;
     private final double netPay;
     private final double totalDeductions;
-    private final String payslipContent; // Full text content
+    private final String payslipContent;
     
     public Payslip(String payslipId, String employeeNumber, String employeeName,
                    LocalDate payPeriodStart, LocalDate payPeriodEnd, LocalDate generatedDate,

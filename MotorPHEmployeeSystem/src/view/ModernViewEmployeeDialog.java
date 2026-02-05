@@ -1,9 +1,13 @@
-package ms1cp2manual.refactored;
+package view;
 
+import model.User;
+import model.Employee;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
+import repository.EmployeeRepository;
+import service.SalaryCalculator;
 
 public class ModernViewEmployeeDialog extends JDialog {
     private EmployeeRepository employeeRepository;

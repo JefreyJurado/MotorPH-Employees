@@ -1,5 +1,7 @@
-package ms1cp2manual.refactored;
+package view;
 
+import model.LeaveApplication;
+import model.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -9,6 +11,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.List;
+import repository.LeaveRepository;
 
 public class ApproveLeaveDialog extends JDialog {
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
@@ -282,9 +285,11 @@ public class ApproveLeaveDialog extends JDialog {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor.brighter());
             }
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor);
             }

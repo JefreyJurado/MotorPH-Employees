@@ -1,5 +1,7 @@
-package ms1cp2manual.refactored;
+package view;
 
+import model.User;
+import model.Employee;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -7,6 +9,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.List;
+import util.EmployeeFactory;
+import repository.EmployeeRepository;
+import service.SalaryCalculator;
 
 public class ModernEmployeeManagementFrame extends JFrame {
     private final EmployeeRepository employeeRepository;

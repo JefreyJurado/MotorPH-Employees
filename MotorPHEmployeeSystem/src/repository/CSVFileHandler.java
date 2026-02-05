@@ -1,8 +1,10 @@
-package ms1cp2manual.refactored;
+package repository;
 
+import model.Employee;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import util.EmployeeFactory;
 
 public class CSVFileHandler {
     private static final String EMPLOYEE_CSV_FILE = "employees.csv";
@@ -112,7 +114,6 @@ public class CSVFileHandler {
             return null;
         } catch (Exception e) {
             System.err.println("ERROR: Unexpected error parsing line: " + line);
-            e.printStackTrace();
             return null;
         }
     }

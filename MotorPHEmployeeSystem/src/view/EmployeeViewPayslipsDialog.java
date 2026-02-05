@@ -1,10 +1,13 @@
-package ms1cp2manual.refactored;
+package view;
 
+import model.Payslip;
+import model.Employee;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
+import repository.PayslipRepository;
 
 public class EmployeeViewPayslipsDialog extends JDialog {
     private final Employee employee;

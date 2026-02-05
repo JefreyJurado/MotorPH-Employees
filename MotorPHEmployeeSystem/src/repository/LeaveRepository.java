@@ -1,5 +1,6 @@
-package ms1cp2manual.refactored;
+package repository;
 
+import model.LeaveApplication;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,14 +104,13 @@ public class LeaveRepository {
             .collect(Collectors.toList());
     }
     
-    // NEW: Search by employee NUMBER instead of name
+    //Search by employee NUMBER instead of name
     public List<LeaveApplication> getLeavesByEmployeeNumber(String employeeNumber) {
         return leaves.stream()
             .filter(leave -> leave.getEmployeeNumber().equals(employeeNumber))
             .collect(Collectors.toList());
     }
-    
-    // KEEP this for backward compatibility
+   
     public List<LeaveApplication> getLeavesByEmployee(String employeeName) {
         return leaves.stream()
             .filter(leave -> leave.getEmployeeName().equalsIgnoreCase(employeeName.trim()))

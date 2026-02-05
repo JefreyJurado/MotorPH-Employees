@@ -1,10 +1,14 @@
-package ms1cp2manual.refactored;
+package view;
 
+import model.User;
+import model.Employee;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
+import repository.EmployeeRepository;
+import service.SalaryCalculator;
 
 public class ViewDeductionsDialog extends JDialog {
     private EmployeeRepository employeeRepository;

@@ -1,4 +1,6 @@
-package ms1cp2manual.refactored;
+package util;
+
+import model.Employee;
 
 public class EmployeeFactory {
     

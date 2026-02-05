@@ -1,8 +1,11 @@
-package ms1cp2manual.refactored;
+package view;
 
+import model.LeaveApplication;
+import model.Employee;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import repository.LeaveRepository;
 
 public class ModernLeaveApplicationDialog extends JDialog {
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
