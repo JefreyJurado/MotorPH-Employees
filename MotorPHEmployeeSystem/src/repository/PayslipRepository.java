@@ -7,51 +7,99 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PayslipRepository {
-    private static final String PAYSLIP_FILE = "payslips.csv";
-    private final List<Payslip> payslips;
+    private final String CSV_FILE = "payslips.csv";
+    private List<Payslip> payslips;
     
     public PayslipRepository() {
         this.payslips = new ArrayList<>();
         loadFromCSV();
     }
     
-    private void loadFromCSV() {
-        File file = new File(PAYSLIP_FILE);
+    public void loadFromCSV() {
+        payslips.clear();
+        File file = new File(CSV_FILE);
+        
         if (!file.exists()) {
-            createCSVFile();
+            System.out.println("Payslips CSV not found. Creating new file.");
+            createDefaultCSV();
             return;
         }
         
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) { 
+        try (BufferedReader br = new BufferedReader(new FileReader(CSV_FILE))) {
             String line;
+            boolean isFirstLine = true;
+            StringBuilder currentRecord = new StringBuilder();
+            int quoteCount = 0;
+            
             while ((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    try {
-                        payslips.add(Payslip.fromCSV(line));
-                    } catch (Exception e) {
-                        System.err.println("Error parsing payslip line: " + line);
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue; // Skip header
+                }
+                
+                // Append current line to record
+                if (currentRecord.length() > 0) {
+                    currentRecord.append("\n"); // Restore newline removed by readLine()
+                }
+                currentRecord.append(line);
+                
+                // Count quotes in current line
+                for (char c : line.toCharArray()) {
+                    if (c == '"') {
+                        quoteCount++;
                     }
                 }
+                
+                // If quote count is even, the record is complete
+                // (all quoted fields are closed)
+                if (quoteCount % 2 == 0) {
+                    try {
+                        Payslip payslip = Payslip.fromCSV(currentRecord.toString());
+                        payslips.add(payslip);
+                    } catch (Exception e) {
+                        System.err.println("Error parsing payslip: " + e.getMessage());
+                        // Don't print the whole record as it's very long
+                    }
+                    
+                    // Reset for next record
+                    currentRecord = new StringBuilder();
+                    quoteCount = 0;
+                }
             }
+            
+            System.out.println("Loaded " + payslips.size() + " payslips");
+            
         } catch (IOException e) {
-        }
-    }
-    
-    private void createCSVFile() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(PAYSLIP_FILE))) {
-            writer.println("PayslipID,EmployeeNumber,EmployeeName,PayPeriodStart,PayPeriodEnd,GeneratedDate,GeneratedBy,GrossPay,NetPay,TotalDeductions,PayslipContent");
-        } catch (IOException e) {
+            System.err.println("Error reading payslips CSV: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
     public void saveToCSV() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(PAYSLIP_FILE))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(CSV_FILE))) {
+            // Write header
             writer.println("PayslipID,EmployeeNumber,EmployeeName,PayPeriodStart,PayPeriodEnd,GeneratedDate,GeneratedBy,GrossPay,NetPay,TotalDeductions,PayslipContent");
             
+            // Write all payslips
             for (Payslip payslip : payslips) {
                 writer.println(payslip.toCSV());
             }
+            
+            System.out.println("Saved " + payslips.size() + " payslips");
+            
         } catch (IOException e) {
+            System.err.println("Error writing payslips CSV: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    private void createDefaultCSV() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(CSV_FILE))) {
+            writer.println("PayslipID,EmployeeNumber,EmployeeName,PayPeriodStart,PayPeriodEnd,GeneratedDate,GeneratedBy,GrossPay,NetPay,TotalDeductions,PayslipContent");
+            System.out.println("Created new payslips.csv file");
+        } catch (IOException e) {
+            System.err.println("Error creating payslips CSV: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -64,10 +112,9 @@ public class PayslipRepository {
         return new ArrayList<>(payslips);
     }
     
-    public List<Payslip> getPayslipsByEmployee(String employeeNumber) {
+    public List<Payslip> getPayslipsByEmployeeNumber(String employeeNumber) {
         return payslips.stream()
             .filter(p -> p.getEmployeeNumber().equals(employeeNumber))
-            .sorted((p1, p2) -> p2.getGeneratedDate().compareTo(p1.getGeneratedDate()))
             .collect(Collectors.toList());
     }
     
@@ -76,10 +123,5 @@ public class PayslipRepository {
             .filter(p -> p.getPayslipId().equals(payslipId))
             .findFirst()
             .orElse(null);
-    }
-    
-    public void deletePayslip(String payslipId) {
-        payslips.removeIf(p -> p.getPayslipId().equals(payslipId));
-        saveToCSV();
     }
 }

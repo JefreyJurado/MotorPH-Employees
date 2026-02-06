@@ -3,8 +3,15 @@ package service;
 import model.Employee;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import repository.AttendanceRepository;
 
 public class SalaryCalculator {
+    
+    private AttendanceRepository attendanceRepository;
+    
+    public SalaryCalculator() {
+        this.attendanceRepository = new AttendanceRepository();
+    }
     
     public double calculateSSSDeduction(double monthlySalary) {
         // 2024 SSS CONTRIBUTION TABLE
@@ -135,6 +142,94 @@ public class SalaryCalculator {
         return calculateMonthlySalary(employee) * 12;
     }
     
+    // ========================================================================
+    // NEW METHODS FOR ATTENDANCE-BASED SALARY CALCULATION
+    // ========================================================================
+    
+    /**
+     * Calculate gross pay based on actual attendance records
+     * @param employee The employee
+     * @param startDate Start of pay period
+     * @param endDate End of pay period
+     * @return Gross pay for the period
+     */
+    public double calculateGrossPayWithAttendance(Employee employee, LocalDate startDate, LocalDate endDate) {
+        // Get attendance records for the period
+        double totalHours = attendanceRepository.calculateTotalHours(
+            employee.getEmployeeNumber(), startDate, endDate);
+        double overtimeHours = attendanceRepository.calculateTotalOvertime(
+            employee.getEmployeeNumber(), startDate, endDate);
+        
+        // Calculate regular pay
+        double regularHours = totalHours - overtimeHours;
+        double regularPay = regularHours * employee.getHourlyRate();
+        
+        // Calculate overtime pay (1.25x for regular OT)
+        double overtimePay = overtimeHours * employee.getHourlyRate() * 1.25;
+        
+        // Add allowances (pro-rated based on days worked vs standard days)
+        int workingDaysInPeriod = getWorkingDaysBetween(startDate, endDate);
+        double attendanceDays = totalHours / 8.0; // Assuming 8 hours per day
+        double attendanceRatio = Math.min(1.0, attendanceDays / workingDaysInPeriod);
+        
+        double proratedRice = employee.getRiceSubsidy() * attendanceRatio;
+        double proratedPhone = employee.getPhoneAllowance() * attendanceRatio;
+        double proratedClothing = employee.getClothingAllowance() * attendanceRatio;
+        
+        double grossPay = regularPay + overtimePay + proratedRice + proratedPhone + proratedClothing;
+        
+        return Math.round(grossPay * 100.0) / 100.0; // Round to 2 decimal places
+    }
+    
+    /**
+     * Helper method to count working days between two dates (excludes weekends)
+     * @param startDate Start date
+     * @param endDate End date
+     * @return Number of working days
+     */
+    public int getWorkingDaysBetween(LocalDate startDate, LocalDate endDate) {
+        int workingDays = 0;
+        LocalDate current = startDate;
+        
+        while (!current.isAfter(endDate)) {
+            // Exclude weekends (Saturday = 6, Sunday = 7)
+            if (current.getDayOfWeek().getValue() < 6) {
+                workingDays++;
+            }
+            current = current.plusDays(1);
+        }
+        
+        return workingDays;
+    }
+    
+    /**
+     * Get attendance summary for a pay period (for payslip display)
+     * @param employeeNumber Employee number
+     * @param startDate Start of pay period
+     * @param endDate End of pay period
+     * @return Formatted attendance summary string
+     */
+    public String getAttendanceSummary(String employeeNumber, LocalDate startDate, LocalDate endDate) {
+        double totalHours = attendanceRepository.calculateTotalHours(employeeNumber, startDate, endDate);
+        double overtimeHours = attendanceRepository.calculateTotalOvertime(employeeNumber, startDate, endDate);
+        double regularHours = totalHours - overtimeHours;
+        
+        return String.format("Regular Hours: %.2f | Overtime Hours: %.2f | Total: %.2f", 
+            regularHours, overtimeHours, totalHours);
+    }
+    
+    /**
+     * Get the AttendanceRepository instance (for use in other classes)
+     * @return AttendanceRepository instance
+     */
+    public AttendanceRepository getAttendanceRepository() {
+        return attendanceRepository;
+    }
+    
+    // ========================================================================
+    // END OF NEW ATTENDANCE METHODS
+    // ========================================================================
+    
     public String generateSalaryReport(Employee employee, String month) {
         double monthlySalary = calculateMonthlySalary(employee);
         
@@ -169,22 +264,73 @@ public class SalaryCalculator {
         private final double taxWeekly;
         private final double totalDeductionsWeekly;
         private final double netWeekly;
+        private final double actualAllowances;  // NEW FIELD
+        private final double actualBasicPay;    // NEW FIELD
         
         public WeeklyPayslip(Employee employee, LocalDate weekStart, LocalDate weekEnd, SalaryCalculator calculator) {
             this.employee = employee;
             this.weekStartDate = weekStart;
             this.weekEndDate = weekEnd;
-            
-            // Calculate monthly amounts
-            double monthlyGross = calculator.calculateGrossMonthlySalary(employee);
-            
-            // Convert to weekly (÷ 4 for approximate 4 weeks/month)
-            this.grossWeekly = monthlyGross / 4;
-            this.sssWeekly = calculator.calculateSSSDeduction(monthlyGross) / 4;
-            this.philHealthWeekly = calculator.calculatePhilHealthDeduction(monthlyGross) / 4;
-            this.pagIBIGWeekly = calculator.calculatePagIBIGDeduction(monthlyGross) / 4;
-            this.taxWeekly = calculator.calculateWithholdingTax(monthlyGross) / 4;
-            
+
+            // TRY to calculate based on actual attendance
+            double totalHours = calculator.attendanceRepository.calculateTotalHours(
+                employee.getEmployeeNumber(), weekStart, weekEnd);
+
+            if (totalHours > 0) {
+                // ===== ATTENDANCE-BASED CALCULATION =====
+                // Use actual hours worked from attendance records
+                double overtimeHours = calculator.attendanceRepository.calculateTotalOvertime(
+                    employee.getEmployeeNumber(), weekStart, weekEnd);
+                double regularHours = totalHours - overtimeHours;
+
+                // Calculate regular pay
+                double regularPay = regularHours * employee.getHourlyRate();
+
+                // Calculate overtime pay (1.25x for regular OT)
+                double overtimePay = overtimeHours * employee.getHourlyRate() * 1.25;
+
+                // Calculate pro-rated allowances based on days worked
+                int workingDaysInPeriod = calculator.getWorkingDaysBetween(weekStart, weekEnd);
+                double attendanceDays = totalHours / 8.0; // Assuming 8 hours per day
+                double attendanceRatio = Math.min(1.0, attendanceDays / workingDaysInPeriod);
+
+                double proratedRice = employee.getRiceSubsidy() * attendanceRatio / 4; // Weekly portion
+                double proratedPhone = employee.getPhoneAllowance() * attendanceRatio / 4;
+                double proratedClothing = employee.getClothingAllowance() * attendanceRatio / 4;
+
+                // Store actual values for display
+                this.actualAllowances = proratedRice + proratedPhone + proratedClothing;
+                this.actualBasicPay = regularPay + overtimePay;
+
+                // Total gross for the week
+                this.grossWeekly = regularPay + overtimePay + proratedRice + proratedPhone + proratedClothing;
+
+                // Calculate deductions based on monthly salary (standard practice)
+                double monthlyGross = calculator.calculateGrossMonthlySalary(employee);
+                this.sssWeekly = calculator.calculateSSSDeduction(monthlyGross) / 4;
+                this.philHealthWeekly = calculator.calculatePhilHealthDeduction(monthlyGross) / 4;
+                this.pagIBIGWeekly = calculator.calculatePagIBIGDeduction(monthlyGross) / 4;
+                this.taxWeekly = calculator.calculateWithholdingTax(monthlyGross) / 4;
+
+            } else {
+                // ===== FALLBACK: NO ATTENDANCE DATA =====
+                // Use old method (divide monthly by 4)
+                System.out.println("⚠️ No attendance records found for " + employee.getEmployeeNumber() + 
+                    " from " + weekStart + " to " + weekEnd + ". Using default calculation.");
+
+                double monthlyGross = calculator.calculateGrossMonthlySalary(employee);
+                this.grossWeekly = monthlyGross / 4;
+                
+                // Store fallback values
+                this.actualBasicPay = employee.getBasicSalary() / 4;
+                this.actualAllowances = (employee.getRiceSubsidy() + employee.getPhoneAllowance() + employee.getClothingAllowance()) / 4;
+                
+                this.sssWeekly = calculator.calculateSSSDeduction(monthlyGross) / 4;
+                this.philHealthWeekly = calculator.calculatePhilHealthDeduction(monthlyGross) / 4;
+                this.pagIBIGWeekly = calculator.calculatePagIBIGDeduction(monthlyGross) / 4;
+                this.taxWeekly = calculator.calculateWithholdingTax(monthlyGross) / 4;
+            }
+
             this.totalDeductionsWeekly = sssWeekly + philHealthWeekly + pagIBIGWeekly + taxWeekly;
             this.netWeekly = grossWeekly - totalDeductionsWeekly;
         }
@@ -212,9 +358,24 @@ public class SalaryCalculator {
             
             sb.append("EARNINGS\n");
             sb.append("─────────────────────────────────────────────────────────────\n");
-            sb.append(String.format("Basic Salary (Weekly)      : ₱%,12.2f\n", employee.getBasicSalary() / 4));
-            sb.append(String.format("Rice Subsidy (Weekly)      : ₱%,12.2f\n", employee.getRiceSubsidy() / 4));
-            sb.append(String.format("Clothing Allowance (Weekly): ₱%,12.2f\n", employee.getClothingAllowance() / 4));
+
+            // Show full weekly amounts for reference
+            double fullBasic = employee.getBasicSalary() / 4;
+            double fullRice = employee.getRiceSubsidy() / 4;
+            double fullPhone = employee.getPhoneAllowance() / 4;
+            double fullClothing = employee.getClothingAllowance() / 4;
+            double fullAllowances = fullRice + fullPhone + fullClothing;
+
+            sb.append(String.format("Basic Salary (Full Week)   : ₱%,12.2f\n", fullBasic));
+            sb.append(String.format("Rice Subsidy (Full Week)   : ₱%,12.2f\n", fullRice));
+            sb.append(String.format("Phone Allowance (Full Week): ₱%,12.2f\n", fullPhone));
+            sb.append(String.format("Clothing Allow. (Full Week): ₱%,12.2f\n", fullClothing));
+            sb.append(String.format("                             ─────────────\n"));
+            sb.append(String.format("FULL WEEK POTENTIAL        : ₱%,12.2f\n\n", fullBasic + fullAllowances));
+
+            sb.append(String.format("ACTUAL EARNINGS (Based on Attendance):\n"));
+            sb.append(String.format("Basic Pay (Actual)         : ₱%,12.2f\n", actualBasicPay));
+            sb.append(String.format("Allowances (Pro-rated)     : ₱%,12.2f\n", actualAllowances));
             sb.append(String.format("                             ─────────────\n"));
             sb.append(String.format("GROSS WEEKLY PAY           : ₱%,12.2f\n\n", grossWeekly));
             

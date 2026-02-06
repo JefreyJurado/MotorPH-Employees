@@ -206,10 +206,36 @@ public class WeeklyPayslipDialog extends JDialog {
                 return;
             }
             
+            // Generate payslip
             SalaryCalculator.WeeklyPayslip payslip = 
                 salaryCalculator.generateWeeklyPayslip(employee, startLocalDate, endLocalDate);
             
-            payslipArea.setText(payslip.generatePayslipText());
+            // Get attendance summary for the period
+            String attendanceSummary = salaryCalculator.getAttendanceSummary(
+                employee.getEmployeeNumber(), startLocalDate, endLocalDate);
+            
+            // Build enhanced payslip text with attendance info
+            StringBuilder enhancedPayslip = new StringBuilder();
+            enhancedPayslip.append(payslip.generatePayslipText());
+            
+            // Add attendance section before the closing lines
+            String originalPayslip = payslip.generatePayslipText();
+            int insertPosition = originalPayslip.lastIndexOf("This is a computer-generated");
+            
+            if (insertPosition > 0) {
+                enhancedPayslip = new StringBuilder();
+                enhancedPayslip.append(originalPayslip.substring(0, insertPosition));
+                
+                // Add attendance section
+                enhancedPayslip.append("ATTENDANCE SUMMARY\n");
+                enhancedPayslip.append("─────────────────────────────────────────────────────────────\n");
+                enhancedPayslip.append(attendanceSummary).append("\n\n");
+                
+                // Add remaining lines
+                enhancedPayslip.append(originalPayslip.substring(insertPosition));
+            }
+            
+            payslipArea.setText(enhancedPayslip.toString());
             payslipArea.setCaretPosition(0);
         }
     }
@@ -244,7 +270,7 @@ public class WeeklyPayslipDialog extends JDialog {
             // Create payslip ID
             String payslipId = "PS" + System.currentTimeMillis();
 
-            // Create Payslip object - FIXED: Use correct getter method names
+            // Create Payslip object
             Payslip payslip = new Payslip(
                 payslipId,
                 employee.getEmployeeNumber(),
@@ -253,9 +279,9 @@ public class WeeklyPayslipDialog extends JDialog {
                 endLocalDate,
                 LocalDate.now(),
                 currentUser.getUsername(),
-                weeklyPayslip.getGrossWeekly(),          // FIXED!
-                weeklyPayslip.getNetWeekly(),            // FIXED!
-                weeklyPayslip.getTotalDeductionsWeekly(), // FIXED!
+                weeklyPayslip.getGrossWeekly(),
+                weeklyPayslip.getNetWeekly(),
+                weeklyPayslip.getTotalDeductionsWeekly(),
                 payslipArea.getText()
             );
 

@@ -1,1 +1,46 @@
 PayslipID,EmployeeNumber,EmployeeName,PayPeriodStart,PayPeriodEnd,GeneratedDate,GeneratedBy,GrossPay,NetPay,TotalDeductions,PayslipContent
+PS1770380209105,1,Manuel III Garcia,2026-02-03,2026-02-07,2026-02-06,admin,21615.91,17018.41,4597.50,"═══════════════════════════════════════════════════════════════
+                    MOTORPH PAYROLL SYSTEM                      
+                     WEEKLY PAYSLIP                             
+═══════════════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+─────────────────────────────────────────────────────────────
+Employee Number : 1
+Name            : Manuel III Garcia
+Position        : Chief Executive Officer
+Status          : Regular
+
+PAY PERIOD
+─────────────────────────────────────────────────────────────
+Week Start      : Feb 03, 2026
+Week End        : Feb 07, 2026
+
+EARNINGS
+─────────────────────────────────────────────────────────────
+Basic Salary (Weekly)      : ₱   22,500.00
+Rice Subsidy (Weekly)      : ₱      375.00
+Clothing Allowance (Weekly): ₱      250.00
+                             ─────────────
+GROSS WEEKLY PAY           : ₱   21,615.91
+
+DEDUCTIONS
+─────────────────────────────────────────────────────────────
+SSS Contribution           : ₱      225.00
+PhilHealth Contribution    : ₱      472.50
+Pag-IBIG Contribution      : ₱       25.00
+Withholding Tax            : ₱    3,875.00
+                             ─────────────
+TOTAL DEDUCTIONS           : ₱    4,597.50
+
+═══════════════════════════════════════════════════════════════
+NET WEEKLY PAY             : ₱   17,018.41
+═══════════════════════════════════════════════════════════════
+
+ATTENDANCE SUMMARY
+─────────────────────────────────────────────────────────────
+Regular Hours: 32.00 | Overtime Hours: 5.00 | Total: 37.00
+
+This is a computer-generated payslip. No signature required.
+Generated on: Feb 06, 2026
+"

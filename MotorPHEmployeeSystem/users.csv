@@ -5,3 +5,8 @@ manager,manager123,HR,10002
 employee1,emp123,Employee,1
 employee2,emp456,Employee,2
 employee3,emp789,Employee,3
+it_eduard,pass123,Employee,5
+hr_andrea,pass123,Employee,6
+accounting_roderick,pass123,Employee,10
+finance_anthony,pass123,Employee,11
+sales_rafael,pass123,Employee,32

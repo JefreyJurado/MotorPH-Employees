@@ -1,3 +1,3 @@
 LeaveID,EmployeeNumber,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ApprovedBy
 LV1770121179389,1,Manuel III Garcia,Sick Leave,2026-03-01,2026-03-05,"I need to be confined in a hospital",Approved,2026-02-03,admin
-LV1770121363669,2,Antonio Lim,Vacation Leave,2026-03-21,2026-03-30,"We will have a family gathering",Pending,2026-02-03,N/A
+LV1770121363669,2,Antonio Lim,Vacation Leave,2026-03-21,2026-03-30,"We will have a family gathering",Approved,2026-02-03,hr_andrea
