@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class LeaveRepository {
     private static final String LEAVE_FILE = "leaves.csv";
-    private List<LeaveApplication> leaves;
+    private final List<LeaveApplication> leaves;
     
     public LeaveRepository() {
         this.leaves = new ArrayList<>();

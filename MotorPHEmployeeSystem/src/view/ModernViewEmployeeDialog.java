@@ -10,9 +10,9 @@ import repository.EmployeeRepository;
 import service.SalaryCalculator;
 
 public class ModernViewEmployeeDialog extends JDialog {
-    private EmployeeRepository employeeRepository;
-    private SalaryCalculator salaryCalculator;
-    private User currentUser;
+    private final EmployeeRepository employeeRepository;
+    private final SalaryCalculator salaryCalculator;
+    private final User currentUser;
     private JComboBox<String> employeeComboBox;
     
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
@@ -212,9 +212,11 @@ public class ModernViewEmployeeDialog extends JDialog {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor.brighter());
             }
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor);
             }

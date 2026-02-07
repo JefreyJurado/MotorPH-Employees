@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -214,11 +213,9 @@ public class WeeklyPayslipDialog extends JDialog {
             String attendanceSummary = salaryCalculator.getAttendanceSummary(
                 employee.getEmployeeNumber(), startLocalDate, endLocalDate);
             
-            // Build enhanced payslip text with attendance info
             StringBuilder enhancedPayslip = new StringBuilder();
             enhancedPayslip.append(payslip.generatePayslipText());
             
-            // Add attendance section before the closing lines
             String originalPayslip = payslip.generatePayslipText();
             int insertPosition = originalPayslip.lastIndexOf("This is a computer-generated");
             
@@ -226,12 +223,10 @@ public class WeeklyPayslipDialog extends JDialog {
                 enhancedPayslip = new StringBuilder();
                 enhancedPayslip.append(originalPayslip.substring(0, insertPosition));
                 
-                // Add attendance section
                 enhancedPayslip.append("ATTENDANCE SUMMARY\n");
                 enhancedPayslip.append("─────────────────────────────────────────────────────────────\n");
                 enhancedPayslip.append(attendanceSummary).append("\n\n");
                 
-                // Add remaining lines
                 enhancedPayslip.append(originalPayslip.substring(insertPosition));
             }
             

@@ -14,7 +14,7 @@ public class LeaveApplication {
     private String submittedDate;
     private String approvedBy;
     
-    // Constructor for NEW leave application
+    // Constructor for leave application
     public LeaveApplication(String employeeNumber, String employeeName, String leaveType, 
                           String startDate, String endDate, String reason) {
         this.leaveId = "LV" + System.currentTimeMillis();

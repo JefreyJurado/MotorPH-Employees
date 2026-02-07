@@ -7,7 +7,7 @@ import repository.AttendanceRepository;
 
 public class SalaryCalculator {
     
-    private AttendanceRepository attendanceRepository;
+    private final AttendanceRepository attendanceRepository;
     
     public SalaryCalculator() {
         this.attendanceRepository = new AttendanceRepository();
@@ -142,9 +142,7 @@ public class SalaryCalculator {
         return calculateMonthlySalary(employee) * 12;
     }
     
-    // ========================================================================
-    // NEW METHODS FOR ATTENDANCE-BASED SALARY CALCULATION
-    // ========================================================================
+    // METHODS FOR ATTENDANCE-BASED SALARY CALCULATION
     
     /**
      * Calculate gross pay based on actual attendance records
@@ -226,9 +224,7 @@ public class SalaryCalculator {
         return attendanceRepository;
     }
     
-    // ========================================================================
-    // END OF NEW ATTENDANCE METHODS
-    // ========================================================================
+    // END OF ATTENDANCE METHODS
     
     public String generateSalaryReport(Employee employee, String month) {
         double monthlySalary = calculateMonthlySalary(employee);
@@ -264,8 +260,8 @@ public class SalaryCalculator {
         private final double taxWeekly;
         private final double totalDeductionsWeekly;
         private final double netWeekly;
-        private final double actualAllowances;  // NEW FIELD
-        private final double actualBasicPay;    // NEW FIELD
+        private final double actualAllowances;  
+        private final double actualBasicPay;   
         
         public WeeklyPayslip(Employee employee, LocalDate weekStart, LocalDate weekEnd, SalaryCalculator calculator) {
             this.employee = employee;
@@ -277,8 +273,10 @@ public class SalaryCalculator {
                 employee.getEmployeeNumber(), weekStart, weekEnd);
 
             if (totalHours > 0) {
-                // ===== ATTENDANCE-BASED CALCULATION =====
-                // Use actual hours worked from attendance records
+                
+                //ATTENDANCE-BASED CALCULATION
+                
+                // Actual hours worked from attendance records
                 double overtimeHours = calculator.attendanceRepository.calculateTotalOvertime(
                     employee.getEmployeeNumber(), weekStart, weekEnd);
                 double regularHours = totalHours - overtimeHours;
@@ -313,7 +311,9 @@ public class SalaryCalculator {
                 this.taxWeekly = calculator.calculateWithholdingTax(monthlyGross) / 4;
 
             } else {
-                // ===== FALLBACK: NO ATTENDANCE DATA =====
+                
+                // FALLBACK: NO ATTENDANCE DATA 
+                
                 // Use old method (divide monthly by 4)
                 System.out.println("⚠️ No attendance records found for " + employee.getEmployeeNumber() + 
                     " from " + weekStart + " to " + weekEnd + ". Using default calculation.");

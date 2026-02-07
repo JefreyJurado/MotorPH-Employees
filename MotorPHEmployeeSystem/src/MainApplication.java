@@ -1,7 +1,5 @@
-
 import repository.EmployeeRepository;
 import view.EmployeeDashboardFrame;
-import view.ModernEmployeeManagementFrame;
 import view.ModernLoginDialog;
 import model.User;
 import javax.swing.SwingUtilities;
@@ -17,17 +15,12 @@ public class MainApplication {
             if (authenticatedUser != null) {
                 EmployeeRepository repository = new EmployeeRepository();
                 
-                if (authenticatedUser.isEmployee()) {
-                    // Show Employee Dashboard
-                    EmployeeDashboardFrame empFrame = 
-                        new EmployeeDashboardFrame(repository, authenticatedUser);
-                    empFrame.setVisible(true);
-                } else {
-                    // Show Admin/HR Dashboard
-                    ModernEmployeeManagementFrame frame = 
-                        new ModernEmployeeManagementFrame(repository, authenticatedUser);
-                    frame.setVisible(true);
-                }
+                // EVERYONE GOES TO EMPLOYEE DASHBOARD
+                // Role-based buttons will appear based on their role
+                EmployeeDashboardFrame empFrame = 
+                    new EmployeeDashboardFrame(repository, authenticatedUser);
+                empFrame.setVisible(true);
+                
             } else {
                 System.exit(0);
             }

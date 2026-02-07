@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class PayslipRepository {
     private final String CSV_FILE = "payslips.csv";
-    private List<Payslip> payslips;
+    private final List<Payslip> payslips;
     
     public PayslipRepository() {
         this.payslips = new ArrayList<>();
@@ -58,7 +58,6 @@ public class PayslipRepository {
                         payslips.add(payslip);
                     } catch (Exception e) {
                         System.err.println("Error parsing payslip: " + e.getMessage());
-                        // Don't print the whole record as it's very long
                     }
                     
                     // Reset for next record

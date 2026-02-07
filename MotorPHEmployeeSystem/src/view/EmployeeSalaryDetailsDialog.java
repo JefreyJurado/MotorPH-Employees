@@ -146,7 +146,7 @@ public class EmployeeSalaryDetailsDialog extends JDialog {
         // Auto-load salary details for current month - FIXED: Removed duplicate headers
         StringBuilder fullReport = new StringBuilder();
         
-        // Employee Information - clean format
+        // Employee Information
         fullReport.append("Employee Number : ").append(employee.getEmployeeNumber()).append("\n");
         fullReport.append("Full Name       : ").append(employee.getFullName()).append("\n");
         fullReport.append("Position        : ").append(employee.getPosition()).append("\n");
@@ -197,9 +197,11 @@ public class EmployeeSalaryDetailsDialog extends JDialog {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor.brighter());
             }
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor);
             }

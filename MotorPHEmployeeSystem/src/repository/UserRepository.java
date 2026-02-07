@@ -54,7 +54,7 @@ public class UserRepository {
             // Reload after creating
             loadFromCSV();
         } catch (IOException e) {
-        }
+      }
     }
     
     public void saveToCSV() {

@@ -11,15 +11,14 @@ import repository.EmployeeRepository;
 import service.SalaryCalculator;
 
 public class ViewDeductionsDialog extends JDialog {
-    private EmployeeRepository employeeRepository;
-    private SalaryCalculator salaryCalculator;
-    private User currentUser;
+    private final EmployeeRepository employeeRepository;
+    private final SalaryCalculator salaryCalculator;
+    private final User currentUser;
     
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SUCCESS_COLOR = new Color(46, 204, 113);
     private final Color DANGER_COLOR = new Color(231, 76, 60);
     private final Color WHITE = Color.WHITE;
-    private final Color TEXT_COLOR = new Color(44, 62, 80);
     private final Color LIGHT_BG = new Color(236, 240, 241);
     
     private JComboBox<String> employeeComboBox;
@@ -43,7 +42,6 @@ public class ViewDeductionsDialog extends JDialog {
         setLayout(new BorderLayout(10, 10));
         getContentPane().setBackground(LIGHT_BG);
         
-        // Create a container to stack the Header and the Selection bar vertically
         JPanel topContainer = new JPanel();
         topContainer.setLayout(new BoxLayout(topContainer, BoxLayout.Y_AXIS));
 
@@ -166,7 +164,7 @@ public class ViewDeductionsDialog extends JDialog {
         add(buttonPanel, BorderLayout.SOUTH);
     }
     
-    // FIXED: Only ONE loadEmployees() method with filtering
+    // Only ONE loadEmployees() method with filtering
     private void loadEmployees() {
         employeeComboBox.removeAllItems();
         List<Employee> employees = employeeRepository.getAllEmployees();
@@ -277,9 +275,11 @@ public class ViewDeductionsDialog extends JDialog {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor.brighter());
             }
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor);
             }

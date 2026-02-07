@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class AttendanceRecord {
-    private String employeeNumber;
-    private LocalDate date;
+    private final String employeeNumber;
+    private final LocalDate date;
     private LocalTime timeIn;
     private LocalTime timeOut;
     private double totalHours;
