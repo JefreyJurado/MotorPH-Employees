@@ -15,7 +15,6 @@ public class MainApplication {
             if (authenticatedUser != null) {
                 EmployeeRepository repository = new EmployeeRepository();
                 
-                // EVERYONE GOES TO EMPLOYEE DASHBOARD
                 // Role-based buttons will appear based on their role
                 EmployeeDashboardFrame empFrame = 
                     new EmployeeDashboardFrame(repository, authenticatedUser);

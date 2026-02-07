@@ -29,7 +29,7 @@ public class User {
     public String getEmployeeNumber() {
         return employeeNumber;
     }
-       
+    
     public boolean isSystemAdmin() {
         return "SystemAdmin".equalsIgnoreCase(role);
     }
@@ -63,11 +63,12 @@ public class User {
     }
     
     public boolean isAdmin() {
-    // Now both SystemAdmin and Owner are considered "admin" for legacy code
+        // Now both SystemAdmin and Owner are considered "admin" for legacy code
         return isSystemAdmin() || isOwner();
     }
     
     // PERMISSION HELPERS
+    
     public boolean canModifyEmployees() {
         return isHR() || isOwner();
     }
