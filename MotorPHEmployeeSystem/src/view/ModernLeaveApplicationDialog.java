@@ -12,18 +12,17 @@ public class ModernLeaveApplicationDialog extends JDialog {
     private final Color SUCCESS_COLOR = new Color(46, 204, 113);
     private final Color DANGER_COLOR = new Color(231, 76, 60);
     private final Color WHITE = Color.WHITE;
-    private final Color TEXT_COLOR = new Color(44, 62, 80);
     private final Color LIGHT_BG = new Color(236, 240, 241);
     
-    private Employee currentEmployee;  // ADDED
+    private final Employee currentEmployee;  // ADDED
     private JTextField employeeNameField;
     private JComboBox<String> leaveTypeCombo;
     private JTextField startDateField;
     private JTextField endDateField;
     private JTextArea reasonArea;
-    private LeaveRepository leaveRepository;
+    private final LeaveRepository leaveRepository;
     
-    // UPDATED constructor to accept Employee
+    // Constructor to accept Employee
     public ModernLeaveApplicationDialog(Frame parent, Employee employee) {
         super(parent, "Leave Application", true);
         this.currentEmployee = employee;  // ADDED
@@ -72,9 +71,9 @@ public class ModernLeaveApplicationDialog extends JDialog {
         employeeNameField = new JTextField();
         employeeNameField.setBounds(fieldX, yPos, fieldWidth, 30);
         employeeNameField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        employeeNameField.setText(currentEmployee.getFullName());  // ADDED: Pre-fill
-        employeeNameField.setEditable(false);  // ADDED: Make read-only
-        employeeNameField.setBackground(new Color(240, 240, 240));  // ADDED: Gray background
+        employeeNameField.setText(currentEmployee.getFullName());
+        employeeNameField.setEditable(false); 
+        employeeNameField.setBackground(new Color(240, 240, 240)); 
         contentPanel.add(employeeNameField);
         yPos += spacing;
         
@@ -167,8 +166,8 @@ public class ModernLeaveApplicationDialog extends JDialog {
         
         // CREATE leave with employee NUMBER - FIXED
         LeaveApplication leave = new LeaveApplication(
-            currentEmployee.getEmployeeNumber(),  // ADDED: Use employee number
-            currentEmployee.getFullName(),         // Use full name from employee object
+            currentEmployee.getEmployeeNumber(),
+            currentEmployee.getFullName(),
             leaveType, 
             startDate, 
             endDate, 
@@ -196,9 +195,11 @@ public class ModernLeaveApplicationDialog extends JDialog {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor.brighter());
             }
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(bgColor);
             }

@@ -14,7 +14,7 @@ public class ModernLoginDialog extends JDialog {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private final AuthenticationService authService;
-    private User authenticatedUser; // Store authenticated user
+    private User authenticatedUser;
     
     public ModernLoginDialog(Frame parent) {
         super(parent, "MotorPH Login", true);

@@ -69,7 +69,7 @@ public class ApproveLeaveDialog extends JDialog {
         leaveTable.setRowHeight(60);
         leaveTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // Set specific column widths
+        // column widths
         leaveTable.getColumnModel().getColumn(0).setPreferredWidth(120);
         leaveTable.getColumnModel().getColumn(1).setPreferredWidth(150);
         leaveTable.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -91,7 +91,6 @@ public class ApproveLeaveDialog extends JDialog {
             leaveTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
 
-        // Center align for all columns EXCEPT Reason
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         centerRenderer.setVerticalAlignment(JLabel.CENTER);
@@ -101,13 +100,11 @@ public class ApproveLeaveDialog extends JDialog {
             }
         }
 
-        // FIXED: Multi-line text renderer for Reason column - CENTERED horizontally AND vertically
         leaveTable.getColumnModel().getColumn(5).setCellRenderer(new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
                     boolean isSelected, boolean hasFocus, int row, int column) {
 
-                // Outer panel with GridBagLayout for vertical centering
                 JPanel outerPanel = new JPanel(new GridBagLayout());
                 outerPanel.setOpaque(true);
 
@@ -117,7 +114,6 @@ public class ApproveLeaveDialog extends JDialog {
                     outerPanel.setBackground(table.getBackground());
                 }
 
-                // Create text pane with centered text
                 JTextPane textPane = new JTextPane();
                 textPane.setText(value != null ? value.toString() : "");
                 textPane.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -125,7 +121,6 @@ public class ApproveLeaveDialog extends JDialog {
                 textPane.setOpaque(false);
                 textPane.setEditable(false);
 
-                // CENTER alignment for text pane
                 StyledDocument doc = textPane.getStyledDocument();
                 SimpleAttributeSet center = new SimpleAttributeSet();
                 StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
@@ -137,7 +132,6 @@ public class ApproveLeaveDialog extends JDialog {
                     textPane.setForeground(table.getForeground());
                 }
 
-                // Add text pane to outer panel (GridBagLayout centers it vertically)
                 outerPanel.add(textPane);
 
                 return outerPanel;

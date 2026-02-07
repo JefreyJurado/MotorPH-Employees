@@ -13,6 +13,7 @@ public class User {
         this.employeeNumber = employeeNumber;
     }
     
+    // Getters
     public String getUsername() {
         return username;
     }
@@ -29,23 +30,70 @@ public class User {
         return employeeNumber;
     }
     
-    public boolean isAdmin() {
-        return "Admin".equalsIgnoreCase(role);
+    // NEW ROLE CHECKING METHODS FOR OPTION B
+    
+    public boolean isSystemAdmin() {
+        return "SystemAdmin".equalsIgnoreCase(role);
+    }
+    
+    public boolean isOwner() {
+        return "Owner".equalsIgnoreCase(role);
     }
     
     public boolean isHR() {
         return "HR".equalsIgnoreCase(role);
     }
     
+    public boolean isFinance() {
+        return "Finance".equalsIgnoreCase(role);
+    }
+    
+    public boolean isIT() {
+        return "IT".equalsIgnoreCase(role);
+    }
+    
+    public boolean isAccounting() {
+        return "Accounting".equalsIgnoreCase(role);
+    }
+    
+    public boolean isExecutive() {
+        return "Executive".equalsIgnoreCase(role);
+    }
+    
     public boolean isEmployee() {
         return "Employee".equalsIgnoreCase(role);
     }
     
+    // LEGACY SUPPORT (for backwards compatibility)
+    public boolean isAdmin() {
+        // Now both SystemAdmin and Owner are considered "admin" for legacy code
+        return isSystemAdmin() || isOwner();
+    }
+    
+    // PERMISSION HELPERS
+    
     public boolean canModifyEmployees() {
-        return isAdmin() || isHR();
+        return isHR() || isOwner();
     }
     
     public boolean canViewAllEmployees() {
-        return isAdmin() || isHR();
+        return isSystemAdmin() || isOwner() || isHR() || isFinance() || 
+               isIT() || isAccounting() || isExecutive();
+    }
+    
+    public boolean canProcessPayroll() {
+        return isFinance() || isOwner();
+    }
+    
+    public boolean canManageSystem() {
+        return isSystemAdmin() || isIT();
+    }
+    
+    public boolean canViewFinancialData() {
+        return isFinance() || isAccounting() || isOwner() || isExecutive();
+    }
+    
+    public boolean hasSpecialAccess() {
+        return !isEmployee();
     }
 }

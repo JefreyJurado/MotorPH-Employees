@@ -20,9 +20,7 @@ public class AttendanceManagementDialog extends JDialog {
     
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
-    private final Color DARK_COLOR = new Color(44, 62, 80);
     private final Color WHITE = Color.WHITE;
-    private final Color TEXT_COLOR = new Color(44, 62, 80);
     
     private JTextField tfEmployeeNum, tfDate, tfTimeIn, tfTimeOut, tfRemarks;
     private JComboBox<String> cbStatus;
@@ -239,9 +237,11 @@ public class AttendanceManagementDialog extends JDialog {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(PRIMARY_COLOR);
             }
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 if (!button.getText().equals("Close")) {
                     button.setBackground(SECONDARY_COLOR);

@@ -187,87 +187,111 @@ public class EmployeeDashboardFrame extends JFrame {
         
         topPanel.add(infoPanel, BorderLayout.CENTER);
         
-        JPanel updatePanel = new JPanel();
-        updatePanel.setLayout(new GridBagLayout());
-        updatePanel.setBackground(WHITE);
-        updatePanel.setPreferredSize(new Dimension(550, 280));
-        updatePanel.setBorder(new EmptyBorder(20, 20, 20, 40));
-        
-        GridBagConstraints ugbc = new GridBagConstraints();
-        ugbc.fill = GridBagConstraints.HORIZONTAL;
-        ugbc.weightx = 1.0;
-        ugbc.gridx = 0;
-        
-        // Address label
-        ugbc.gridy = 0;
-        ugbc.insets = new Insets(0, 0, 5, 0);
-        JLabel addressLabel = new JLabel("Address:");
-        addressLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-        addressLabel.setForeground(Color.BLACK);
-        updatePanel.add(addressLabel, ugbc);
-        
-        // Address field (Large box)
-        ugbc.gridy = 1;
-        ugbc.weighty = 1.0; 
-        ugbc.fill = GridBagConstraints.BOTH;
-        addressField = new JTextArea();
-        addressField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        addressField.setLineWrap(true);
-        addressField.setWrapStyleWord(true);
-        JScrollPane addressScroll = new JScrollPane(addressField);
-        addressScroll.setBorder(BorderFactory.createLineBorder(BORDER_COLOR, 1));
-        updatePanel.add(addressScroll, ugbc);
-        
-        // Phone label
-        ugbc.gridy = 2;
-        ugbc.weighty = 0;
-        ugbc.fill = GridBagConstraints.HORIZONTAL;
-        ugbc.insets = new Insets(10, 0, 5, 0);
-        JLabel phoneLabel = new JLabel("Phone Number");
-        phoneLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-        phoneLabel.setForeground(Color.BLACK);
-        updatePanel.add(phoneLabel, ugbc);
-        
-        // Phone field
-        ugbc.gridy = 3;
-        phoneField = new JTextField();
-        phoneField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        phoneField.setPreferredSize(new Dimension(0, 35));
-        phoneField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(BORDER_COLOR, 1),
-            new EmptyBorder(5, 10, 5, 10)
-        ));
-        updatePanel.add(phoneField, ugbc);
-        
-        // Update button
-        ugbc.gridy = 4;
-        ugbc.insets = new Insets(15, 0, 0, 0);
-        JButton updateBtn = new JButton("Update Phone and Address");
-        updateBtn.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-        updateBtn.setBackground(PRIMARY_COLOR);
-        updateBtn.setForeground(WHITE);
-        updateBtn.setFocusPainted(false);
-        updateBtn.setBorderPainted(false);
-        updateBtn.setPreferredSize(new Dimension(0, 38));
-        updateBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        updateBtn.addActionListener(e -> updatePhoneAndAddress());
-        updatePanel.add(updateBtn, ugbc);
-        
-        topPanel.add(updatePanel, BorderLayout.EAST);
+        // Only show update panel if employee exists
+        if (currentEmployee != null) {
+            JPanel updatePanel = new JPanel();
+            updatePanel.setLayout(new GridBagLayout());
+            updatePanel.setBackground(WHITE);
+            updatePanel.setPreferredSize(new Dimension(550, 280));
+            updatePanel.setBorder(new EmptyBorder(20, 20, 20, 40));
+            
+            GridBagConstraints ugbc = new GridBagConstraints();
+            ugbc.fill = GridBagConstraints.HORIZONTAL;
+            ugbc.weightx = 1.0;
+            ugbc.gridx = 0;
+            
+            ugbc.gridy = 0;
+            ugbc.insets = new Insets(0, 0, 5, 0);
+            JLabel addressLabel = new JLabel("Address:");
+            addressLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+            addressLabel.setForeground(Color.BLACK);
+            updatePanel.add(addressLabel, ugbc);
+            
+            ugbc.gridy = 1;
+            ugbc.weighty = 1.0; 
+            ugbc.fill = GridBagConstraints.BOTH;
+            addressField = new JTextArea();
+            addressField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            addressField.setLineWrap(true);
+            addressField.setWrapStyleWord(true);
+            JScrollPane addressScroll = new JScrollPane(addressField);
+            addressScroll.setBorder(BorderFactory.createLineBorder(BORDER_COLOR, 1));
+            updatePanel.add(addressScroll, ugbc);
+            
+            ugbc.gridy = 2;
+            ugbc.weighty = 0;
+            ugbc.fill = GridBagConstraints.HORIZONTAL;
+            ugbc.insets = new Insets(10, 0, 5, 0);
+            JLabel phoneLabel = new JLabel("Phone Number");
+            phoneLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+            phoneLabel.setForeground(Color.BLACK);
+            updatePanel.add(phoneLabel, ugbc);
+            
+            ugbc.gridy = 3;
+            phoneField = new JTextField();
+            phoneField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            phoneField.setPreferredSize(new Dimension(0, 35));
+            phoneField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(BORDER_COLOR, 1),
+                new EmptyBorder(5, 10, 5, 10)
+            ));
+            updatePanel.add(phoneField, ugbc);
+            
+            ugbc.gridy = 4;
+            ugbc.insets = new Insets(15, 0, 0, 0);
+            JButton updateBtn = new JButton("Update Phone and Address");
+            updateBtn.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+            updateBtn.setBackground(PRIMARY_COLOR);
+            updateBtn.setForeground(WHITE);
+            updateBtn.setFocusPainted(false);
+            updateBtn.setBorderPainted(false);
+            updateBtn.setPreferredSize(new Dimension(0, 38));
+            updateBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            updateBtn.addActionListener(e -> updatePhoneAndAddress());
+            updatePanel.add(updateBtn, ugbc);
+            
+            topPanel.add(updatePanel, BorderLayout.EAST);
+        }
         
         return topPanel;
     }
     
     private JPanel createQuickActionsPanel() {
-        // Count how many buttons needed
-        int buttonCount = 5; // Standard buttons (Leave, Payslip, Salary, Deductions, My Attendance)
+        int buttonCount = 0;
         
-        // Check what role-specific buttons to add
-        boolean hasHRAccess = currentEmployee instanceof IHROperations;
-        boolean hasFinanceAccess = currentEmployee instanceof IFinanceOperations;
-        boolean hasITAccess = currentEmployee instanceof IITOperations;
-        boolean hasAccountingAccess = currentEmployee instanceof IAccountingOperations;
-        boolean hasExecutiveAccess = currentEmployee instanceof IExecutiveOperations;
+        // Count standard buttons (only if employee exists)
+        if (currentEmployee != null) {
+            buttonCount = 5; // File Leave, My Payslip, Salary Details, Deductions, My Attendance
+        }
+        
+        // ROLE-SPECIFIC BUTTONS: Only for MANAGERS with matching employee type
+        boolean hasHRAccess = false;
+        boolean hasFinanceAccess = false;
+        boolean hasITAccess = false;
+        boolean hasAccountingAccess = false;
+        boolean hasExecutiveAccess = false;
+        
+        if (currentEmployee != null) {
+            // HR Operations: Only if User.role is HR or Owner AND Employee type is IHROperations
+            hasHRAccess = (currentUser.isHR() || currentUser.isOwner()) && 
+                          (currentEmployee instanceof IHROperations);
+            
+            // Finance Operations: Only if User.role is Finance or Owner AND Employee type is IFinanceOperations
+            hasFinanceAccess = (currentUser.isFinance() || currentUser.isOwner()) && 
+                               (currentEmployee instanceof IFinanceOperations);
+            
+            // IT Operations: Only if User.role is IT or SystemAdmin AND Employee type is IITOperations
+            hasITAccess = (currentUser.isIT() || currentUser.isSystemAdmin() || currentUser.isOwner()) && 
+                          (currentEmployee instanceof IITOperations);
+            
+            // Accounting Operations: Only if User.role is Accounting or Owner AND Employee type is IAccountingOperations
+            hasAccountingAccess = (currentUser.isAccounting() || currentUser.isOwner()) && 
+                                  (currentEmployee instanceof IAccountingOperations);
+            
+            // Executive Operations: Only if User.role is Executive or Owner AND Employee type is IExecutiveOperations
+            hasExecutiveAccess = (currentUser.isExecutive() || currentUser.isOwner()) && 
+                                 (currentEmployee instanceof IExecutiveOperations);
+        }
         
         if (hasHRAccess) buttonCount++;
         if (hasFinanceAccess) buttonCount++;
@@ -276,34 +300,35 @@ public class EmployeeDashboardFrame extends JFrame {
         if (hasExecutiveAccess) buttonCount++;
         
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, buttonCount, 20, 0));
+        panel.setLayout(new GridLayout(1, Math.max(buttonCount, 1), 20, 0));
         panel.setBackground(LIGHT_BG);
         panel.setPreferredSize(new Dimension(1360, 110));
         
-        // STANDARD BUTTONS - All employees get these
-        JButton leaveBtn = createActionButton("File Leave", "Request time off");
-        leaveBtn.addActionListener(e -> openLeaveApplicationDialog());
-        panel.add(leaveBtn);
+        // STANDARD BUTTONS - Only if employee exists
+        if (currentEmployee != null) {
+            JButton leaveBtn = createActionButton("File Leave", "Request time off");
+            leaveBtn.addActionListener(e -> openLeaveApplicationDialog());
+            panel.add(leaveBtn);
+            
+            JButton payslipBtn = createActionButton("My Payslip", "View weekly payslip");
+            payslipBtn.addActionListener(e -> openPayslipDialog());
+            panel.add(payslipBtn);
+            
+            JButton salaryBtn = createActionButton("Salary Details", "View salary computation");
+            salaryBtn.addActionListener(e -> openSalaryDetailsDialog());
+            panel.add(salaryBtn);
+            
+            JButton deductionsBtn = createActionButton("Deductions", "View monthly deductions");
+            deductionsBtn.addActionListener(e -> openDeductionsDialog());
+            panel.add(deductionsBtn);
+            
+            JButton attendanceBtn = createActionButton("My Attendance", "View attendance records");
+            attendanceBtn.setBackground(new Color(156, 89, 182));
+            attendanceBtn.addActionListener(e -> openMyAttendance());
+            panel.add(attendanceBtn);
+        }
         
-        JButton payslipBtn = createActionButton("My Payslip", "View weekly payslip");
-        payslipBtn.addActionListener(e -> openPayslipDialog());
-        panel.add(payslipBtn);
-        
-        JButton salaryBtn = createActionButton("Salary Details", "View salary computation");
-        salaryBtn.addActionListener(e -> openSalaryDetailsDialog());
-        panel.add(salaryBtn);
-        
-        JButton deductionsBtn = createActionButton("Deductions", "View monthly deductions");
-        deductionsBtn.addActionListener(e -> openDeductionsDialog());
-        panel.add(deductionsBtn);
-        
-        // MY ATTENDANCE BUTTON - ALL EMPLOYEES GET THIS
-        JButton attendanceBtn = createActionButton("My Attendance", "View attendance records");
-        attendanceBtn.setBackground(new Color(156, 89, 182)); // Purple color
-        attendanceBtn.addActionListener(e -> openMyAttendance());
-        panel.add(attendanceBtn);
-        
-        // ROLE-SPECIFIC BUTTONS - Only certain employees get these
+        // ROLE-SPECIFIC BUTTONS
         if (hasHRAccess) {
             JButton hrBtn = createActionButton("HR Operations", "Manage employees & leave");
             hrBtn.setBackground(new Color(46, 204, 113)); // Green
@@ -339,6 +364,14 @@ public class EmployeeDashboardFrame extends JFrame {
             panel.add(executiveBtn);
         }
         
+        // If no buttons (e.g., admin with no employee), show a message
+        if (buttonCount == 0) {
+            JLabel noAccessLabel = new JLabel("No employee record found - Limited access", SwingConstants.CENTER);
+            noAccessLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+            noAccessLabel.setForeground(TEXT_COLOR);
+            panel.add(noAccessLabel);
+        }
+        
         return panel;
     }
     
@@ -366,13 +399,20 @@ public class EmployeeDashboardFrame extends JFrame {
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(PRIMARY_COLOR.brighter());
+                button.setBackground(button.getBackground().brighter());
             }
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(PRIMARY_COLOR);
+                // Reset to original color - need to store it
+                Color originalColor = (Color) button.getClientProperty("originalColor");
+                if (originalColor != null) {
+                    button.setBackground(originalColor);
+                }
             }
         });
+        
+        // Store original color for hover effect
+        button.putClientProperty("originalColor", button.getBackground());
         
         return button;
     }
@@ -455,6 +495,8 @@ public class EmployeeDashboardFrame extends JFrame {
     }
     
     private void loadLeaveHistory() {
+        if (currentEmployee == null) return;
+        
         leaveTableModel.setRowCount(0);
         LeaveRepository leaveRepo = new LeaveRepository();
         List<LeaveApplication> leaves = leaveRepo.getLeavesByEmployeeNumber(currentEmployee.getEmployeeNumber());
@@ -474,6 +516,14 @@ public class EmployeeDashboardFrame extends JFrame {
     }
     
     private void updatePhoneAndAddress() {
+        if (currentEmployee == null) {
+            JOptionPane.showMessageDialog(this,
+                "Employee information not found",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         String newAddress = addressField.getText().trim();
         String newPhone = phoneField.getText().trim();
         
@@ -504,25 +554,59 @@ public class EmployeeDashboardFrame extends JFrame {
     }
     
     private void openLeaveApplicationDialog() {
+        if (currentEmployee == null) {
+            JOptionPane.showMessageDialog(this,
+                "Employee information not found",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         new ModernLeaveApplicationDialog(this, currentEmployee).setVisible(true);
         loadLeaveHistory();
     }
     
     private void openPayslipDialog() {
+        if (currentEmployee == null) {
+            JOptionPane.showMessageDialog(this,
+                "Employee information not found",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         new EmployeeViewPayslipsDialog(this, currentEmployee).setVisible(true);
     }
     
     private void openDeductionsDialog() {
+        if (currentEmployee == null) {
+            JOptionPane.showMessageDialog(this,
+                "Employee information not found",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         SalaryCalculator calculator = new SalaryCalculator();
         new ViewDeductionsDialog(this, employeeRepository, calculator, currentUser).setVisible(true);
     }
     
     private void openSalaryDetailsDialog() {
+        if (currentEmployee == null) {
+            JOptionPane.showMessageDialog(this,
+                "Employee information not found",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         new EmployeeSalaryDetailsDialog(this, currentEmployee).setVisible(true);
     }
     
-    // NEW METHOD - MY ATTENDANCE
     private void openMyAttendance() {
+        if (currentEmployee == null) {
+            JOptionPane.showMessageDialog(this,
+                "Employee information not found",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         new EmployeeAttendanceDialog(this, currentEmployee, attendanceRepository).setVisible(true);
     }
     
@@ -560,9 +644,8 @@ public class EmployeeDashboardFrame extends JFrame {
 
             JButton manageEmployeesBtn = createOperationButton("Manage Employees");
             manageEmployeesBtn.addActionListener(e -> {
-                dialog.dispose(); // Close the HR Operations dialog
-                dispose(); // Close the current dashboard
-                // Open the Management Frame
+                dialog.dispose();
+                dispose();
                 new ModernEmployeeManagementFrame(employeeRepository, currentUser).setVisible(true);
             });
 
@@ -574,7 +657,7 @@ public class EmployeeDashboardFrame extends JFrame {
             contentPanel.add(generateReportBtn);
             contentPanel.add(approveLeaveBtn);
             contentPanel.add(manageEmployeesBtn);
-            contentPanel.add(new JLabel()); // Spacer
+            contentPanel.add(new JLabel());
             contentPanel.add(closeBtn);
 
             dialog.add(contentPanel, BorderLayout.CENTER);
@@ -587,12 +670,12 @@ public class EmployeeDashboardFrame extends JFrame {
             IFinanceOperations financeOps = (IFinanceOperations) currentEmployee;
             
             JDialog dialog = new JDialog(this, "Finance Operations", true);
-            dialog.setSize(500, 450);
+            dialog.setSize(500, 500);
             dialog.setLocationRelativeTo(this);
             dialog.setLayout(new BorderLayout(10, 10));
             
             JPanel contentPanel = new JPanel();
-            contentPanel.setLayout(new GridLayout(7, 1, 10, 10));
+            contentPanel.setLayout(new GridLayout(8, 1, 10, 10));
             contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
             contentPanel.setBackground(WHITE);
             
@@ -602,11 +685,9 @@ public class EmployeeDashboardFrame extends JFrame {
             
             JButton processPayrollBtn = createOperationButton("Process Payroll");
             processPayrollBtn.addActionListener(e -> {
-                String period = JOptionPane.showInputDialog(dialog, "Enter payroll period (e.g., February 2025):");
-                if (period != null && !period.trim().isEmpty()) {
-                    financeOps.processPayroll(period);
-                    JOptionPane.showMessageDialog(dialog, "Payroll processed for: " + period);
-                }
+                dialog.dispose();
+                dispose();
+                new ModernEmployeeManagementFrame(employeeRepository, currentUser).setVisible(true);
             });
             
             JButton generateFinancialReportBtn = createOperationButton("Generate Financial Report");
@@ -642,7 +723,8 @@ public class EmployeeDashboardFrame extends JFrame {
             contentPanel.add(generateFinancialReportBtn);
             contentPanel.add(calculateNetPayBtn);
             contentPanel.add(viewDeductionsBtn);
-            contentPanel.add(new JLabel()); // Spacer
+            contentPanel.add(new JLabel());
+            contentPanel.add(new JLabel());
             contentPanel.add(closeBtn);
             
             dialog.add(contentPanel, BorderLayout.CENTER);

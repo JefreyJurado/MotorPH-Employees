@@ -24,7 +24,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
     private final User currentUser; 
     private final AttendanceRepository attendanceRepository;
     
-    // Modern Color Scheme
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
     private final Color DARK_COLOR = new Color(44, 62, 80);
@@ -46,131 +45,19 @@ public class ModernEmployeeManagementFrame extends JFrame {
         this.employeeRepository = repository;
         this.salaryCalculator = new SalaryCalculator();
         this.currentUser = user;
-        this.attendanceRepository = new AttendanceRepository(); // ADD THIS LINE
+        this.attendanceRepository = new AttendanceRepository();
         initializeModernUI();
         loadEmployeeData();
         applyAccessControl();
     }
     
     private void openAttendanceManagement() {
-    new AttendanceManagementDialog(this, attendanceRepository, employeeRepository).setVisible(true);
-}
+        new AttendanceManagementDialog(this, attendanceRepository, employeeRepository).setVisible(true);
+    }
     
     private void applyAccessControl() {
         setTitle("MotorPH Employee Management System - " + currentUser.getRole() + ": " + currentUser.getUsername());
-
-        if (currentUser.isEmployee()) {
-            // Get the current employee object
-            Employee currentEmployee = employeeRepository.findByEmployeeNumber(currentUser.getEmployeeNumber());
-            
-            if (currentEmployee instanceof IHROperations) {
-                // HR EMPLOYEES: Can Add/Update/Delete, but NO access to payroll/finance buttons
-                applyHRAccess();
-                System.out.println("[ACCESS] HR Employee: " + currentEmployee.getFullName() + " - Employee management access granted");
-                
-            } else if (currentEmployee instanceof IFinanceOperations) {
-                // FINANCE EMPLOYEES: Can view all, access payroll, but CANNOT Add/Update/Delete
-                applyFinanceAccess();
-                System.out.println("[ACCESS] Finance Employee: " + currentEmployee.getFullName() + " - Payroll access granted");
-                
-            } else if (currentEmployee instanceof IAccountingOperations) {
-                // ACCOUNTING EMPLOYEES: Can view all and financial data, but CANNOT modify or process payroll
-                applyAccountingAccess();
-                System.out.println("[ACCESS] Accounting Employee: " + currentEmployee.getFullName() + " - View-only financial access");
-                
-            } else if (currentEmployee instanceof IITOperations) {
-                // IT EMPLOYEES: Can view all employees (for system access), but CANNOT modify or access finances
-                applyITAccess();
-                System.out.println("[ACCESS] IT Employee: " + currentEmployee.getFullName() + " - View-only access");
-                
-            } else if (currentEmployee instanceof IExecutiveOperations) {
-                // EXECUTIVE EMPLOYEES: Can view everything but CANNOT modify
-                applyExecutiveAccess();
-                System.out.println("[ACCESS] Executive Employee: " + currentEmployee.getFullName() + " - View-only executive access");
-                
-            } else {
-                // REGULAR EMPLOYEES: Can only view their own record
-                applyRegularEmployeeAccess();
-                JOptionPane.showMessageDialog(this,
-                    "You are logged in as an Employee.\nYou can only view your own employee record.",
-                    "Access Level: Employee",
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
-    }
-
-    // HR ACCESS: Can manage employees but NO financial operations
-    private void applyHRAccess() {
-        Component[] components = getContentPane().getComponents();
-        disableButtonsByText(components, "Weekly Payslip", "View Deductions");
-    }
-
-    // FINANCE ACCESS: Can handle payroll but CANNOT add/update/delete employees
-    private void applyFinanceAccess() {
-        Component[] components = getContentPane().getComponents();
-        disableButtonsByText(components, "Add", "Update", "Delete");
-        // They can use Query, View, Weekly Payslip, View Deductions
-    }
-
-    // ACCOUNTING ACCESS: View-only financial data, CANNOT modify or process payroll
-    private void applyAccountingAccess() {
-        Component[] components = getContentPane().getComponents();
-        disableButtonsByText(components, "Add", "Update", "Delete", "Weekly Payslip");
-        // They can Query, View, and View Deductions only
-    }
-
-    // IT ACCESS: View-only for all employees, NO financial access
-    private void applyITAccess() {
-        Component[] components = getContentPane().getComponents();
-        disableButtonsByText(components, "Add", "Update", "Delete", "Weekly Payslip", "View Deductions");
-        // They can Query and View only
-    }
-
-    // EXECUTIVE ACCESS: View everything but CANNOT modify anything
-    private void applyExecutiveAccess() {
-        Component[] components = getContentPane().getComponents();
-        disableButtonsByText(components, "Add", "Update", "Delete");
-        // They can Query, View, View Deductions, Weekly Payslip (view only)
-    }
-
-    // REGULAR EMPLOYEE ACCESS: Restricted to own record only
-    private void applyRegularEmployeeAccess() {
-        Component[] components = getContentPane().getComponents();
-        disableModificationButtons(components);
-    }
-
-    // Helper method to HIDE specific buttons by their text (not just disable)
-    private void disableButtonsByText(Component[] components, String... buttonTexts) {
-        for (Component comp : components) {
-            if (comp instanceof JPanel) {
-                disableButtonsByText(((JPanel) comp).getComponents(), buttonTexts);
-            } else if (comp instanceof JButton) {
-                JButton button = (JButton) comp;
-                String buttonText = button.getText();
-
-                for (String textToDisable : buttonTexts) {
-                    if (textToDisable.equals(buttonText)) {
-                        button.setVisible(false); // HIDE the button completely
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-    private void disableModificationButtons(Component[] components) {
-        for (Component comp : components) {
-            if (comp instanceof JPanel) {
-                disableModificationButtons(((JPanel) comp).getComponents());
-            } else if (comp instanceof JButton) {
-                JButton button = (JButton) comp;
-                String buttonText = button.getText();
-
-                if ("Add".equals(buttonText) || "Update".equals(buttonText) || "Delete".equals(buttonText)) {
-                    button.setVisible(false); // HIDE instead of disable
-                }
-            }
-        }
+        // Access control is now handled in createHeaderPanel() and createEmploymentDetailsPanel()
     }
 
     private void initializeModernUI() {
@@ -216,57 +103,90 @@ public class ModernEmployeeManagementFrame extends JFrame {
         int spacing = 5;
         int yPos = 22;
         
-        JButton queryBtn = createHeaderButton("Query", startX, yPos, btnWidth, btnHeight);
-        queryBtn.addActionListener(e -> handleQuery());
-        headerPanel.add(queryBtn);
-        startX += btnWidth + spacing;
+        String role = currentUser.getRole();
         
-        JButton addBtn = createHeaderButton("Add", startX, yPos, btnWidth, btnHeight);
-        addBtn.addActionListener(e -> handleAdd());
-        headerPanel.add(addBtn);
-        startX += btnWidth + spacing;
+        // QUERY - Everyone with access can see
+        if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
+            role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
+            role.equals("Executive")) {
+            JButton queryBtn = createHeaderButton("Query", startX, yPos, btnWidth, btnHeight);
+            queryBtn.addActionListener(e -> handleQuery());
+            headerPanel.add(queryBtn);
+            startX += btnWidth + spacing;
+        }
         
-        updateButton = createHeaderButton("Update", startX, yPos, btnWidth, btnHeight);
-        updateButton.setEnabled(false);
-        updateButton.addActionListener(e -> handleUpdate());
-        headerPanel.add(updateButton);
-        startX += btnWidth + spacing;
+        // ADD - Only HR and Owner
+        if (role.equals("HR") || role.equals("Owner")) {
+            JButton addBtn = createHeaderButton("Add", startX, yPos, btnWidth, btnHeight);
+            addBtn.addActionListener(e -> handleAdd());
+            headerPanel.add(addBtn);
+            startX += btnWidth + spacing;
+        }
         
-        JButton deleteBtn = createHeaderButton("Delete", startX, yPos, btnWidth, btnHeight);
-        deleteBtn.addActionListener(e -> handleDelete());
-        headerPanel.add(deleteBtn);
-        startX += btnWidth + spacing;
+        // UPDATE - Only HR and Owner
+        if (role.equals("HR") || role.equals("Owner")) {
+            updateButton = createHeaderButton("Update", startX, yPos, btnWidth, btnHeight);
+            updateButton.setEnabled(false);
+            updateButton.addActionListener(e -> handleUpdate());
+            headerPanel.add(updateButton);
+            startX += btnWidth + spacing;
+        } else {
+            updateButton = new JButton(); // Create dummy button so code doesn't break
+            updateButton.setVisible(false);
+        }
         
-        JButton clearBtn = createHeaderButton("Clear", startX, yPos, btnWidth, btnHeight);
-        clearBtn.addActionListener(e -> clearFields());
-        headerPanel.add(clearBtn);
-        startX += btnWidth + spacing;
+        // DELETE - Only HR and Owner
+        if (role.equals("HR") || role.equals("Owner")) {
+            JButton deleteBtn = createHeaderButton("Delete", startX, yPos, btnWidth, btnHeight);
+            deleteBtn.addActionListener(e -> handleDelete());
+            headerPanel.add(deleteBtn);
+            startX += btnWidth + spacing;
+        }
         
-        JButton saveBtn = createHeaderButton("Save", startX, yPos, btnWidth, btnHeight);
-        saveBtn.addActionListener(e -> handleSave());
-        headerPanel.add(saveBtn);
-        startX += btnWidth + spacing;
+        // CLEAR - Everyone
+        if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
+            role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
+            role.equals("Executive")) {
+            JButton clearBtn = createHeaderButton("Clear", startX, yPos, btnWidth, btnHeight);
+            clearBtn.addActionListener(e -> clearFields());
+            headerPanel.add(clearBtn);
+            startX += btnWidth + spacing;
+        }
         
-        JButton viewBtn = createHeaderButton("View", startX, yPos, btnWidth, btnHeight);
-        viewBtn.addActionListener(e -> openViewEmployeeDialog());
-        headerPanel.add(viewBtn);
-        startX += btnWidth + spacing;
+        // SAVE - Everyone
+        if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
+            role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
+            role.equals("Executive")) {
+            JButton saveBtn = createHeaderButton("Save", startX, yPos, btnWidth, btnHeight);
+            saveBtn.addActionListener(e -> handleSave());
+            headerPanel.add(saveBtn);
+            startX += btnWidth + spacing;
+        }
         
-        JButton leaveBtn = createHeaderButton("Leave", startX, yPos, btnWidth, btnHeight);
-        leaveBtn.addActionListener(e -> {
-            if (currentUser.isEmployee()) {
-                openLeaveApplicationDialog();
-            } else {
-                openApproveLeaveDialog();
-            }
-        });
-        headerPanel.add(leaveBtn);
+        // VIEW - Everyone
+        if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
+            role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
+            role.equals("Executive")) {
+            JButton viewBtn = createHeaderButton("View", startX, yPos, btnWidth, btnHeight);
+            viewBtn.addActionListener(e -> openViewEmployeeDialog());
+            headerPanel.add(viewBtn);
+            startX += btnWidth + spacing;
+        }
         
-        startX += btnWidth + spacing;
+        // LEAVE - Only HR and Owner
+        if (role.equals("HR") || role.equals("Owner")) {
+            JButton leaveBtn = createHeaderButton("Leave", startX, yPos, btnWidth, btnHeight);
+            leaveBtn.addActionListener(e -> openApproveLeaveDialog());
+            headerPanel.add(leaveBtn);
+            startX += btnWidth + spacing;
+        }
 
-        JButton attendanceBtn = createHeaderButton("Attendance", startX, yPos, 140, btnHeight);
-        attendanceBtn.addActionListener(e -> openAttendanceManagement());
-        headerPanel.add(attendanceBtn);
+        // ATTENDANCE - Only HR and Owner
+        if (role.equals("HR") || role.equals("Owner")) {
+            JButton attendanceBtn = createHeaderButton("Attendance", startX, yPos, 140, btnHeight);
+            attendanceBtn.addActionListener(e -> openAttendanceManagement());
+            headerPanel.add(attendanceBtn);
+        }
         
         parent.add(headerPanel);
     }
@@ -377,19 +297,26 @@ public class ModernEmployeeManagementFrame extends JFrame {
         addModernField(panel, "Hourly Rate", tfHourlyR = createStyledTextField(), labelX, fieldX, yPos);
         yPos += spacing + 20;
 
-        JLabel payrollLabel = new JLabel("Payroll Actions:");
-        payrollLabel.setBounds(labelX, yPos + 7, 150, 25);
-        payrollLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        payrollLabel.setForeground(PRIMARY_COLOR);
-        panel.add(payrollLabel);
+        String role = currentUser.getRole();
 
-        JButton weeklyPayslipBtn = createHeaderButton("Weekly Payslip", 170, yPos, 215, 35);
-        weeklyPayslipBtn.addActionListener(e -> openWeeklyPayslipDialog());
-        panel.add(weeklyPayslipBtn);
+        // PAYROLL ACTIONS - Only for Finance, Accounting, Executive, Owner
+        if (role.equals("Finance") || role.equals("Accounting") || 
+            role.equals("Executive") || role.equals("Owner")) {
+            
+            JLabel payrollLabel = new JLabel("Payroll Actions:");
+            payrollLabel.setBounds(labelX, yPos + 7, 150, 25);
+            payrollLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            payrollLabel.setForeground(PRIMARY_COLOR);
+            panel.add(payrollLabel);
 
-        JButton viewDeductionsBtn = createHeaderButton("View Deductions", 395, yPos, 215, 35);
-        viewDeductionsBtn.addActionListener(e -> openViewDeductionsDialog());
-        panel.add(viewDeductionsBtn);
+            JButton weeklyPayslipBtn = createHeaderButton("Weekly Payslip", 170, yPos, 215, 35);
+            weeklyPayslipBtn.addActionListener(e -> openWeeklyPayslipDialog());
+            panel.add(weeklyPayslipBtn);
+
+            JButton viewDeductionsBtn = createHeaderButton("View Deductions", 395, yPos, 215, 35);
+            viewDeductionsBtn.addActionListener(e -> openViewDeductionsDialog());
+            panel.add(viewDeductionsBtn);
+        }
 
         parent.add(panel);
     }
@@ -517,29 +444,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
         if (empNumber.isEmpty()) {
             showModernDialog("Please enter an Employee Number", "Query", JOptionPane.WARNING_MESSAGE);
             return;
-        }
-
-        // Check if employee has special access (HR, Finance, IT, Accounting, Executive)
-        if (currentUser.isEmployee()) {
-            Employee currentEmployee = employeeRepository.findByEmployeeNumber(currentUser.getEmployeeNumber());
-
-            // Allow specialized employees to query anyone
-            boolean hasSpecialAccess = (currentEmployee instanceof IHROperations) ||
-                                       (currentEmployee instanceof IFinanceOperations) ||
-                                       (currentEmployee instanceof IAccountingOperations) ||
-                                       (currentEmployee instanceof IITOperations) ||
-                                       (currentEmployee instanceof IExecutiveOperations);
-
-            if (!hasSpecialAccess) {
-                // Regular employees can only query their own number
-                if (currentUser.getEmployeeNumber() != null && 
-                    !empNumber.equals(currentUser.getEmployeeNumber())) {
-                    showModernDialog("Access Denied: You can only view your own employee record", 
-                        "Access Denied", JOptionPane.ERROR_MESSAGE);
-                    tfEmpNum.setText(currentUser.getEmployeeNumber());
-                    return;
-                }
-            }
         }
 
         Employee employee = employeeRepository.findByEmployeeNumber(empNumber);
@@ -703,49 +607,15 @@ public class ModernEmployeeManagementFrame extends JFrame {
         tfHourlyR.setText("");
     }
 
-    // FIXED: Only ONE loadEmployeeData() method with filtering
     private void loadEmployeeData() {
         List<Employee> employees = employeeRepository.getAllEmployees();
-
         for (Employee employee : employees) {
-            if (currentUser.isEmployee()) {
-                // Check if employee has special access rights
-                Employee currentEmployee = employeeRepository.findByEmployeeNumber(currentUser.getEmployeeNumber());
-                
-                if (currentEmployee instanceof IHROperations || 
-                    currentEmployee instanceof IFinanceOperations || 
-                    currentEmployee instanceof IAccountingOperations || 
-                    currentEmployee instanceof IITOperations || 
-                    currentEmployee instanceof IExecutiveOperations) {
-                    // Specialized employees can see all employees
-                    tableModel.addRow(employee.toTableRow());
-                } else {
-                    // Regular employees can only see their own record
-                    if (currentUser.getEmployeeNumber() != null && 
-                        employee.getEmployeeNumber().equals(currentUser.getEmployeeNumber())) {
-                        tableModel.addRow(employee.toTableRow());
-                    }
-                }
-            } else {
-                // Admin/HR can see all employees
-                tableModel.addRow(employee.toTableRow());
-            }
+            tableModel.addRow(employee.toTableRow());
         }
     }
 
     private void openViewEmployeeDialog() {
         new ModernViewEmployeeDialog(this, employeeRepository, salaryCalculator, currentUser).setVisible(true);
-    }
-
-    private void openLeaveApplicationDialog() {
-        // Get the current employee object
-        Employee currentEmployee = employeeRepository.findByEmployeeNumber(currentUser.getEmployeeNumber());
-
-        if (currentEmployee != null) {
-            new ModernLeaveApplicationDialog(this, currentEmployee).setVisible(true);
-        } else {
-            showModernDialog("Error: Employee record not found", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     private void openWeeklyPayslipDialog() {

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class AttendanceRepository {
     private final String CSV_FILE = "attendance.csv";
-    private List<AttendanceRecord> attendanceRecords;
+    private final List<AttendanceRecord> attendanceRecords;
     
     public AttendanceRepository() {
         this.attendanceRecords = new ArrayList<>();

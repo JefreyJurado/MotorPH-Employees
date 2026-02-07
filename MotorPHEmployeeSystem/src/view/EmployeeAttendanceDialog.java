@@ -9,7 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class EmployeeAttendanceDialog extends JDialog {
@@ -19,7 +18,6 @@ public class EmployeeAttendanceDialog extends JDialog {
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
     private final Color WHITE = Color.WHITE;
-    private final Color TEXT_COLOR = new Color(44, 62, 80);
     
     private DefaultTableModel tableModel;
     private JTable attendanceTable;
