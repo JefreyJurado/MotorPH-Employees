@@ -39,21 +39,27 @@ public class EmployeeAttendanceDialog extends JDialog {
         setLayout(new BorderLayout(10, 10));
         
         // Title Panel
-        JPanel titlePanel = new JPanel();
+        JPanel titlePanel = new JPanel(new GridBagLayout());
         titlePanel.setBackground(PRIMARY_COLOR);
         titlePanel.setPreferredSize(new Dimension(900, 80));
-        titlePanel.setLayout(new BorderLayout());
         
-        JLabel titleLabel = new JLabel("My Attendance Records", SwingConstants.CENTER);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        
+        JLabel titleLabel = new JLabel("My Attendance Records");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
         titleLabel.setForeground(WHITE);
-        titlePanel.add(titleLabel, BorderLayout.CENTER);
+        titlePanel.add(titleLabel, gbc);
         
+        gbc.gridy = 1;
+        gbc.insets = new Insets(5, 0, 0, 0);
         JLabel empLabel = new JLabel("Employee: " + employee.getFullName() + 
-            " (" + employee.getEmployeeNumber() + ")", SwingConstants.CENTER);
+            " (" + employee.getEmployeeNumber() + ")");
         empLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         empLabel.setForeground(WHITE);
-        titlePanel.add(empLabel, BorderLayout.SOUTH);
+        titlePanel.add(empLabel, gbc);
         
         add(titlePanel, BorderLayout.NORTH);
         
@@ -136,11 +142,27 @@ public class EmployeeAttendanceDialog extends JDialog {
         attendanceTable.setShowVerticalLines(true);
         attendanceTable.setGridColor(new Color(189, 195, 199));
         
+        // FIXED: Proper header renderer with visible colors
         JTableHeader header = attendanceTable.getTableHeader();
+        header.setOpaque(true);
         header.setBackground(PRIMARY_COLOR);
         header.setForeground(WHITE);
-        header.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        header.setFont(new Font("Segoe UI", Font.BOLD, 13));
         
+        // Custom header renderer to ensure colors are applied
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(PRIMARY_COLOR);
+        headerRenderer.setForeground(WHITE);
+        headerRenderer.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        headerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        headerRenderer.setOpaque(true);
+        
+        // Apply to all columns
+        for (int i = 0; i < attendanceTable.getColumnModel().getColumnCount(); i++) {
+            attendanceTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        
+        // Center align table cells
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < attendanceTable.getColumnCount(); i++) {

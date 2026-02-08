@@ -164,21 +164,26 @@ public class ViewDeductionsDialog extends JDialog {
         add(buttonPanel, BorderLayout.SOUTH);
     }
     
-    // Only ONE loadEmployees() method with filtering
     private void loadEmployees() {
         employeeComboBox.removeAllItems();
         List<Employee> employees = employeeRepository.getAllEmployees();
         
+        // Determine who can see all employees vs only self
+        boolean canViewAll = currentUser.isOwner() || 
+                            currentUser.isFinance() || 
+                            currentUser.isAccounting() || 
+                            currentUser.isExecutive();
+        
         for (Employee employee : employees) {
-            if (currentUser.isEmployee()) {
-                // Employee can only see their own record
+            if (canViewAll) {
+                // Owner, Finance, Accounting, Executive can see ALL employees
+                employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
+            } else {
+                // HR, IT, SystemAdmin, Employee can ONLY see themselves
                 if (currentUser.getEmployeeNumber() != null && 
                     employee.getEmployeeNumber().equals(currentUser.getEmployeeNumber())) {
                     employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
                 }
-            } else {
-                // Admin/HR can see all
-                employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
             }
         }
     }

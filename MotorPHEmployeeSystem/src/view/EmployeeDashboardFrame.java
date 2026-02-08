@@ -86,12 +86,12 @@ public class EmployeeDashboardFrame extends JFrame {
         welcomeLabel.setForeground(WHITE);
         
         JButton logoutBtn = new JButton("Logout");
-        logoutBtn.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        logoutBtn.setFont(new Font("Segoe UI", Font.BOLD, 14));
         logoutBtn.setBackground(WHITE);
         logoutBtn.setForeground(PRIMARY_COLOR);
         logoutBtn.setFocusPainted(false);
         logoutBtn.setBorderPainted(false);
-        logoutBtn.setPreferredSize(new Dimension(120, 45));
+        logoutBtn.setPreferredSize(new Dimension(100, 38));
         logoutBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         logoutBtn.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(this,
@@ -298,11 +298,12 @@ public class EmployeeDashboardFrame extends JFrame {
         if (hasITAccess) buttonCount++;
         if (hasAccountingAccess) buttonCount++;
         if (hasExecutiveAccess) buttonCount++;
+        if (currentUser.isSystemAdmin() && currentEmployee != null) buttonCount++;
         
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, Math.max(buttonCount, 1), 20, 0));
+        panel.setLayout(new GridLayout(1, Math.max(buttonCount, 1), 15, 0));
         panel.setBackground(LIGHT_BG);
-        panel.setPreferredSize(new Dimension(1360, 110));
+        panel.setPreferredSize(new Dimension(1360, 120));
         
         // STANDARD BUTTONS - Only if employee exists
         if (currentEmployee != null) {
@@ -358,19 +359,27 @@ public class EmployeeDashboardFrame extends JFrame {
         }
         
         if (hasExecutiveAccess) {
-            JButton executiveBtn = createActionButton("Executive Operations", "Strategic decisions");
-            executiveBtn.setBackground(new Color(231, 76, 60)); // Red
-            executiveBtn.addActionListener(e -> openExecutiveOperationsDialog());
-            panel.add(executiveBtn);
-        }
-        
-        // If no buttons (e.g., admin with no employee), show a message
-        if (buttonCount == 0) {
-            JLabel noAccessLabel = new JLabel("No employee record found - Limited access", SwingConstants.CENTER);
-            noAccessLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
-            noAccessLabel.setForeground(TEXT_COLOR);
-            panel.add(noAccessLabel);
-        }
+                    JButton executiveBtn = createActionButton("Executive Operations", "Strategic decisions");
+                    executiveBtn.setBackground(new Color(231, 76, 60)); // Red
+                    executiveBtn.addActionListener(e -> openExecutiveOperationsDialog());
+                    panel.add(executiveBtn);
+                }
+
+                // SYSTEM ADMIN: Approve Leave Access (per requirements)
+                if (currentUser.isSystemAdmin() && currentEmployee != null) {
+                    JButton approveLeaveBtn = createActionButton("Approve Leave", "Review leave requests");
+                    approveLeaveBtn.setBackground(new Color(26, 188, 156)); // Teal
+                    approveLeaveBtn.addActionListener(e -> openApproveLeaveDialog());
+                    panel.add(approveLeaveBtn);
+                }
+
+                // If no buttons (e.g., admin with no employee), show a message
+                if (buttonCount == 0) {
+                    JLabel noAccessLabel = new JLabel("No employee record found - Limited access", SwingConstants.CENTER);
+                    noAccessLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+                    noAccessLabel.setForeground(TEXT_COLOR);
+                    panel.add(noAccessLabel);
+                }
         
         return panel;
     }
@@ -382,20 +391,20 @@ public class EmployeeDashboardFrame extends JFrame {
         button.setFocusPainted(false);
         button.setBorderPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
+
         JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
         titleLabel.setForeground(WHITE);
-        titleLabel.setBorder(new EmptyBorder(20, 10, 3, 10));
-        
+        titleLabel.setBorder(new EmptyBorder(22, 3, 3, 3)); 
+
         JLabel subtitleLabel = new JLabel(subtitle, SwingConstants.CENTER);
-        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11)); 
         subtitleLabel.setForeground(WHITE);
-        subtitleLabel.setBorder(new EmptyBorder(0, 10, 20, 10));
-        
+        subtitleLabel.setBorder(new EmptyBorder(0, 3, 22, 3)); 
+
         button.add(titleLabel, BorderLayout.CENTER);
         button.add(subtitleLabel, BorderLayout.SOUTH);
-        
+
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -403,17 +412,15 @@ public class EmployeeDashboardFrame extends JFrame {
             }
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                // Reset to original color - need to store it
                 Color originalColor = (Color) button.getClientProperty("originalColor");
                 if (originalColor != null) {
                     button.setBackground(originalColor);
                 }
             }
         });
-        
-        // Store original color for hover effect
+
         button.putClientProperty("originalColor", button.getBackground());
-        
+
         return button;
     }
     

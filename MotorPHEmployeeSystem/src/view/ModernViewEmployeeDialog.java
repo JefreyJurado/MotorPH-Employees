@@ -56,7 +56,9 @@ public class ModernViewEmployeeDialog extends JDialog {
         headerPanel.setBackground(PRIMARY_COLOR);
         headerPanel.setLayout(null);
         
-        JLabel titleLabel = new JLabel("Salary Computation");
+        // FIXED: Change title based on user role
+        String title = canViewSalary() ? "Salary Computation" : "Employee Information";
+        JLabel titleLabel = new JLabel(title);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         titleLabel.setForeground(WHITE);
         titleLabel.setBounds(30, 20, 400, 40);
@@ -97,20 +99,24 @@ public class ModernViewEmployeeDialog extends JDialog {
         
         selectionPanel.add(employeeComboBox);
         
-        JLabel monthLabel = new JLabel("Select Month:");
-        monthLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        monthLabel.setForeground(DARK_COLOR);
-        monthLabel.setBounds(330, 15, 150, 25);
-        selectionPanel.add(monthLabel);
+        // FIXED: Only show month selector if user can view salary
+        JComboBox<String> monthComboBox = null;
+        if (canViewSalary()) {
+            JLabel monthLabel = new JLabel("Select Month:");
+            monthLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            monthLabel.setForeground(DARK_COLOR);
+            monthLabel.setBounds(330, 15, 150, 25);
+            selectionPanel.add(monthLabel);
+            
+            String[] months = {"January", "February", "March", "April", "May", "June", 
+                              "July", "August", "September", "October", "November", "December"};
+            monthComboBox = new JComboBox<>(months);
+            monthComboBox.setBounds(330, 45, 200, 35);
+            monthComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+            selectionPanel.add(monthComboBox);
+        }
         
-        String[] months = {"January", "February", "March", "April", "May", "June", 
-                          "July", "August", "September", "October", "November", "December"};
-        JComboBox<String> monthComboBox = new JComboBox<>(months);
-        monthComboBox.setBounds(330, 45, 200, 35);
-        monthComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        selectionPanel.add(monthComboBox);
-        
-        JButton computeButton = createModernButton("Compute", SUCCESS_COLOR);
+        JButton computeButton = createModernButton("View Details", SUCCESS_COLOR);
         computeButton.setBounds(540, 45, 80, 35);
         selectionPanel.add(computeButton);
         
@@ -126,7 +132,8 @@ public class ModernViewEmployeeDialog extends JDialog {
             BorderFactory.createEmptyBorder(15, 15, 15, 15)
         ));
         
-        JLabel resultsTitleLabel = new JLabel("Salary Details");
+        String resultsTitle = canViewSalary() ? "Salary Details" : "Employee Details";
+        JLabel resultsTitleLabel = new JLabel(resultsTitle);
         resultsTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
         resultsTitleLabel.setForeground(PRIMARY_COLOR);
         resultsTitleLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
@@ -137,7 +144,11 @@ public class ModernViewEmployeeDialog extends JDialog {
         employeeDetailsArea.setEditable(false);
         employeeDetailsArea.setBackground(new Color(250, 250, 250));
         employeeDetailsArea.setBorder(new EmptyBorder(10, 10, 10, 10));
-        employeeDetailsArea.setText("Select an employee and click 'Compute' to view salary details.");
+        
+        String initialText = canViewSalary() 
+            ? "Select an employee and click 'View Details' to view salary computation."
+            : "Select an employee and click 'View Details' to view employee information.";
+        employeeDetailsArea.setText(initialText);
         
         JScrollPane scrollPane = new JScrollPane(employeeDetailsArea);
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(189, 195, 199), 1));
@@ -145,19 +156,18 @@ public class ModernViewEmployeeDialog extends JDialog {
         
         contentPanel.add(resultsPanel);
         
-        // Compute button action
+        // FIXED: Compute button action - check role before showing salary
+        JComboBox<String> finalMonthComboBox = monthComboBox;
         computeButton.addActionListener(e -> {
             String selectedItem = (String) employeeComboBox.getSelectedItem();
             if (selectedItem != null) {
                 String empNumber = selectedItem.split(" - ")[0];
                 Employee employee = employeeRepository.findByEmployeeNumber(empNumber);
-                String selectedMonth = (String) monthComboBox.getSelectedItem();
                 
                 if (employee != null) {
-                    // Build complete employee report with polymorphic methods
                     StringBuilder fullReport = new StringBuilder();
                     
-                    // Employee Information Section
+                    // Employee Information Section - EVERYONE can see this
                     fullReport.append("╔════════════════════════════════════════════════════════════╗\n");
                     fullReport.append("║              EMPLOYEE INFORMATION                          ║\n");
                     fullReport.append("╚════════════════════════════════════════════════════════════╝\n\n");
@@ -166,15 +176,27 @@ public class ModernViewEmployeeDialog extends JDialog {
                     fullReport.append(String.format("Full Name       : %s\n", employee.getFullName()));
                     fullReport.append(String.format("Position        : %s\n", employee.getPosition()));
                     fullReport.append(String.format("Department      : %s\n", employee.getDepartment()));
-                    fullReport.append(String.format("Job Description : %s\n\n", employee.getJobDescription()));
+                    fullReport.append(String.format("Job Description : %s\n", employee.getJobDescription()));
+                    fullReport.append(String.format("Status          : %s\n", employee.getStatus()));
+                    fullReport.append(String.format("Supervisor      : %s\n\n", employee.getImmediateSupervisor()));
                     
-                    // Salary Computation Section
-                    fullReport.append("╔════════════════════════════════════════════════════════════╗\n");
-                    fullReport.append("║              SALARY COMPUTATION - ").append(selectedMonth).append("\n");
-                    fullReport.append("╚════════════════════════════════════════════════════════════╝\n\n");
-                    
-                    String salaryReport = salaryCalculator.generateSalaryReport(employee, selectedMonth);
-                    fullReport.append(salaryReport);
+                    // Salary Computation Section - ONLY Finance, Accounting, Executive, Owner
+                    if (canViewSalary() && finalMonthComboBox != null) {
+                        String selectedMonth = (String) finalMonthComboBox.getSelectedItem();
+                        
+                        fullReport.append("╔════════════════════════════════════════════════════════════╗\n");
+                        fullReport.append("║              SALARY COMPUTATION - ").append(selectedMonth).append("\n");
+                        fullReport.append("╚════════════════════════════════════════════════════════════╝\n\n");
+                        
+                        String salaryReport = salaryCalculator.generateSalaryReport(employee, selectedMonth);
+                        fullReport.append(salaryReport);
+                    } else if (!canViewSalary()) {
+                        // HR sees this message instead of salary details
+                        fullReport.append("\n");
+                        fullReport.append("═══════════════════════════════════════════════════════════\n");
+                        fullReport.append("Salary information is restricted to Finance and Accounting.\n");
+                        fullReport.append("═══════════════════════════════════════════════════════════\n");
+                    }
                     
                     employeeDetailsArea.setText(fullReport.toString());
                     employeeDetailsArea.setCaretPosition(0);
@@ -183,6 +205,14 @@ public class ModernViewEmployeeDialog extends JDialog {
         });
         
         return contentPanel;
+    }
+
+    // FIXED: Check if current user can view salary details
+    private boolean canViewSalary() {
+        return currentUser.isOwner() || 
+               currentUser.isFinance() || 
+               currentUser.isAccounting() || 
+               currentUser.isExecutive();
     }
 
     private void loadEmployees() {
@@ -196,7 +226,7 @@ public class ModernViewEmployeeDialog extends JDialog {
                     employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
                 }
             } else {
-                // Admin/HR can see all
+                // Admin/HR/Finance/etc can see all
                 employeeComboBox.addItem(employee.getEmployeeNumber() + " - " + employee.getFullName());
             }
         }

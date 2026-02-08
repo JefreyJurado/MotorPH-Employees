@@ -44,7 +44,7 @@ public class AttendanceManagementDialog extends JDialog {
         setLayout(new BorderLayout(10, 10));
         
         // Title Panel
-        JPanel titlePanel = new JPanel();
+        JPanel titlePanel = new JPanel(new GridBagLayout());
         titlePanel.setBackground(PRIMARY_COLOR);
         titlePanel.setPreferredSize(new Dimension(1200, 60));
         
@@ -177,11 +177,27 @@ public class AttendanceManagementDialog extends JDialog {
         attendanceTable.setShowVerticalLines(true);
         attendanceTable.setGridColor(new Color(189, 195, 199));
         
+        // Proper header renderer with visible colors
         JTableHeader header = attendanceTable.getTableHeader();
+        header.setOpaque(true);
         header.setBackground(PRIMARY_COLOR);
         header.setForeground(WHITE);
-        header.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        header.setFont(new Font("Segoe UI", Font.BOLD, 13));
         
+        // Custom header renderer to ensure colors are applied
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(PRIMARY_COLOR);
+        headerRenderer.setForeground(WHITE);
+        headerRenderer.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        headerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        headerRenderer.setOpaque(true);
+        
+        // Apply to all columns
+        for (int i = 0; i < attendanceTable.getColumnModel().getColumnCount(); i++) {
+            attendanceTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        
+        // Center align table cells
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < attendanceTable.getColumnCount(); i++) {

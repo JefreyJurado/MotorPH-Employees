@@ -1,5 +1,5 @@
 Username,Password,Role,EmployeeNumber
-admin,admin123,SystemAdmin,
+admin,admin123,SystemAdmin,1
 owner_manuel,owner123,Owner,1
 hr_andrea,pass123,HR,6
 finance_anthony,pass123,Finance,11

@@ -11,11 +11,6 @@ import java.util.List;
 import util.EmployeeFactory;
 import repository.EmployeeRepository;
 import service.SalaryCalculator;
-import service.IHROperations;
-import service.IFinanceOperations;
-import service.IAccountingOperations;
-import service.IITOperations;
-import service.IExecutiveOperations;
 import repository.AttendanceRepository;
 
 public class ModernEmployeeManagementFrame extends JFrame {
@@ -163,16 +158,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
             startX += btnWidth + spacing;
         }
         
-        // VIEW - Everyone
-        if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
-            role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
-            role.equals("Executive")) {
-            JButton viewBtn = createHeaderButton("View", startX, yPos, btnWidth, btnHeight);
-            viewBtn.addActionListener(e -> openViewEmployeeDialog());
-            headerPanel.add(viewBtn);
-            startX += btnWidth + spacing;
-        }
-        
         // LEAVE - Only HR and Owner
         if (role.equals("HR") || role.equals("Owner")) {
             JButton leaveBtn = createHeaderButton("Leave", startX, yPos, btnWidth, btnHeight);
@@ -181,11 +166,39 @@ public class ModernEmployeeManagementFrame extends JFrame {
             startX += btnWidth + spacing;
         }
 
-        // ATTENDANCE - Only HR and Owner
-        if (role.equals("HR") || role.equals("Owner")) {
+        // ATTENDANCE - HR, Finance (for payroll), and Owner
+        if (role.equals("HR") || role.equals("Finance") || role.equals("Owner")) {
             JButton attendanceBtn = createHeaderButton("Attendance", startX, yPos, 140, btnHeight);
             attendanceBtn.addActionListener(e -> openAttendanceManagement());
             headerPanel.add(attendanceBtn);
+            startX += 140 + spacing; // Move startX for next button
+        }
+        
+        // BACK BUTTON - At the end, after all other buttons
+        if (currentUser.getEmployeeNumber() != null && !currentUser.getEmployeeNumber().isEmpty()) {
+            JButton backBtn = new JButton("← Back");
+            backBtn.setFont(new Font("Segoe UI", Font.BOLD, 12));
+            backBtn.setBackground(new Color(231, 76, 60));
+            backBtn.setForeground(WHITE);
+            backBtn.setFocusPainted(false);
+            backBtn.setBorderPainted(false);
+            backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            backBtn.setBounds(startX, yPos, 100, btnHeight);
+            backBtn.addActionListener(e -> {
+                dispose();
+                new EmployeeDashboardFrame(employeeRepository, currentUser).setVisible(true);
+            });
+            backBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    backBtn.setBackground(new Color(192, 57, 43));
+                }
+                @Override
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    backBtn.setBackground(new Color(231, 76, 60));
+                }
+            });
+            headerPanel.add(backBtn);
         }
         
         parent.add(headerPanel);
@@ -202,9 +215,11 @@ public class ModernEmployeeManagementFrame extends JFrame {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(PRIMARY_COLOR.brighter());
             }
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 button.setBackground(SECONDARY_COLOR);
             }
