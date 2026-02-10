@@ -1,175 +1,110 @@
 MotorPH Employee Management System
 
-A comprehensive Java-based Employee Management System demonstrating advanced Object-Oriented Programming principles with role-based access control, payroll processing, and complete employee lifecycle management.
+A comprehensive Role-Based Access Control (RBAC) employee management system demonstrating advanced Object-Oriented Programming principles through a production-quality Java application.
 
 Project Overview
-This enterprise-grade application manages MotorPH company's 34 employees across 8 departments with a sophisticated two-layer Role-Based Access Control (RBAC) system, comprehensive payroll calculations following Philippine tax and benefits regulations, and complete MVC architecture.
+
+This system implements a sophisticated two-layer RBAC architecture managing MotorPH company operations including employee records, payroll processing, leave management, and attendance tracking. The application demonstrates mastery of all four OOP principles while following industry-standard 4-layer architecture pattern.
 
 Core Features
 
 Employee Management
-- Complete CRUD operations (Create, Read, Update, Delete)
-- 19-field employee records with government IDs
-- 8 specialized employee types with department-specific capabilities
-- Factory pattern for automatic employee type determination
-- CSV-based data persistence
+- Complete CRUD operations for employee records
+- Dynamic employee classification using Factory Pattern
+- Support for 8 different employee types with role-specific capabilities
+- 34 real MotorPH employees with comprehensive data
 
-Role-Based Access Control (Two-Layer)
-- Layer 1: User roles (SystemAdmin, Owner, HR, Finance, IT, Accounting, Executive, Employee)
-- Layer 2: Employee interface implementations (IHROperations, IFinanceOperations, etc.)
-- Dynamic dashboard based on combined permissions
-- Role-specific operational capabilities
+Role-Based Access Control (RBAC)
+Two-Layer RBAC Implementation:
+1. User Role Layer (8 roles)
+   - SystemAdmin, Owner, HR, Finance, IT, Accounting, Executive, Employee
+   - Each role has specific dashboard interface and operational permissions
 
-Payroll & Compensation
-- SSS, PhilHealth, Pag-IBIG contributions (2024 rates)
-- Withholding tax calculations (2024 tax brackets)
-- Weekly payslip generation
-- Monthly salary reports with deduction breakdowns
-- Allowances management (rice, phone, clothing)
+2. Employee Type Layer (8 types)
+   - ExecutiveEmployee, HREmployee, FinanceEmployee, ITEmployee
+   - AccountingEmployee, OperationsEmployee, SalesEmployee, GeneralEmployee
+   - Each type implements department-specific interfaces
+
+Payroll Management
+- Automated salary calculations with Philippine tax compliance
+- SSS, PhilHealth, Pag-IBIG deductions (2024 rates)
+- TRAIN Law withholding tax computation
+- Weekly payslip generation with attendance integration
+- Method overloading for flexible salary calculations
 
 Leave Management
-- Leave application submission (Sick, Vacation, Emergency)
-- Approval workflow for HR/SystemAdmin
-- Leave history tracking
+- Leave application filing with multiple leave types
+- Approval workflow for HR personnel
+- Leave balance tracking and history
 - Status management (Pending, Approved, Rejected)
 
 Attendance Tracking
 - Time-in/time-out recording
-- Hours worked and overtime calculation
-- Attendance status management
-- Personal and management views
+- Overtime calculation
+- Attendance-based salary computation
+- Working days calculation (excludes weekends)
 
-Modern UI/UX
+Modern User Interface
 - Professional blue and white color scheme
-- Card-based responsive layouts
-- Role-specific dashboards
-- Intuitive navigation
-- Real-time data validation
+- Card-based layouts with modern styling
+- Role-based button visibility
+- Responsive design with proper spacing
+
+4-Layer Architecture
+
+This system follows industry-standard 4-layer architecture pattern as specified in course guidelines:
+
+Layer 1: Model (Domain Layer)
+- Purpose: Pure domain entities with business logic
+- Rule: NO file I/O, NO UI components
+- Classes: Employee hierarchy, User, LeaveApplication, AttendanceRecord, Payslip
+- Example: `calculateTotalAllowances()` business method
+
+Layer 2: DAO (Data Access Object)
+- Purpose: ALL file operations and data persistence
+- Rule: ONLY data storage, NO business logic
+- Classes: Repository classes, CSVFileHandler
+- Example: `loadEmployeesFromCSV()` data operation
+
+Layer 3: Service (Business Logic)
+- Purpose: Business rules, calculations, validation
+- Rule: NO file I/O, NO UI components
+- Classes: SalaryCalculator, AuthenticationService, Operational Interfaces
+- Example: `calculateWithholdingTax()` business calculation
+
+Layer 4: UI (User Interface)
+- Purpose: User interaction and display
+- Rule: Calls SERVICE layer, NEVER directly calls DAO
+- Classes: JFrame and JDialog components
+- Example: User clicks button → calls Service method → Service calls DAO
+
+Data Flow: UI → Service → DAO → Files
 
 Architecture & OOP Principles
 
-Encapsulation
-- All data fields private across 25+ classes
-- Controlled access through public getters/setters
-- Business logic encapsulated in service classes
-- Repository pattern hides data access implementation
+1. Encapsulation
+- Private fields with public getters/setters - All 19 Employee fields are private with controlled access
+- Repository Pattern - Data access logic encapsulated in repository classes
+- Service Layer - Business logic encapsulated in dedicated service classes
 
-Abstraction
-- Abstract `Employee` base class with abstract methods
-- 6 operational interfaces (IEmployeeRepository, IHROperations, IFinanceOperations, IITOperations, IAccountingOperations, IExecutiveOperations)
-- Clear separation between interface and implementation
-- Complex calculations hidden behind simple method calls
+2. Abstraction
+- Abstract Employee Class - Defines template with abstract methods `getDepartment()` and `getJobDescription()`
+- Interfaces - 6 interfaces (IEmployeeRepository, IHROperations, IFinanceOperations, IITOperations, IAccountingOperations, IExecutiveOperations)
+- Layer Separation - Abstract interfaces between architectural layers
 
-Inheritance
-- 8 employee subclasses extend abstract `Employee` class
-- All dialogs extend `JDialog` for consistent behavior
-- Main frame extends `JFrame` with domain-specific features
-- Code reuse through 19 inherited fields per subclass
+3. Inheritance
+- 8 Employee Subclasses - Each inherits from abstract Employee base class
+- Code Reusability - Subclasses inherit 19 fields and common methods
+- IS-A Relationship - HREmployee IS-A Employee, FinanceEmployee IS-A Employee, etc.
 
-Polymorphism
-- Factory pattern returns abstract `Employee` type
-- Method overriding (`getDepartment()`, `getJobDescription()`)
-- Interface polymorphism (`instanceof` checks for RBAC)
-- Runtime type determination for dynamic behavior
-- ActionListener interface for event handling
-
-Technologies Used
-
-- Java SE 8+
-- Swing - GUI framework
-- CSV - Data persistence
-- Factory Pattern - Object creation
-- Repository Pattern - Data access abstraction
-- MVC Architecture - Application structure
-
-Installation & Setup
-
-Prerequisites
-- Java JDK 8 or higher
-- NetBeans IDE (recommended) or any Java IDE
-
-Steps
-1. Clone the repository
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/MotorPHEmployeeSystem.git
-   ```
-
-2. Open in NetBeans
-   - File → Open Project
-   - Select `MotorPHEmployeeSystem` folder
-
-3. Clean and Build
-   - Right-click project → Clean and Build
-
-4. Run the application
-   - Right-click project → Run
-   - Or run `MainApplication.java`
-
-User Accounts
-
-System Admin
-- Username: `admin`
-- Password: `admin123`
-- Access: Leave approval + Employee #1 profile (CEO)
-
-Owner
-- Username: `owner_manuel`
-- Password: `owner123`
-- Access: Full system access
-
-Department Heads
-- HR: `hr_andrea` / `pass123`
-- Finance: `finance_anthony` / `pass123`
-- IT: `it_eduard` / `pass123`
-- Accounting: `acct_roderick` / `pass123`
-
-Executives
-- CFO: `cfo_bianca` / `pass123`
-- COO: `coo_antonio` / `pass123`
-
-Regular Employees
-- Employee: `employee_brad` / `pass123`
-- And more... (see `data/users.csv`)
-
-Database Schema
-
-Employees (19 fields)
-- Employee Number, Name, Birthday, Address
-- Contact Info (Phone)
-- Government IDs (SSS, PhilHealth, TIN, Pag-IBIG)
-- Employment (Position, Status, Supervisor)
-- Compensation (Basic Salary, Allowances, Rates)
-
-Users (4 fields)
-- Username, Password, Role, Employee Number
-
-Leave Applications (8 fields)
-- Leave ID, Employee Info, Type, Dates, Reason, Status
-
-Attendance (8 fields)
-- Employee Number, Date, Time In/Out, Hours, OT, Status
-
-Payslips (11 fields)
-- Payslip ID, Employee Info, Period, Gross Pay, Deductions, Net Pay
+4. Polymorphism
+- Method Overriding (Runtime) - `getDepartment()`, `getJobDescription()` implemented differently by each subclass
+- Method Overloading (Compile-Time) - `calculateSalary()` with 3 versions, `calculateDeductions()` with 2 versions
+- Interface Polymorphism - Employee references can hold any subclass, role-based operations using instanceof
+- Factory Pattern - EmployeeFactory returns Employee type, actual object can be any subclass
 
 This project demonstrates:
-- All 4 OOP Principles (Encapsulation, Abstraction, Inheritance, Polymorphism)
-- Design Patterns (Factory, Repository, MVC)
-- SOLID Principles (Single Responsibility, Interface Segregation)
-- Enterprise Architecture (Layered architecture, Separation of concerns)
-- Real-world Business Logic (Philippine payroll system)
-- Professional UI/UX (Modern, responsive design)
-
-Documentation
-
-Complete documentation includes:
-- Method Dictionary - 250+ methods across 25 classes
-- CRC Cards - Class Responsibility Collaborator cards for all classes
-- Architecture Overview - Detailed explanation of OOP principles implementation
-
-This is an academic project. For improvements or issues, please create a pull request.
-This project is for educational purposes as part of an Object-Oriented Programming course.
-
-Author: Jefrey Jurado
-- Course: Object-Oriented Programming (MO-IT110)
-- Institution: Mapúa Malayan Digital College
+- ✅ All 4 OOP Principles- Encapsulation, Abstraction, Inheritance, Polymorphism
+- ✅ Multiple Polymorphism Types - Method Overriding, Method Overloading, Interface Polymorphism, Factory Pattern
+- ✅ Design Patterns - Factory, Repository, DAO, Service Layer, Template Method, MVC
+- ✅ 4-Layer Architecture - Complete separation of concerns (Model, DAO, Service, UI)
