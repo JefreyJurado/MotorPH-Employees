@@ -10,8 +10,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
-import repository.EmployeeRepository;
-import repository.PayslipRepository;
+import dao.EmployeeRepository;
+import dao.PayslipRepository;
 import service.SalaryCalculator;
 
 public class WeeklyPayslipDialog extends JDialog {

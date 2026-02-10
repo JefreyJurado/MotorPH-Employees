@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
-import repository.EmployeeRepository;
+import dao.EmployeeRepository;
 import service.SalaryCalculator;
 
 public class ModernViewEmployeeDialog extends JDialog {

@@ -1,4 +1,4 @@
-import repository.EmployeeRepository;
+import dao.EmployeeRepository;
 import view.EmployeeDashboardFrame;
 import view.ModernLoginDialog;
 import model.User;

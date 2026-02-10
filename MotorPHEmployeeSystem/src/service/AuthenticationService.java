@@ -1,7 +1,7 @@
 package service;
 
 import model.User;
-import repository.UserRepository;
+import dao.UserRepository;
 
 public class AuthenticationService {
     private final UserRepository userRepository;

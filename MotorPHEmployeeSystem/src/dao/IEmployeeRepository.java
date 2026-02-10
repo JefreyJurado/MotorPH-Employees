@@ -1,4 +1,4 @@
-package repository;
+package dao;
 
 import model.Employee;
 import java.util.List;

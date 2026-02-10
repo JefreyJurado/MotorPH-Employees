@@ -1,9 +1,8 @@
-package repository;
+package dao;
 import model.Employee;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 public class EmployeeRepository implements IEmployeeRepository {
     private final List<Employee> employees;
     private final CSVFileHandler csvFileHandler;
@@ -29,17 +28,17 @@ public class EmployeeRepository implements IEmployeeRepository {
         }
     }
     
-    @Override
-    public void saveToCSV() {
-        try {
-            csvFileHandler.saveEmployeesToCSV(employees);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, 
-                "Error saving to CSV: " + e.getMessage(), 
-                "Save Error", 
-                JOptionPane.ERROR_MESSAGE);
+        @Override
+        public void saveToCSV() {
+            try {
+                csvFileHandler.saveEmployeesToCSV(employees);
+            } catch (IOException e) {
+                System.err.println("ERROR: Failed to save employees to CSV - " + e.getMessage());
+                e.printStackTrace();
+                // Throw runtime exception to let View layer handle error display
+                throw new RuntimeException("Error saving to CSV: " + e.getMessage(), e);
+            }
         }
-    }
     
     // Empty method - real data loaded from CSV
     private void initializeDefaultEmployees() {

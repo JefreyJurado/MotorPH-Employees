@@ -11,7 +11,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.List;
-import repository.LeaveRepository;
+import dao.LeaveRepository;
 
 public class ApproveLeaveDialog extends JDialog {
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);

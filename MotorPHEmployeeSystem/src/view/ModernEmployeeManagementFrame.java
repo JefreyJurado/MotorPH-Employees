@@ -9,9 +9,9 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.List;
 import util.EmployeeFactory;
-import repository.EmployeeRepository;
+import dao.EmployeeRepository;
 import service.SalaryCalculator;
-import repository.AttendanceRepository;
+import dao.AttendanceRepository;
 
 public class ModernEmployeeManagementFrame extends JFrame {
     private final EmployeeRepository employeeRepository;
@@ -526,22 +526,30 @@ public class ModernEmployeeManagementFrame extends JFrame {
                 JOptionPane.YES_NO_OPTION);
 
             if (confirm == JOptionPane.YES_OPTION) {
-                employeeRepository.deleteEmployee(selectedRow);
-                tableModel.removeRow(selectedRow);
-                employeeRepository.saveToCSV();
-                clearFields();
-                updateButton.setEnabled(false);
-                showModernDialog("Employee deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                try {
+                    employeeRepository.deleteEmployee(selectedRow);
+                    tableModel.removeRow(selectedRow);
+                    employeeRepository.saveToCSV();
+                    clearFields();
+                    updateButton.setEnabled(false);
+                    showModernDialog("Employee deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } catch (RuntimeException e) {
+                    showModernDialog("Error deleting employee: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } else {
             showModernDialog("No employee selected to delete", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void handleSave() {
-        employeeRepository.saveToCSV();
-        showModernDialog("All data saved to CSV successfully!", "Save Success", JOptionPane.INFORMATION_MESSAGE);
-    }
+        private void handleSave() {
+            try {
+                employeeRepository.saveToCSV();
+                showModernDialog("All data saved to CSV successfully!", "Save Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (RuntimeException e) {
+                showModernDialog("Error saving data: " + e.getMessage(), "Save Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
 
     private void handleRowSelection() {
         int selectedRow = employeeTable.getSelectedRow();
@@ -627,10 +635,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
         for (Employee employee : employees) {
             tableModel.addRow(employee.toTableRow());
         }
-    }
-
-    private void openViewEmployeeDialog() {
-        new ModernViewEmployeeDialog(this, employeeRepository, salaryCalculator, currentUser).setVisible(true);
     }
 
     private void openWeeklyPayslipDialog() {

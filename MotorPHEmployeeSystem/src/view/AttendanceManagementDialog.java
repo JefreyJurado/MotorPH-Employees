@@ -2,8 +2,8 @@ package view;
 
 import model.AttendanceRecord;
 import model.Employee;
-import repository.AttendanceRepository;
-import repository.EmployeeRepository;
+import dao.AttendanceRepository;
+import dao.EmployeeRepository;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;

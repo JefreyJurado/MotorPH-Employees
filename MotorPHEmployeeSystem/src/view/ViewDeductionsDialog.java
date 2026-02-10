@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
-import repository.EmployeeRepository;
+import dao.EmployeeRepository;
 import service.SalaryCalculator;
 
 public class ViewDeductionsDialog extends JDialog {

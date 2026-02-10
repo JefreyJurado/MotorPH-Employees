@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
-import repository.PayslipRepository;
+import dao.PayslipRepository;
 
 public class EmployeeViewPayslipsDialog extends JDialog {
     private final Employee employee;

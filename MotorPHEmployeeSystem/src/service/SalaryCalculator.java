@@ -3,7 +3,7 @@ package service;
 import model.Employee;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import repository.AttendanceRepository;
+import dao.AttendanceRepository;
 
 public class SalaryCalculator {
     
@@ -143,14 +143,7 @@ public class SalaryCalculator {
     }
     
     // METHODS FOR ATTENDANCE-BASED SALARY CALCULATION
-    
-    /**
-     * Calculate gross pay based on actual attendance records
-     * @param employee The employee
-     * @param startDate Start of pay period
-     * @param endDate End of pay period
-     * @return Gross pay for the period
-     */
+
     public double calculateGrossPayWithAttendance(Employee employee, LocalDate startDate, LocalDate endDate) {
         // Get attendance records for the period
         double totalHours = attendanceRepository.calculateTotalHours(
@@ -178,13 +171,7 @@ public class SalaryCalculator {
         
         return Math.round(grossPay * 100.0) / 100.0; // Round to 2 decimal places
     }
-    
-    /**
-     * Helper method to count working days between two dates (excludes weekends)
-     * @param startDate Start date
-     * @param endDate End date
-     * @return Number of working days
-     */
+
     public int getWorkingDaysBetween(LocalDate startDate, LocalDate endDate) {
         int workingDays = 0;
         LocalDate current = startDate;
@@ -199,14 +186,7 @@ public class SalaryCalculator {
         
         return workingDays;
     }
-    
-    /**
-     * Get attendance summary for a pay period (for payslip display)
-     * @param employeeNumber Employee number
-     * @param startDate Start of pay period
-     * @param endDate End of pay period
-     * @return Formatted attendance summary string
-     */
+
     public String getAttendanceSummary(String employeeNumber, LocalDate startDate, LocalDate endDate) {
         double totalHours = attendanceRepository.calculateTotalHours(employeeNumber, startDate, endDate);
         double overtimeHours = attendanceRepository.calculateTotalOvertime(employeeNumber, startDate, endDate);
@@ -215,17 +195,69 @@ public class SalaryCalculator {
         return String.format("Regular Hours: %.2f | Overtime Hours: %.2f | Total: %.2f", 
             regularHours, overtimeHours, totalHours);
     }
-    
-    /**
-     * Get the AttendanceRepository instance (for use in other classes)
-     * @return AttendanceRepository instance
-     */
+
     public AttendanceRepository getAttendanceRepository() {
         return attendanceRepository;
     }
     
-    // END OF ATTENDANCE METHODS
+    // METHOD OVERLOADING 
+  
+    public double calculateSalary(Employee employee) {
+        return employee.getBasicSalary();
+    }
+    public double calculateSalary(Employee employee, boolean includeAllowances) {
+        if (includeAllowances) {
+            return employee.getBasicSalary() + employee.calculateTotalAllowances();
+        }
+        return employee.getBasicSalary();
+    }
+    public double calculateSalary(Employee employee, String period, boolean includeAllowances) {
+        double salary = calculateSalary(employee, includeAllowances);
+        
+        // Adjust based on period
+        switch (period.toLowerCase()) {
+            case "weekly":
+                return salary / 4;
+            case "daily":
+                return salary / 22; // Average working days per month
+            case "semi-monthly":
+                return salary / 2;
+            default: // "monthly"
+                return salary;
+        }
+    }
     
+    public double calculateDeductions(Employee employee) {
+        double grossSalary = calculateGrossMonthlySalary(employee);
+        return calculateSSSDeduction(grossSalary) + 
+               calculatePhilHealthDeduction(grossSalary) + 
+               calculatePagIBIGDeduction(grossSalary) + 
+               calculateWithholdingTax(grossSalary);
+    }
+    
+    public double calculateDeductions(Employee employee, boolean showBreakdown) {
+        double grossSalary = calculateGrossMonthlySalary(employee);
+        double sss = calculateSSSDeduction(grossSalary);
+        double philHealth = calculatePhilHealthDeduction(grossSalary);
+        double pagibig = calculatePagIBIGDeduction(grossSalary);
+        double tax = calculateWithholdingTax(grossSalary);
+        
+        if (showBreakdown) {
+            System.out.println("═══════════════════════════════════════════════════════════");
+            System.out.println("         DEDUCTION BREAKDOWN - " + employee.getFullName());
+            System.out.println("═══════════════════════════════════════════════════════════");
+            System.out.println(String.format("SSS Contribution        : ₱%,12.2f", sss));
+            System.out.println(String.format("PhilHealth Contribution : ₱%,12.2f", philHealth));
+            System.out.println(String.format("Pag-IBIG Contribution   : ₱%,12.2f", pagibig));
+            System.out.println(String.format("Withholding Tax         : ₱%,12.2f", tax));
+            System.out.println("───────────────────────────────────────────────────────────");
+            System.out.println(String.format("TOTAL DEDUCTIONS        : ₱%,12.2f", (sss + philHealth + pagibig + tax)));
+            System.out.println("═══════════════════════════════════════════════════════════");
+        }
+        
+        return sss + philHealth + pagibig + tax;
+    }
+        
     public String generateSalaryReport(Employee employee, String month) {
         double monthlySalary = calculateMonthlySalary(employee);
         
