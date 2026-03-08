@@ -2,9 +2,12 @@ package view;
 
 import model.LeaveApplication;
 import model.Employee;
+import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import dao.LeaveRepository;
 
 public class ModernLeaveApplicationDialog extends JDialog {
@@ -14,18 +17,19 @@ public class ModernLeaveApplicationDialog extends JDialog {
     private final Color WHITE = Color.WHITE;
     private final Color LIGHT_BG = new Color(236, 240, 241);
     
-    private final Employee currentEmployee;  // ADDED
+    private final Employee currentEmployee;
     private JTextField employeeNameField;
     private JComboBox<String> leaveTypeCombo;
-    private JTextField startDateField;
-    private JTextField endDateField;
+    private JDateChooser startDateChooser;
+    private JDateChooser endDateChooser;
     private JTextArea reasonArea;
     private final LeaveRepository leaveRepository;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     
     // Constructor to accept Employee
     public ModernLeaveApplicationDialog(Frame parent, Employee employee) {
         super(parent, "Leave Application", true);
-        this.currentEmployee = employee;  // ADDED
+        this.currentEmployee = employee;
         this.leaveRepository = new LeaveRepository();
         initializeUI();
     }
@@ -90,28 +94,28 @@ public class ModernLeaveApplicationDialog extends JDialog {
         contentPanel.add(leaveTypeCombo);
         yPos += spacing;
         
-        // Start Date
         JLabel startLabel = new JLabel("Start Date:");
         startLabel.setBounds(20, yPos, labelWidth, 25);
         startLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         contentPanel.add(startLabel);
         
-        startDateField = new JTextField("YYYY-MM-DD");
-        startDateField.setBounds(fieldX, yPos, fieldWidth, 30);
-        startDateField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        contentPanel.add(startDateField);
+        startDateChooser = new JDateChooser();
+        startDateChooser.setDateFormatString("yyyy-MM-dd");
+        startDateChooser.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        startDateChooser.setBounds(fieldX, yPos, fieldWidth, 30);
+        contentPanel.add(startDateChooser);
         yPos += spacing;
         
-        // End Date
         JLabel endLabel = new JLabel("End Date:");
         endLabel.setBounds(20, yPos, labelWidth, 25);
         endLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         contentPanel.add(endLabel);
         
-        endDateField = new JTextField("YYYY-MM-DD");
-        endDateField.setBounds(fieldX, yPos, fieldWidth, 30);
-        endDateField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        contentPanel.add(endDateField);
+        endDateChooser = new JDateChooser();
+        endDateChooser.setDateFormatString("yyyy-MM-dd");
+        endDateChooser.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        endDateChooser.setBounds(fieldX, yPos, fieldWidth, 30);
+        contentPanel.add(endDateChooser);
         yPos += spacing;
         
         // Reason
@@ -149,35 +153,168 @@ public class ModernLeaveApplicationDialog extends JDialog {
         setContentPane(mainPanel);
     }
     
-    private void handleSubmit() {
-        String leaveType = (String) leaveTypeCombo.getSelectedItem();
-        String startDate = startDateField.getText().trim();
-        String endDate = endDateField.getText().trim();
-        String reason = reasonArea.getText().trim();
+    // Validation Method
+    private boolean validateLeaveFields() {
         
-        if (startDate.isEmpty() || endDate.isEmpty() || reason.isEmpty() || 
-            startDate.equals("YYYY-MM-DD") || endDate.equals("YYYY-MM-DD")) {
+        // 1. Check Employee (should always be set, but validate anyway)
+        
+        if (currentEmployee == null || currentEmployee.getEmployeeNumber() == null) {
             JOptionPane.showMessageDialog(this,
-                "Please fill in all fields",
+                "Employee information is missing",
                 "Validation Error",
-                JOptionPane.WARNING_MESSAGE);
-            return;
+                JOptionPane.ERROR_MESSAGE);
+            return false;
         }
         
-        // CREATE leave with employee NUMBER - FIXED
+        // 2. Check Leave Type
+        
+        String leaveType = (String) leaveTypeCombo.getSelectedItem();
+        if (leaveType == null || leaveType.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Please select a leave type",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // 3. Check Start Date (from JDateChooser)
+        
+        Date startDate = startDateChooser.getDate();
+        if (startDate == null) {
+            JOptionPane.showMessageDialog(this,
+                "Start Date is required!\n\n" +
+                "Please select a date from the calendar.",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // 4. Check End Date (from JDateChooser)
+        
+        Date endDate = endDateChooser.getDate();
+        if (endDate == null) {
+            JOptionPane.showMessageDialog(this,
+                "End Date is required!\n\n" +
+                "Please select a date from the calendar.",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // 5. Check that End Date is not before Start Date
+        
+        if (endDate.before(startDate)) {
+            JOptionPane.showMessageDialog(this,
+                "Invalid Date Range!\n\n" +
+                "End Date cannot be before Start Date.\n\n" +
+                "Start Date: " + dateFormat.format(startDate) + "\n" +
+                "End Date: " + dateFormat.format(endDate),
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // 6. Calculate and display leave duration
+        
+        long diffInMillies = endDate.getTime() - startDate.getTime();
+        long days = (diffInMillies / (1000 * 60 * 60 * 24)) + 1; 
+        
+        // 7. Warn if leave duration is very long (more than 30 days)
+        
+        if (days > 30) {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                "Leave duration is very long (" + days + " days).\n\n" +
+                "Start: " + dateFormat.format(startDate) + "\n" +
+                "End: " + dateFormat.format(endDate) + "\n\n" +
+                "This exceeds the typical maximum leave period.\n\n" +
+                "Do you want to continue anyway?",
+                "Long Leave Duration Warning",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+            if (confirm != JOptionPane.YES_OPTION) {
+                return false;
+            }
+        }
+        
+        // 8. Check Reason (Must not be empty)
+        
+        if (reasonArea.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Reason for leave is required",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            reasonArea.requestFocus();
+            return false;
+        }
+        
+        // 9. Check Reason Length (At least 10 characters for meaningful explanation)
+        
+        if (reasonArea.getText().trim().length() < 10) {
+            JOptionPane.showMessageDialog(this,
+                "Please provide a more detailed reason (at least 10 characters)\n" +
+                "Current length: " + reasonArea.getText().trim().length() + " characters",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            reasonArea.requestFocus();
+            return false;
+        }
+        
+        // 10. Warn if Reason is very long (more than 500 characters)
+        
+        if (reasonArea.getText().trim().length() > 500) {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                "Your reason is very long (" + reasonArea.getText().trim().length() + " characters).\n" +
+                "Consider making it more concise. Continue anyway?",
+                "Long Reason Warning",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+            if (confirm != JOptionPane.YES_OPTION) {
+                reasonArea.requestFocus();
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private void handleSubmit() {
+        // Validation Check - Must be first
+        if (!validateLeaveFields()) {
+            return;  // Stop if validation fails
+        }
+        
+        String leaveType = (String) leaveTypeCombo.getSelectedItem();
+        Date startDate = startDateChooser.getDate();
+        Date endDate = endDateChooser.getDate();
+        String startDateStr = dateFormat.format(startDate);
+        String endDateStr = dateFormat.format(endDate);
+        
+        String reason = reasonArea.getText().trim();
+        
+        // CREATE leave with employee NUMBER
         LeaveApplication leave = new LeaveApplication(
             currentEmployee.getEmployeeNumber(),
             currentEmployee.getFullName(),
             leaveType, 
-            startDate, 
-            endDate, 
+            startDateStr, 
+            endDateStr,  
             reason
         );
         
         leaveRepository.addLeave(leave);
         
+        // Calculate duration for display
+        long diffInMillies = endDate.getTime() - startDate.getTime();
+        long days = (diffInMillies / (1000 * 60 * 60 * 24)) + 1;
+        
         JOptionPane.showMessageDialog(this,
-            "Leave application submitted successfully!\nStatus: Pending\nLeave ID: " + leave.getLeaveId(),
+            "Leave application submitted successfully!\n\n" +
+            "Leave ID: " + leave.getLeaveId() + "\n" +
+            "Type: " + leaveType + "\n" +
+            "Duration: " + days + " day(s)\n" +
+            "From: " + startDateStr + "\n" +
+            "To: " + endDateStr + "\n" +
+            "Status: Pending",
             "Success",
             JOptionPane.INFORMATION_MESSAGE);
         

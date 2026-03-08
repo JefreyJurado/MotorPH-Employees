@@ -8,36 +8,31 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.List;
-import util.EmployeeFactory;
 import dao.EmployeeRepository;
+import dao.PayslipRepository;
 import service.SalaryCalculator;
 import dao.AttendanceRepository;
 
 public class ModernEmployeeManagementFrame extends JFrame {
     private final EmployeeRepository employeeRepository;
+    private final PayslipRepository payslipRepository;
     private final SalaryCalculator salaryCalculator;
     private final User currentUser; 
     private final AttendanceRepository attendanceRepository;
     
     private final Color PRIMARY_COLOR = new Color(41, 128, 185);
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
-    private final Color DARK_COLOR = new Color(44, 62, 80);
     private final Color LIGHT_BG = new Color(236, 240, 241);
     private final Color WHITE = Color.WHITE;
     private final Color TEXT_COLOR = new Color(44, 62, 80);
     
-    private JTextField tfEmpNum, tfLastName, tfFirstName, tfBDay, tfAdd;
-    private JTextField tfPhone, tfSSS, tfPhealth, tfTin, tfPag;
-    private JTextField tfPosition, tfStatus, tfSupervisor;
-    private JTextField tfSalary, tfRice, tfPhoneAllow;
-    private JTextField tfClothing, tfSemiMo, tfHourlyR;
-    
     private DefaultTableModel tableModel;
     private JTable employeeTable;
-    private JButton updateButton;
+    private JButton updateButton, deleteButton;
 
     public ModernEmployeeManagementFrame(EmployeeRepository repository, User user) {
         this.employeeRepository = repository;
+        this.payslipRepository = new PayslipRepository();
         this.salaryCalculator = new SalaryCalculator();
         this.currentUser = user;
         this.attendanceRepository = new AttendanceRepository();
@@ -52,12 +47,11 @@ public class ModernEmployeeManagementFrame extends JFrame {
     
     private void applyAccessControl() {
         setTitle("MotorPH Employee Management System - " + currentUser.getRole() + ": " + currentUser.getUsername());
-        // Access control is now handled in createHeaderPanel() and createEmploymentDetailsPanel()
     }
 
     private void initializeModernUI() {
         setTitle("MotorPH Employee Management System");
-        setSize(1400, 950);
+        setSize(1400, 900);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -69,34 +63,32 @@ public class ModernEmployeeManagementFrame extends JFrame {
         }
         
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(null);
+        mainPanel.setLayout(new BorderLayout());
         mainPanel.setBackground(LIGHT_BG);
         
-        createHeaderPanel(mainPanel);
-        createEmployeeInfoPanel(mainPanel);
-        createEmploymentDetailsPanel(mainPanel);
-        createModernTable(mainPanel);
+        JPanel headerPanel = createHeaderPanel();
+        mainPanel.add(headerPanel, BorderLayout.NORTH);
+        
+        JPanel tablePanel = createModernTable();
+        mainPanel.add(tablePanel, BorderLayout.CENTER);
         
         setContentPane(mainPanel);
     }
     
-    private void createHeaderPanel(JPanel parent) {
+    private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
-        headerPanel.setBounds(0, 0, 1400, 80);
+        headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 22));
         headerPanel.setBackground(PRIMARY_COLOR);
-        headerPanel.setLayout(null);
+        headerPanel.setPreferredSize(new Dimension(1400, 80));
         
         JLabel titleLabel = new JLabel("MotorPH Employee Management");
-        titleLabel.setBounds(30, 15, 400, 50);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         titleLabel.setForeground(WHITE);
+        titleLabel.setPreferredSize(new Dimension(400, 40));
         headerPanel.add(titleLabel);
         
-        int btnWidth = 90;
-        int btnHeight = 35;
-        int startX = 470;
-        int spacing = 5;
-        int yPos = 22;
+        // Add some spacing
+        headerPanel.add(Box.createHorizontalStrut(20));
         
         String role = currentUser.getRole();
         
@@ -104,74 +96,80 @@ public class ModernEmployeeManagementFrame extends JFrame {
         if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
             role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
             role.equals("Executive")) {
-            JButton queryBtn = createHeaderButton("Query", startX, yPos, btnWidth, btnHeight);
+            JButton queryBtn = createHeaderButton("Query");
             queryBtn.addActionListener(e -> handleQuery());
             headerPanel.add(queryBtn);
-            startX += btnWidth + spacing;
         }
         
         // ADD - Only HR and Owner
         if (role.equals("HR") || role.equals("Owner")) {
-            JButton addBtn = createHeaderButton("Add", startX, yPos, btnWidth, btnHeight);
+            JButton addBtn = createHeaderButton("Add");
             addBtn.addActionListener(e -> handleAdd());
             headerPanel.add(addBtn);
-            startX += btnWidth + spacing;
         }
         
         // UPDATE - Only HR and Owner
         if (role.equals("HR") || role.equals("Owner")) {
-            updateButton = createHeaderButton("Update", startX, yPos, btnWidth, btnHeight);
+            updateButton = createHeaderButton("Update");
             updateButton.setEnabled(false);
             updateButton.addActionListener(e -> handleUpdate());
             headerPanel.add(updateButton);
-            startX += btnWidth + spacing;
         } else {
-            updateButton = new JButton(); // Create dummy button so code doesn't break
+            updateButton = new JButton(); 
             updateButton.setVisible(false);
         }
         
         // DELETE - Only HR and Owner
         if (role.equals("HR") || role.equals("Owner")) {
-            JButton deleteBtn = createHeaderButton("Delete", startX, yPos, btnWidth, btnHeight);
-            deleteBtn.addActionListener(e -> handleDelete());
-            headerPanel.add(deleteBtn);
-            startX += btnWidth + spacing;
+            deleteButton = createHeaderButton("Delete");
+            deleteButton.setEnabled(false);
+            deleteButton.addActionListener(e -> handleDelete());
+            headerPanel.add(deleteButton);
+        } else {
+            deleteButton = new JButton();
+            deleteButton.setVisible(false);
         }
         
         // CLEAR - Everyone
         if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
             role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
             role.equals("Executive")) {
-            JButton clearBtn = createHeaderButton("Clear", startX, yPos, btnWidth, btnHeight);
-            clearBtn.addActionListener(e -> clearFields());
+            JButton clearBtn = createHeaderButton("Clear");
+            clearBtn.addActionListener(e -> clearSelection());
             headerPanel.add(clearBtn);
-            startX += btnWidth + spacing;
         }
         
         // SAVE - Everyone
         if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
             role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
             role.equals("Executive")) {
-            JButton saveBtn = createHeaderButton("Save", startX, yPos, btnWidth, btnHeight);
+            JButton saveBtn = createHeaderButton("Save");
             saveBtn.addActionListener(e -> handleSave());
             headerPanel.add(saveBtn);
-            startX += btnWidth + spacing;
         }
         
         // LEAVE - Only HR and Owner
         if (role.equals("HR") || role.equals("Owner")) {
-            JButton leaveBtn = createHeaderButton("Leave", startX, yPos, btnWidth, btnHeight);
+            JButton leaveBtn = createHeaderButton("Leave");
             leaveBtn.addActionListener(e -> openApproveLeaveDialog());
             headerPanel.add(leaveBtn);
-            startX += btnWidth + spacing;
         }
 
         // ATTENDANCE - HR, Finance (for payroll), and Owner
         if (role.equals("HR") || role.equals("Finance") || role.equals("Owner")) {
-            JButton attendanceBtn = createHeaderButton("Attendance", startX, yPos, 140, btnHeight);
+            JButton attendanceBtn = createHeaderButton("Attendance");
+            attendanceBtn.setPreferredSize(new Dimension(110, 35));
             attendanceBtn.addActionListener(e -> openAttendanceManagement());
             headerPanel.add(attendanceBtn);
-            startX += 140 + spacing; // Move startX for next button
+        }
+        
+        // PROCESS PAYROLL - Only Finance, Accounting, Executive, Owner
+        if (role.equals("Finance") || role.equals("Accounting") || 
+            role.equals("Executive") || role.equals("Owner")) {
+            JButton processPayrollBtn = createHeaderButton("Process Payroll");
+            processPayrollBtn.setPreferredSize(new Dimension(130, 35));
+            processPayrollBtn.addActionListener(e -> openProcessPayrollDialog());
+            headerPanel.add(processPayrollBtn);
         }
         
         // BACK BUTTON - At the end, after all other buttons
@@ -183,7 +181,7 @@ public class ModernEmployeeManagementFrame extends JFrame {
             backBtn.setFocusPainted(false);
             backBtn.setBorderPainted(false);
             backBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            backBtn.setBounds(startX, yPos, 100, btnHeight);
+            backBtn.setPreferredSize(new Dimension(90, 35));
             backBtn.addActionListener(e -> {
                 dispose();
                 new EmployeeDashboardFrame(employeeRepository, currentUser).setVisible(true);
@@ -201,18 +199,18 @@ public class ModernEmployeeManagementFrame extends JFrame {
             headerPanel.add(backBtn);
         }
         
-        parent.add(headerPanel);
+        return headerPanel;
     }
 
-    private JButton createHeaderButton(String text, int x, int y, int width, int height) {
+    private JButton createHeaderButton(String text) {
         JButton button = new JButton(text);
-        button.setBounds(x, y, width, height);
         button.setFont(new Font("Segoe UI", Font.BOLD, 11));
         button.setBackground(SECONDARY_COLOR);
         button.setForeground(WHITE);
         button.setFocusPainted(false);
         button.setBorderPainted(false);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setPreferredSize(new Dimension(90, 35));
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -228,128 +226,19 @@ public class ModernEmployeeManagementFrame extends JFrame {
         return button;
     }
 
-    private void createEmployeeInfoPanel(JPanel parent) {
-        JPanel panel = createModernPanel("Personal Information", 30, 100, 650, 540);
-        
-        int yPos = 50;
-        int labelX = 20;
-        int fieldX = 200;
-        int spacing = 45;
-        
-        addModernField(panel, "Employee Number", tfEmpNum = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "Last Name", tfLastName = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "First Name", tfFirstName = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "Birthday", tfBDay = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        JLabel addressLabel = new JLabel("Address");
-        addressLabel.setBounds(labelX, yPos, 150, 25);
-        addressLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        addressLabel.setForeground(TEXT_COLOR);
-        panel.add(addressLabel);
-        
-        tfAdd = new JTextField();
-        tfAdd.setBounds(fieldX, yPos, 420, 60);
-        styleTextField(tfAdd);
-        panel.add(tfAdd);
-        yPos += 75;
-        
-        addModernField(panel, "Phone Number", tfPhone = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "SSS Number", tfSSS = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "PhilHealth Number", tfPhealth = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "TIN", tfTin = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-        
-        addModernField(panel, "Pag-IBIG Number", tfPag = createStyledTextField(), labelX, fieldX, yPos);
-        
-        parent.add(panel);
-    }
-
-    private void createEmploymentDetailsPanel(JPanel parent) {
-        JPanel panel = createModernPanel("Employment Details", 700, 100, 650, 540);
-
-        int yPos = 50;
-        int labelX = 20;
-        int fieldX = 200;
-        int spacing = 45;
-
-        addModernField(panel, "Position", tfPosition = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-
-        addModernField(panel, "Status", tfStatus = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-
-        addModernField(panel, "Immediate Supervisor", tfSupervisor = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-
-        addModernField(panel, "Basic Salary", tfSalary = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-
-        addModernField(panel, "Rice Subsidy", tfRice = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-
-        addModernField(panel, "Phone Allowance", tfPhoneAllow = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-
-        addModernField(panel, "Clothing Allowance", tfClothing = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-
-        addModernField(panel, "Semi-Monthly Rate", tfSemiMo = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing;
-
-        addModernField(panel, "Hourly Rate", tfHourlyR = createStyledTextField(), labelX, fieldX, yPos);
-        yPos += spacing + 20;
-
-        String role = currentUser.getRole();
-
-        // PAYROLL ACTIONS - Only for Finance, Accounting, Executive, Owner
-        if (role.equals("Finance") || role.equals("Accounting") || 
-            role.equals("Executive") || role.equals("Owner")) {
-            
-            JLabel payrollLabel = new JLabel("Payroll Actions:");
-            payrollLabel.setBounds(labelX, yPos + 7, 150, 25);
-            payrollLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-            payrollLabel.setForeground(PRIMARY_COLOR);
-            panel.add(payrollLabel);
-
-            JButton weeklyPayslipBtn = createHeaderButton("Weekly Payslip", 170, yPos, 215, 35);
-            weeklyPayslipBtn.addActionListener(e -> openWeeklyPayslipDialog());
-            panel.add(weeklyPayslipBtn);
-
-            JButton viewDeductionsBtn = createHeaderButton("View Deductions", 395, yPos, 215, 35);
-            viewDeductionsBtn.addActionListener(e -> openViewDeductionsDialog());
-            panel.add(viewDeductionsBtn);
-        }
-
-        parent.add(panel);
-    }
-
-    private void createModernTable(JPanel parent) {
+    private JPanel createModernTable() {
         JPanel tablePanel = new JPanel();
-        tablePanel.setBounds(30, 650, 1320, 280);
         tablePanel.setLayout(new BorderLayout());
         tablePanel.setBackground(WHITE);
         tablePanel.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+            BorderFactory.createEmptyBorder(20, 20, 20, 20)
         ));
 
-        JLabel tableTitle = new JLabel("Employee Records");
-        tableTitle.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        JLabel tableTitle = new JLabel("Employee Records - All Employees");
+        tableTitle.setFont(new Font("Segoe UI", Font.BOLD, 18));
         tableTitle.setForeground(TEXT_COLOR);
-        tableTitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        tableTitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
         tablePanel.add(tableTitle, BorderLayout.NORTH);
 
         String[] columnNames = {"Emp #", "Last Name", "First Name", 
@@ -365,26 +254,66 @@ public class ModernEmployeeManagementFrame extends JFrame {
         };
 
         employeeTable = new JTable(tableModel);
-        employeeTable.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        employeeTable.setRowHeight(30);
+        employeeTable.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        employeeTable.setRowHeight(35);
         employeeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         employeeTable.setShowVerticalLines(true);
         employeeTable.setGridColor(new Color(189, 195, 199));
-        employeeTable.setSelectionBackground(new Color(52, 152, 219, 50));
+        employeeTable.setSelectionBackground(new Color(52, 152, 219, 80));
         employeeTable.setSelectionForeground(TEXT_COLOR);
         employeeTable.setFillsViewportHeight(true);
         employeeTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+        // Set column widths for better readability
+        employeeTable.getColumnModel().getColumn(0).setPreferredWidth(70);   // Emp #
+        employeeTable.getColumnModel().getColumn(1).setPreferredWidth(120);  // Last Name
+        employeeTable.getColumnModel().getColumn(2).setPreferredWidth(120);  // First Name
+        employeeTable.getColumnModel().getColumn(3).setPreferredWidth(100);  // Birthday
+        employeeTable.getColumnModel().getColumn(4).setPreferredWidth(300);  // Address
+        employeeTable.getColumnModel().getColumn(5).setPreferredWidth(120);  // Phone
+        employeeTable.getColumnModel().getColumn(6).setPreferredWidth(120);  // SSS
+        employeeTable.getColumnModel().getColumn(7).setPreferredWidth(120);  // PhilHealth
+        employeeTable.getColumnModel().getColumn(8).setPreferredWidth(120);  // TIN
+        employeeTable.getColumnModel().getColumn(9).setPreferredWidth(120);  // Pag-IBIG
+        employeeTable.getColumnModel().getColumn(10).setPreferredWidth(100); // Status
+        employeeTable.getColumnModel().getColumn(11).setPreferredWidth(200); // Position
+        employeeTable.getColumnModel().getColumn(12).setPreferredWidth(150); // Supervisor
+        employeeTable.getColumnModel().getColumn(13).setPreferredWidth(100); // Salary
+        employeeTable.getColumnModel().getColumn(14).setPreferredWidth(80);  // Rice
+        employeeTable.getColumnModel().getColumn(15).setPreferredWidth(100); // Phone Allow
+        employeeTable.getColumnModel().getColumn(16).setPreferredWidth(100); // Clothing
+        employeeTable.getColumnModel().getColumn(17).setPreferredWidth(110); // Semi-Monthly
+        employeeTable.getColumnModel().getColumn(18).setPreferredWidth(90);  // Hourly
+
         JTableHeader header = employeeTable.getTableHeader();
-        header.setBackground(Color.WHITE);
-        header.setForeground(DARK_COLOR);
+        header.setBackground(PRIMARY_COLOR);
+        header.setForeground(Color.BLACK);
         header.setFont(new Font("Segoe UI", Font.BOLD, 13));
         header.setPreferredSize(new Dimension(header.getWidth(), 40));
         header.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, PRIMARY_COLOR));
         header.setOpaque(true);
 
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setFont(new Font("Segoe UI", Font.BOLD, 13));
+                c.setBackground(PRIMARY_COLOR);
+                c.setForeground(WHITE);
+                setHorizontalAlignment(JLabel.CENTER);
+                return c;
+            }
+        };
+        headerRenderer.setOpaque(true);
+
+        for (int i = 0; i < employeeTable.getColumnModel().getColumnCount(); i++) {
+            employeeTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
         for (int i = 0; i < employeeTable.getColumnCount(); i++) {
             employeeTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
@@ -395,7 +324,6 @@ public class ModernEmployeeManagementFrame extends JFrame {
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.getVerticalScrollBar().setBlockIncrement(50);
-        scrollPane.setPreferredSize(new Dimension(1300, 220));
 
         tablePanel.add(scrollPane, BorderLayout.CENTER);
 
@@ -405,114 +333,59 @@ public class ModernEmployeeManagementFrame extends JFrame {
             }
         });
 
-        parent.add(tablePanel);
-    }
-
-    private JPanel createModernPanel(String title, int x, int y, int width, int height) {
-        JPanel panel = new JPanel();
-        panel.setBounds(x, y, width, height);
-        panel.setLayout(null);
-        panel.setBackground(WHITE);
-        panel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
-        ));
-        
-        JLabel titleLabel = new JLabel(title);
-        titleLabel.setBounds(15, 10, 400, 30);
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        titleLabel.setForeground(PRIMARY_COLOR);
-        panel.add(titleLabel);
-        
-        return panel;
-    }
-
-    private void addModernField(JPanel panel, String labelText, JTextField textField, 
-                                int labelX, int fieldX, int yPos) {
-        JLabel label = new JLabel(labelText);
-        label.setBounds(labelX, yPos, 170, 25);
-        label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        label.setForeground(TEXT_COLOR);
-        panel.add(label);
-        
-        textField.setBounds(fieldX, yPos, 420, 30);
-        panel.add(textField);
-    }
-
-    private JTextField createStyledTextField() {
-        JTextField textField = new JTextField();
-        styleTextField(textField);
-        return textField;
-    }
-
-    private void styleTextField(JTextField textField) {
-        textField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        textField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-            BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        ));
+        return tablePanel;
     }
 
     private void handleQuery() {
-        String empNumber = tfEmpNum.getText().trim();
+        String empNumber = JOptionPane.showInputDialog(this, 
+            "Enter Employee Number:", 
+            "Query Employee", 
+            JOptionPane.QUESTION_MESSAGE);
 
-        if (empNumber.isEmpty()) {
-            showModernDialog("Please enter an Employee Number", "Query", JOptionPane.WARNING_MESSAGE);
+        if (empNumber == null || empNumber.trim().isEmpty()) {
             return;
         }
 
-        Employee employee = employeeRepository.findByEmployeeNumber(empNumber);
+        Employee employee = employeeRepository.findByEmployeeNumber(empNumber.trim());
 
         if (employee != null) {
-            populateFields(employee);
-
             for (int i = 0; i < tableModel.getRowCount(); i++) {
-                if (tableModel.getValueAt(i, 0).equals(empNumber)) {
+                if (tableModel.getValueAt(i, 0).equals(empNumber.trim())) {
                     employeeTable.setRowSelectionInterval(i, i);
                     employeeTable.scrollRectToVisible(employeeTable.getCellRect(i, 0, true));
                     break;
                 }
             }
-
-            updateButton.setEnabled(true);
             showModernDialog("Employee found!", "Query Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
             showModernDialog("Employee Number not found", "Query Failed", JOptionPane.ERROR_MESSAGE);
-            clearFields();
         }
     }
 
     private void handleAdd() {
-        try {
-            Employee employee = createEmployeeFromFields();
-            employeeRepository.addEmployee(employee);
-            tableModel.addRow(employee.toTableRow());
-            employeeRepository.saveToCSV();
-            clearFields();
+        AddEmployeeDialog dialog = new AddEmployeeDialog(this, employeeRepository);
+        dialog.setVisible(true);
+        
+        // Refresh table after dialog closes
+        if (dialog.isEmployeeAdded()) {
+            loadEmployeeData();
             showModernDialog("Employee added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception ex) {
-            showModernDialog("Error adding employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void handleUpdate() {
         int selectedRow = employeeTable.getSelectedRow();
         if (selectedRow != -1) {
-            try {
-                Employee employee = createEmployeeFromFields();
-                employeeRepository.updateEmployee(selectedRow, employee);
-
-                Object[] rowData = employee.toTableRow();
-                for (int i = 0; i < rowData.length; i++) {
-                    tableModel.setValueAt(rowData[i], selectedRow, i);
-                }
-
-                employeeRepository.saveToCSV();
-                clearFields();
-                updateButton.setEnabled(false);
+            Employee employee = employeeRepository.getEmployee(selectedRow);
+            
+            UpdateEmployeeDialog dialog = new UpdateEmployeeDialog(this, employeeRepository, employee, selectedRow);
+            dialog.setVisible(true);
+            
+            // Refresh table after dialog closes
+            if (dialog.isEmployeeUpdated()) {
+                loadEmployeeData();
+                clearSelection();
                 showModernDialog("Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
-                showModernDialog("Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -520,133 +393,69 @@ public class ModernEmployeeManagementFrame extends JFrame {
     private void handleDelete() {
         int selectedRow = employeeTable.getSelectedRow();
         if (selectedRow != -1) {
+            Employee employee = employeeRepository.getEmployee(selectedRow);
+            
             int confirm = JOptionPane.showConfirmDialog(this, 
-                "Are you sure you want to delete this employee?", 
+                "Are you sure you want to delete this employee?\n\n" +
+                "Employee: " + employee.getFullName() + "\n" +
+                "Position: " + employee.getPosition(), 
                 "Confirm Delete", 
-                JOptionPane.YES_NO_OPTION);
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
 
             if (confirm == JOptionPane.YES_OPTION) {
                 try {
                     employeeRepository.deleteEmployee(selectedRow);
                     tableModel.removeRow(selectedRow);
                     employeeRepository.saveToCSV();
-                    clearFields();
-                    updateButton.setEnabled(false);
+                    clearSelection();
                     showModernDialog("Employee deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 } catch (RuntimeException e) {
                     showModernDialog("Error deleting employee: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } else {
-            showModernDialog("No employee selected to delete", "Error", JOptionPane.ERROR_MESSAGE);
+            showModernDialog("Please select an employee to delete", "No Selection", JOptionPane.WARNING_MESSAGE);
         }
     }
 
-        private void handleSave() {
-            try {
-                employeeRepository.saveToCSV();
-                showModernDialog("All data saved to CSV successfully!", "Save Success", JOptionPane.INFORMATION_MESSAGE);
-            } catch (RuntimeException e) {
-                showModernDialog("Error saving data: " + e.getMessage(), "Save Error", JOptionPane.ERROR_MESSAGE);
-            }
+    private void handleSave() {
+        try {
+            employeeRepository.saveToCSV();
+            showModernDialog("All data saved to CSV successfully!", "Save Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (RuntimeException e) {
+            showModernDialog("Error saving data: " + e.getMessage(), "Save Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
 
     private void handleRowSelection() {
         int selectedRow = employeeTable.getSelectedRow();
         if (selectedRow != -1) {
-            Employee employee = employeeRepository.getEmployee(selectedRow);
-            if (employee != null) {
-                populateFields(employee);
-                updateButton.setEnabled(true);
-            }
+            updateButton.setEnabled(true);
+            deleteButton.setEnabled(true);
         }
     }
-
-    private void populateFields(Employee employee) {
-        tfEmpNum.setText(employee.getEmployeeNumber());
-        tfLastName.setText(employee.getLastName());
-        tfFirstName.setText(employee.getFirstName());
-        tfBDay.setText(employee.getBirthday());
-        tfAdd.setText(employee.getAddress());
-        tfPhone.setText(employee.getPhoneNumber());
-        tfSSS.setText(employee.getSssNumber());
-        tfPhealth.setText(employee.getPhilhealthNumber());
-        tfTin.setText(employee.getTin());
-        tfPag.setText(employee.getPagibigNumber());
-        tfPosition.setText(employee.getPosition());
-        tfStatus.setText(employee.getStatus());
-        tfSupervisor.setText(employee.getImmediateSupervisor());
-        tfSalary.setText(String.valueOf(employee.getBasicSalary()));
-        tfRice.setText(String.valueOf(employee.getRiceSubsidy()));
-        tfPhoneAllow.setText(String.valueOf(employee.getPhoneAllowance()));
-        tfClothing.setText(String.valueOf(employee.getClothingAllowance()));
-        tfSemiMo.setText(String.valueOf(employee.getSemiMonthlyRate()));
-        tfHourlyR.setText(String.valueOf(employee.getHourlyRate()));
-    }
-
-    private Employee createEmployeeFromFields() {
-        return EmployeeFactory.createEmployee(
-            tfEmpNum.getText(),
-            tfLastName.getText(),
-            tfFirstName.getText(),
-            tfBDay.getText(),
-            tfAdd.getText(),
-            tfPhone.getText(),
-            tfSSS.getText(),
-            tfPhealth.getText(),
-            tfTin.getText(),
-            tfPag.getText(),
-            tfStatus.getText(),
-            tfPosition.getText(),
-            tfSupervisor.getText(),
-            Double.parseDouble(tfSalary.getText()),
-            Double.parseDouble(tfRice.getText()),
-            Double.parseDouble(tfPhoneAllow.getText()),
-            Double.parseDouble(tfClothing.getText()),
-            Double.parseDouble(tfSemiMo.getText()),
-            Double.parseDouble(tfHourlyR.getText())
-        );
-    }
-
-    private void clearFields() {
-        tfEmpNum.setText("");
-        tfLastName.setText("");
-        tfFirstName.setText("");
-        tfBDay.setText("");
-        tfAdd.setText("");
-        tfPhone.setText("");
-        tfSSS.setText("");
-        tfPhealth.setText("");
-        tfTin.setText("");
-        tfPag.setText("");
-        tfPosition.setText("");
-        tfStatus.setText("");
-        tfSupervisor.setText("");
-        tfSalary.setText("");
-        tfRice.setText("");
-        tfPhoneAllow.setText("");
-        tfClothing.setText("");
-        tfSemiMo.setText("");
-        tfHourlyR.setText("");
+    
+    private void clearSelection() {
+        employeeTable.clearSelection();
+        updateButton.setEnabled(false);
+        deleteButton.setEnabled(false);
     }
 
     private void loadEmployeeData() {
+        tableModel.setRowCount(0);
         List<Employee> employees = employeeRepository.getAllEmployees();
         for (Employee employee : employees) {
             tableModel.addRow(employee.toTableRow());
         }
     }
 
-    private void openWeeklyPayslipDialog() {
-        new WeeklyPayslipDialog(this, employeeRepository, salaryCalculator, currentUser).setVisible(true);
-    }
-
-    private void openViewDeductionsDialog() {
-        new ViewDeductionsDialog(this, employeeRepository, salaryCalculator, currentUser).setVisible(true);
-    }
-
     private void openApproveLeaveDialog() {
         new ApproveLeaveDialog(this, currentUser).setVisible(true);
+    }
+    
+    private void openProcessPayrollDialog() {
+        new ProcessPayrollDialog(this, employeeRepository, salaryCalculator, currentUser).setVisible(true);
     }
 
     private void showModernDialog(String message, String title, int messageType) {

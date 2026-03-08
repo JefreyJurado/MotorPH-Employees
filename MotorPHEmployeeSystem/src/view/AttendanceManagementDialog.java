@@ -4,6 +4,7 @@ import model.AttendanceRecord;
 import model.Employee;
 import dao.AttendanceRepository;
 import dao.EmployeeRepository;
+import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -11,8 +12,9 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 public class AttendanceManagementDialog extends JDialog {
     private final AttendanceRepository attendanceRepository;
@@ -22,7 +24,8 @@ public class AttendanceManagementDialog extends JDialog {
     private final Color SECONDARY_COLOR = new Color(52, 152, 219);
     private final Color WHITE = Color.WHITE;
     
-    private JTextField tfEmployeeNum, tfDate, tfTimeIn, tfTimeOut, tfRemarks;
+    private JTextField tfEmployeeNum, tfTimeIn, tfTimeOut, tfRemarks;
+    private JDateChooser dateChooser; 
     private JComboBox<String> cbStatus;
     private DefaultTableModel tableModel;
     private JTable attendanceTable;
@@ -43,7 +46,6 @@ public class AttendanceManagementDialog extends JDialog {
         setLocationRelativeTo(getParent());
         setLayout(new BorderLayout(10, 10));
         
-        // Title Panel
         JPanel titlePanel = new JPanel(new GridBagLayout());
         titlePanel.setBackground(PRIMARY_COLOR);
         titlePanel.setPreferredSize(new Dimension(1200, 60));
@@ -103,12 +105,15 @@ public class AttendanceManagementDialog extends JDialog {
         panel.add(tfEmployeeNum, gbc);
         
         gbc.gridx = 2;
-        panel.add(new JLabel("Date (YYYY-MM-DD):"), gbc);
+        panel.add(new JLabel("Date:"), gbc);
         
         gbc.gridx = 3;
-        tfDate = new JTextField(15);
-        tfDate.setText(LocalDate.now().toString());
-        panel.add(tfDate, gbc);
+        dateChooser = new JDateChooser();
+        dateChooser.setDateFormatString("yyyy-MM-dd");
+        dateChooser.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        dateChooser.setDate(new Date());
+        dateChooser.setPreferredSize(new Dimension(180, 25));
+        panel.add(dateChooser, gbc);
         
         // Row 2: Time In, Time Out
         gbc.gridx = 0; gbc.gridy = 1;
@@ -177,14 +182,12 @@ public class AttendanceManagementDialog extends JDialog {
         attendanceTable.setShowVerticalLines(true);
         attendanceTable.setGridColor(new Color(189, 195, 199));
         
-        // Proper header renderer with visible colors
         JTableHeader header = attendanceTable.getTableHeader();
         header.setOpaque(true);
         header.setBackground(PRIMARY_COLOR);
         header.setForeground(WHITE);
         header.setFont(new Font("Segoe UI", Font.BOLD, 13));
         
-        // Custom header renderer to ensure colors are applied
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(PRIMARY_COLOR);
         headerRenderer.setForeground(WHITE);
@@ -192,12 +195,10 @@ public class AttendanceManagementDialog extends JDialog {
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
         headerRenderer.setOpaque(true);
         
-        // Apply to all columns
         for (int i = 0; i < attendanceTable.getColumnModel().getColumnCount(); i++) {
             attendanceTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
         
-        // Center align table cells
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < attendanceTable.getColumnCount(); i++) {
@@ -270,27 +271,183 @@ public class AttendanceManagementDialog extends JDialog {
         return button;
     }
     
+    // VALIDATION METHOD
+    
+    private boolean validateAttendanceFields() {
+        // 1. Check Employee Number
+        if (tfEmployeeNum.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Employee Number is required",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            tfEmployeeNum.requestFocus();
+            return false;
+        }
+        
+        // 2. Check if Employee Exists
+        
+        String empNum = tfEmployeeNum.getText().trim();
+        Employee employee = employeeRepository.findByEmployeeNumber(empNum);
+        if (employee == null) {
+            JOptionPane.showMessageDialog(this,
+                "Employee Number " + empNum + " not found in system",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            tfEmployeeNum.requestFocus();
+            return false;
+        }
+        
+        // 3. Check Date (from JDateChooser)
+        
+        Date selectedDate = dateChooser.getDate();
+        if (selectedDate == null) {
+            JOptionPane.showMessageDialog(this,
+                "Date is required!\n\n" +
+                "Please select a date from the calendar.",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // 4. Check Status
+        
+        String status = (String) cbStatus.getSelectedItem();
+        if (status == null || status.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                "Please select an attendance status",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // 5. Validate Time Fields for "PRESENT" Status
+        
+        if ("Present".equals(status)) {
+            String timeIn = tfTimeIn.getText().trim();
+            String timeOut = tfTimeOut.getText().trim();
+            
+            if (timeIn.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                    "Time-In is required for Present status",
+                    "Validation Error",
+                    JOptionPane.ERROR_MESSAGE);
+                tfTimeIn.requestFocus();
+                return false;
+            }
+            
+            if (timeOut.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                    "Time-Out is required for Present status",
+                    "Validation Error",
+                    JOptionPane.ERROR_MESSAGE);
+                tfTimeOut.requestFocus();
+                return false;
+            }
+            
+            // 6. Validate Time Format (HH:mm)
+            
+            if (!timeIn.matches("\\d{2}:\\d{2}")) {
+                JOptionPane.showMessageDialog(this,
+                    "Time-In must be in HH:mm format (e.g., 08:00)",
+                    "Validation Error",
+                    JOptionPane.ERROR_MESSAGE);
+                tfTimeIn.requestFocus();
+                return false;
+            }
+            
+            if (!timeOut.matches("\\d{2}:\\d{2}")) {
+                JOptionPane.showMessageDialog(this,
+                    "Time-Out must be in HH:mm format (e.g., 17:00)",
+                    "Validation Error",
+                    JOptionPane.ERROR_MESSAGE);
+                tfTimeOut.requestFocus();
+                return false;
+            }
+            
+            // 7. Validate Time Values (00-23 for hours, 00-59 for minutes)
+            
+            try {
+                String[] inParts = timeIn.split(":");
+                int inHour = Integer.parseInt(inParts[0]);
+                int inMin = Integer.parseInt(inParts[1]);
+                
+                if (inHour < 0 || inHour > 23 || inMin < 0 || inMin > 59) {
+                    JOptionPane.showMessageDialog(this,
+                        "Time-In has invalid hour or minute values",
+                        "Validation Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    tfTimeIn.requestFocus();
+                    return false;
+                }
+                
+                String[] outParts = timeOut.split(":");
+                int outHour = Integer.parseInt(outParts[0]);
+                int outMin = Integer.parseInt(outParts[1]);
+                
+                if (outHour < 0 || outHour > 23 || outMin < 0 || outMin > 59) {
+                    JOptionPane.showMessageDialog(this,
+                        "Time-Out has invalid hour or minute values",
+                        "Validation Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    tfTimeOut.requestFocus();
+                    return false;
+                }
+                
+                // 8. Check Time-Out is after Time-In
+                
+                int inTotal = inHour * 60 + inMin;
+                int outTotal = outHour * 60 + outMin;
+                
+                if (outTotal <= inTotal) {
+                    JOptionPane.showMessageDialog(this,
+                        "Time-Out must be later than Time-In",
+                        "Validation Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    tfTimeOut.requestFocus();
+                    return false;
+                }
+                
+                // 9. Warn if hours are excessive (more than 16 hours)
+                
+                int totalMinutes = outTotal - inTotal;
+                double totalHours = totalMinutes / 60.0;
+                if (totalHours > 16) {
+                    int confirm = JOptionPane.showConfirmDialog(this,
+                        "Total hours is " + String.format("%.1f", totalHours) + " hours (more than 16 hours).\n" +
+                        "Is this correct?",
+                        "Confirm Long Hours",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+                    if (confirm != JOptionPane.YES_OPTION) {
+                        tfTimeOut.requestFocus();
+                        return false;
+                    }
+                }
+                
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,
+                    "Invalid time format. Use HH:mm (e.g., 08:00)",
+                    "Validation Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     private void handleSave() {
+        // Validation first - Must be first
+        if (!validateAttendanceFields()) {
+            return;  // Stop if validation fails
+        }
+        
         try {
-            // Validate inputs
             String empNum = tfEmployeeNum.getText().trim();
-            if (empNum.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Please enter Employee Number", 
-                    "Validation Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Verify employee exists
-            Employee employee = employeeRepository.findByEmployeeNumber(empNum);
-            if (employee == null) {
-                JOptionPane.showMessageDialog(this, "Employee Number not found", 
-                    "Validation Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Parse date
-            LocalDate date = LocalDate.parse(tfDate.getText().trim(), 
-                DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            Date selectedDate = dateChooser.getDate();
+            LocalDate date = selectedDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
             
             // Parse times
             LocalTime timeIn = null;
@@ -298,24 +455,10 @@ public class AttendanceManagementDialog extends JDialog {
             String status = (String) cbStatus.getSelectedItem();
             
             if ("Present".equals(status)) {
-                if (tfTimeIn.getText().trim().isEmpty() || tfTimeOut.getText().trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, 
-                        "Time In and Time Out required for Present status", 
-                        "Validation Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                
                 timeIn = LocalTime.parse(tfTimeIn.getText().trim(), 
                     DateTimeFormatter.ofPattern("HH:mm"));
                 timeOut = LocalTime.parse(tfTimeOut.getText().trim(), 
                     DateTimeFormatter.ofPattern("HH:mm"));
-                
-                if (timeOut.isBefore(timeIn)) {
-                    JOptionPane.showMessageDialog(this, 
-                        "Time Out cannot be before Time In", 
-                        "Validation Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
             }
             
             String remarks = tfRemarks.getText().trim();
@@ -336,10 +479,6 @@ public class AttendanceManagementDialog extends JDialog {
                 "Attendance record saved successfully!", 
                 "Success", JOptionPane.INFORMATION_MESSAGE);
             
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, 
-                "Invalid date or time format. Please use YYYY-MM-DD for date and HH:MM for time.", 
-                "Format Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
                 "Error saving attendance: " + e.getMessage(), 
@@ -390,9 +529,11 @@ public class AttendanceManagementDialog extends JDialog {
         if (selectedRow != -1) {
             tfEmployeeNum.setText((String) tableModel.getValueAt(selectedRow, 0));
             
+            // ← CHANGED: Set date to JDateChooser
             String dateStr = (String) tableModel.getValueAt(selectedRow, 1);
-            LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-            tfDate.setText(date.toString());
+            LocalDate localDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+            Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            dateChooser.setDate(date);
             
             String timeInStr = (String) tableModel.getValueAt(selectedRow, 2);
             String timeOutStr = (String) tableModel.getValueAt(selectedRow, 3);
@@ -430,7 +571,7 @@ public class AttendanceManagementDialog extends JDialog {
     
     private void clearForm() {
         tfEmployeeNum.setText("");
-        tfDate.setText(LocalDate.now().toString());
+        dateChooser.setDate(new Date());
         tfTimeIn.setText("08:00");
         tfTimeOut.setText("17:00");
         cbStatus.setSelectedIndex(0);

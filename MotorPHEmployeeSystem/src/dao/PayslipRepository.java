@@ -2,6 +2,7 @@ package dao;
 
 import model.Payslip;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,12 +35,12 @@ public class PayslipRepository {
             while ((line = br.readLine()) != null) {
                 if (isFirstLine) {
                     isFirstLine = false;
-                    continue; // Skip header
+                    continue; 
                 }
                 
                 // Append current line to record
                 if (currentRecord.length() > 0) {
-                    currentRecord.append("\n"); // Restore newline removed by readLine()
+                    currentRecord.append("\n");
                 }
                 currentRecord.append(line);
                 
@@ -122,5 +123,131 @@ public class PayslipRepository {
             .filter(p -> p.getPayslipId().equals(payslipId))
             .findFirst()
             .orElse(null);
+    }
+    
+    // Save a payslip with duplicate checking
+    // Removes any existing payslip for same employee and period before adding
+
+    public void save(Payslip payslip) {
+        // Remove any existing payslip for same employee and period
+        payslips.removeIf(p -> 
+            p.getEmployeeNumber().equals(payslip.getEmployeeNumber()) &&
+            p.getPayPeriodStart().equals(payslip.getPayPeriodStart()) &&
+            p.getPayPeriodEnd().equals(payslip.getPayPeriodEnd())
+        );
+        
+        payslips.add(payslip);
+        saveToCSV();
+    }
+    
+    // Check if a payslip exists for a specific employee and period
+    
+    public boolean exists(String employeeNumber, LocalDate periodStart, LocalDate periodEnd) {
+        return payslips.stream().anyMatch(p ->
+            p.getEmployeeNumber().equals(employeeNumber) &&
+            p.getPayPeriodStart().equals(periodStart) &&
+            p.getPayPeriodEnd().equals(periodEnd)
+        );
+    }
+    
+    // Find all payslips for a specific pay period
+    
+    public List<Payslip> findByPeriod(LocalDate periodStart, LocalDate periodEnd) {
+        return payslips.stream()
+            .filter(p -> p.getPayPeriodStart().equals(periodStart) && 
+                        p.getPayPeriodEnd().equals(periodEnd))
+            .collect(Collectors.toList());
+    }
+      
+    // Find all payslips for a specific employee (sorted by date, most recent first)
+    
+    public List<Payslip> findByEmployee(String employeeNumber) {
+        return payslips.stream()
+            .filter(p -> p.getEmployeeNumber().equals(employeeNumber))
+            .sorted((p1, p2) -> p2.getPayPeriodStart().compareTo(p1.getPayPeriodStart()))
+            .collect(Collectors.toList());
+    }
+    
+    // Find a specific payslip by employee and period
+   
+    public Payslip findByEmployeeAndPeriod(String employeeNumber, LocalDate periodStart, LocalDate periodEnd) {
+        return payslips.stream()
+            .filter(p -> 
+                p.getEmployeeNumber().equals(employeeNumber) &&
+                p.getPayPeriodStart().equals(periodStart) &&
+                p.getPayPeriodEnd().equals(periodEnd))
+            .findFirst()
+            .orElse(null);
+    }
+    
+    // Delete all payslips for an employee
+    
+    public void deleteByEmployee(String employeeNumber) {
+        payslips.removeIf(p -> p.getEmployeeNumber().equals(employeeNumber));
+        saveToCSV();
+    }
+    
+     // Delete a specific payslip
+    
+    public void delete(String employeeNumber, LocalDate periodStart, LocalDate periodEnd) {
+        payslips.removeIf(p ->
+            p.getEmployeeNumber().equals(employeeNumber) &&
+            p.getPayPeriodStart().equals(periodStart) &&
+            p.getPayPeriodEnd().equals(periodEnd)
+        );
+        saveToCSV();
+    }
+    
+    // Get count of payslips
+    
+    public int getCount() {
+        return payslips.size();
+    }
+    
+    // Reload from file (useful after external changes)
+
+    public void reload() {
+        loadFromCSV();
+    }
+    
+    // Remove duplicate payslips (same employee + same period)
+    // Keeps the most recently generated one
+    
+    public int removeDuplicates() {
+        int duplicatesRemoved = 0;
+        
+        // Group payslips by employee number and period
+        java.util.Map<String, List<Payslip>> grouped = new java.util.HashMap<>();
+        
+        for (Payslip payslip : payslips) {
+            String key = payslip.getEmployeeNumber() + "|" + 
+                        payslip.getPayPeriodStart() + "|" + 
+                        payslip.getPayPeriodEnd();
+            
+            grouped.computeIfAbsent(key, k -> new ArrayList<>()).add(payslip);
+        }
+        
+        // Find duplicates and keep only the most recent one
+        payslips.clear();
+        
+        for (List<Payslip> group : grouped.values()) {
+            if (group.size() > 1) {
+                // Sort by generated date (most recent first)
+                group.sort((p1, p2) -> p2.getGeneratedDate().compareTo(p1.getGeneratedDate()));
+                
+                // Keep the first one (most recent), discard the rest
+                payslips.add(group.get(0));
+                duplicatesRemoved += (group.size() - 1);
+            } else {
+                payslips.add(group.get(0));
+            }
+        }
+        
+        if (duplicatesRemoved > 0) {
+            saveToCSV();
+            System.out.println("✓ Removed " + duplicatesRemoved + " duplicate payslips");
+        }
+        
+        return duplicatesRemoved;
     }
 }

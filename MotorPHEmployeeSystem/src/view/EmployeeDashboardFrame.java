@@ -177,12 +177,6 @@ public class EmployeeDashboardFrame extends JFrame {
             positionLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
             positionLabel.setForeground(TEXT_COLOR);
             infoPanel.add(positionLabel, gbc);
-            
-            gbc.gridy++;
-            JLabel departmentLabel = new JLabel(currentEmployee.getDepartment());
-            departmentLabel.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-            departmentLabel.setForeground(TEXT_COLOR);
-            infoPanel.add(departmentLabel, gbc);
         }
         
         topPanel.add(infoPanel, BorderLayout.CENTER);
