@@ -80,8 +80,19 @@ public class EmployeeDashboardFrame extends JFrame {
         headerPanel.setPreferredSize(new Dimension(1400, 100));
         headerPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
         
-        JLabel welcomeLabel = new JLabel("Welcome, " + 
-            (currentEmployee != null ? currentEmployee.getFullName() : currentUser.getUsername()));
+        // Display role name for Admin/Owner, otherwise employee name
+        String displayName;
+        if (currentUser.isSystemAdmin()) {
+            displayName = "Admin";
+        } else if (currentUser.isOwner()) {
+            displayName = "Owner";
+        } else if (currentEmployee != null) {
+            displayName = currentEmployee.getFullName();
+        } else {
+            displayName = currentUser.getUsername();
+        }
+        
+        JLabel welcomeLabel = new JLabel("Welcome, " + displayName);
         welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 32));
         welcomeLabel.setForeground(WHITE);
         
@@ -258,7 +269,7 @@ public class EmployeeDashboardFrame extends JFrame {
             buttonCount = 5; // File Leave, My Payslip, Salary Details, Deductions, My Attendance
         }
         
-        // ROLE-SPECIFIC BUTTONS: Only for MANAGERS with matching employee type
+        // ROLE-SPECIFIC BUTTONS: Admin/Owner get full access, others need matching employee type
         boolean hasHRAccess = false;
         boolean hasFinanceAccess = false;
         boolean hasITAccess = false;
@@ -266,25 +277,25 @@ public class EmployeeDashboardFrame extends JFrame {
         boolean hasExecutiveAccess = false;
         
         if (currentEmployee != null) {
-            // HR Operations: Only if User.role is HR or Owner AND Employee type is IHROperations
-            hasHRAccess = (currentUser.isHR() || currentUser.isOwner()) && 
-                          (currentEmployee instanceof IHROperations);
+            // HR Operations: SystemAdmin/Owner get full access OR proper role+type match
+            hasHRAccess = currentUser.isSystemAdmin() || currentUser.isOwner() || 
+                          (currentUser.isHR() && (currentEmployee instanceof IHROperations));
             
-            // Finance Operations: Only if User.role is Finance or Owner AND Employee type is IFinanceOperations
-            hasFinanceAccess = (currentUser.isFinance() || currentUser.isOwner()) && 
-                               (currentEmployee instanceof IFinanceOperations);
+            // Finance Operations: SystemAdmin/Owner get full access OR proper role+type match
+            hasFinanceAccess = currentUser.isSystemAdmin() || currentUser.isOwner() || 
+                               (currentUser.isFinance() && (currentEmployee instanceof IFinanceOperations));
             
-            // IT Operations: Only if User.role is IT or SystemAdmin AND Employee type is IITOperations
-            hasITAccess = (currentUser.isIT() || currentUser.isSystemAdmin() || currentUser.isOwner()) && 
-                          (currentEmployee instanceof IITOperations);
+            // IT Operations: SystemAdmin/Owner get full access OR proper role+type match
+            hasITAccess = currentUser.isSystemAdmin() || currentUser.isOwner() || 
+                          (currentUser.isIT() && (currentEmployee instanceof IITOperations));
             
-            // Accounting Operations: Only if User.role is Accounting or Owner AND Employee type is IAccountingOperations
-            hasAccountingAccess = (currentUser.isAccounting() || currentUser.isOwner()) && 
-                                  (currentEmployee instanceof IAccountingOperations);
+            // Accounting Operations: SystemAdmin/Owner get full access OR proper role+type match
+            hasAccountingAccess = currentUser.isSystemAdmin() || currentUser.isOwner() || 
+                                  (currentUser.isAccounting() && (currentEmployee instanceof IAccountingOperations));
             
-            // Executive Operations: Only if User.role is Executive or Owner AND Employee type is IExecutiveOperations
-            hasExecutiveAccess = (currentUser.isExecutive() || currentUser.isOwner()) && 
-                                 (currentEmployee instanceof IExecutiveOperations);
+            // Executive Operations: SystemAdmin/Owner get full access OR proper role+type match
+            hasExecutiveAccess = currentUser.isSystemAdmin() || currentUser.isOwner() || 
+                                 (currentUser.isExecutive() && (currentEmployee instanceof IExecutiveOperations));
         }
         
         if (hasHRAccess) buttonCount++;
@@ -295,9 +306,13 @@ public class EmployeeDashboardFrame extends JFrame {
         if (currentUser.isSystemAdmin() && currentEmployee != null) buttonCount++;
         
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, Math.max(buttonCount, 1), 15, 0));
+        // Use 2 rows if there are 8 or more buttons, otherwise 1 row
+        int rows = (buttonCount >= 8) ? 2 : 1;
+        int cols = (buttonCount >= 8) ? (int) Math.ceil(buttonCount / 2.0) : buttonCount;
+        panel.setLayout(new GridLayout(rows, cols, 15, 15));
         panel.setBackground(LIGHT_BG);
-        panel.setPreferredSize(new Dimension(1360, 120));
+        int panelHeight = (rows == 2) ? 255 : 120;
+        panel.setPreferredSize(new Dimension(1360, panelHeight));
         
         // STANDARD BUTTONS - Only if employee exists
         if (currentEmployee != null) {
@@ -614,272 +629,286 @@ public class EmployeeDashboardFrame extends JFrame {
     //ROLE-SPECIFIC OPERATION DIALOGS
     
     private void openHROperationsDialog() {
-        if (currentEmployee instanceof IHROperations) {
-            IHROperations hrOps = (IHROperations) currentEmployee;
+        JDialog dialog = new JDialog(this, "HR Operations", true);
+        dialog.setSize(500, 400);
+        dialog.setLocationRelativeTo(this);
+        dialog.setLayout(new BorderLayout(10, 10));
 
-            JDialog dialog = new JDialog(this, "HR Operations", true);
-            dialog.setSize(500, 400);
-            dialog.setLocationRelativeTo(this);
-            dialog.setLayout(new BorderLayout(10, 10));
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayout(6, 1, 10, 10));
+        contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        contentPanel.setBackground(WHITE);
 
-            JPanel contentPanel = new JPanel();
-            contentPanel.setLayout(new GridLayout(6, 1, 10, 10));
-            contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-            contentPanel.setBackground(WHITE);
+        JLabel titleLabel = new JLabel("HR Operations Panel", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        titleLabel.setForeground(new Color(46, 204, 113));
 
-            JLabel titleLabel = new JLabel("HR Operations Panel", SwingConstants.CENTER);
-            titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
-            titleLabel.setForeground(new Color(46, 204, 113));
+        JButton generateReportBtn = createOperationButton("Generate Employee Report");
+        generateReportBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IHROperations) {
+                ((IHROperations) currentEmployee).generateEmployeeReport();
+            }
+            JOptionPane.showMessageDialog(dialog, "Employee report generated successfully!");
+        });
 
-            JButton generateReportBtn = createOperationButton("Generate Employee Report");
-            generateReportBtn.addActionListener(e -> {
-                hrOps.generateEmployeeReport();
-                JOptionPane.showMessageDialog(dialog, "Employee report generated successfully!");
-            });
+        JButton approveLeaveBtn = createOperationButton("Approve Leave Requests");
+        approveLeaveBtn.addActionListener(e -> {
+            openApproveLeaveDialog();
+            dialog.dispose();
+        });
 
-            JButton approveLeaveBtn = createOperationButton("Approve Leave Requests");
-            approveLeaveBtn.addActionListener(e -> {
-                openApproveLeaveDialog();
-                dialog.dispose();
-            });
+        JButton manageEmployeesBtn = createOperationButton("Manage Employees");
+        manageEmployeesBtn.addActionListener(e -> {
+            dialog.dispose();
+            dispose();
+            new ModernEmployeeManagementFrame(employeeRepository, currentUser, "HR").setVisible(true);
+        });
 
-            JButton manageEmployeesBtn = createOperationButton("Manage Employees");
-            manageEmployeesBtn.addActionListener(e -> {
-                dialog.dispose();
-                dispose();
-                new ModernEmployeeManagementFrame(employeeRepository, currentUser).setVisible(true);
-            });
+        JButton closeBtn = createOperationButton("Close");
+        closeBtn.setBackground(new Color(231, 76, 60));
+        closeBtn.addActionListener(e -> dialog.dispose());
 
-            JButton closeBtn = createOperationButton("Close");
-            closeBtn.setBackground(new Color(231, 76, 60));
-            closeBtn.addActionListener(e -> dialog.dispose());
+        contentPanel.add(titleLabel);
+        contentPanel.add(generateReportBtn);
+        contentPanel.add(approveLeaveBtn);
+        contentPanel.add(manageEmployeesBtn);
+        contentPanel.add(new JLabel());
+        contentPanel.add(closeBtn);
 
-            contentPanel.add(titleLabel);
-            contentPanel.add(generateReportBtn);
-            contentPanel.add(approveLeaveBtn);
-            contentPanel.add(manageEmployeesBtn);
-            contentPanel.add(new JLabel());
-            contentPanel.add(closeBtn);
-
-            dialog.add(contentPanel, BorderLayout.CENTER);
-            dialog.setVisible(true);
-        }
+        dialog.add(contentPanel, BorderLayout.CENTER);
+        dialog.setVisible(true);
     }
     
     private void openFinanceOperationsDialog() {
-        if (currentEmployee instanceof IFinanceOperations) {
-            IFinanceOperations financeOps = (IFinanceOperations) currentEmployee;
-            
-            JDialog dialog = new JDialog(this, "Finance Operations", true);
-            dialog.setSize(500, 500);
-            dialog.setLocationRelativeTo(this);
-            dialog.setLayout(new BorderLayout(10, 10));
-            
-            JPanel contentPanel = new JPanel();
-            contentPanel.setLayout(new GridLayout(8, 1, 10, 10));
-            contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-            contentPanel.setBackground(WHITE);
-            
-            JLabel titleLabel = new JLabel("Finance Operations Panel", SwingConstants.CENTER);
-            titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
-            titleLabel.setForeground(new Color(155, 89, 182));
-            
-            JButton processPayrollBtn = createOperationButton("Process Payroll");
-            processPayrollBtn.addActionListener(e -> {
-                dialog.dispose();
-                dispose();
-                new ModernEmployeeManagementFrame(employeeRepository, currentUser).setVisible(true);
-            });
-            
-            JButton generateFinancialReportBtn = createOperationButton("Generate Financial Report");
-            generateFinancialReportBtn.addActionListener(e -> {
-                financeOps.generateFinancialReport();
-                JOptionPane.showMessageDialog(dialog, "Financial report generated successfully!");
-            });
-            
-            JButton calculateNetPayBtn = createOperationButton("Calculate Net Pay");
-            calculateNetPayBtn.addActionListener(e -> {
-                double netPay = financeOps.calculateNetPay(currentEmployee);
-                JOptionPane.showMessageDialog(dialog, 
-                    "Net Pay Calculated:\n" +
-                    "Employee: " + currentEmployee.getFullName() + "\n" +
-                    "Net Pay: ₱" + String.format("%.2f", netPay),
-                    "Net Pay Calculation", JOptionPane.INFORMATION_MESSAGE);
-            });
-            
-            JButton viewDeductionsBtn = createOperationButton("View Deductions Breakdown");
-            viewDeductionsBtn.addActionListener(e -> {
-                double deductions = financeOps.calculateTotalDeductions(currentEmployee);
-                JOptionPane.showMessageDialog(dialog, 
-                    "Total Deductions: ₱" + String.format("%.2f", deductions),
-                    "Deductions", JOptionPane.INFORMATION_MESSAGE);
-            });
-            
-            JButton closeBtn = createOperationButton("Close");
-            closeBtn.setBackground(new Color(231, 76, 60));
-            closeBtn.addActionListener(e -> dialog.dispose());
-            
-            contentPanel.add(titleLabel);
-            contentPanel.add(processPayrollBtn);
-            contentPanel.add(generateFinancialReportBtn);
-            contentPanel.add(calculateNetPayBtn);
-            contentPanel.add(viewDeductionsBtn);
-            contentPanel.add(new JLabel());
-            contentPanel.add(new JLabel());
-            contentPanel.add(closeBtn);
-            
-            dialog.add(contentPanel, BorderLayout.CENTER);
-            dialog.setVisible(true);
-        }
+        JDialog dialog = new JDialog(this, "Finance Operations", true);
+        dialog.setSize(500, 500);
+        dialog.setLocationRelativeTo(this);
+        dialog.setLayout(new BorderLayout(10, 10));
+        
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayout(8, 1, 10, 10));
+        contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        contentPanel.setBackground(WHITE);
+        
+        JLabel titleLabel = new JLabel("Finance Operations Panel", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        titleLabel.setForeground(new Color(155, 89, 182));
+        
+        JButton processPayrollBtn = createOperationButton("Process Payroll");
+        processPayrollBtn.addActionListener(e -> {
+            dialog.dispose();
+            dispose();
+            new ModernEmployeeManagementFrame(employeeRepository, currentUser, "Finance").setVisible(true);
+        });
+        
+        JButton generateFinancialReportBtn = createOperationButton("Generate Financial Report");
+        generateFinancialReportBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IFinanceOperations) {
+                ((IFinanceOperations) currentEmployee).generateFinancialReport();
+            }
+            JOptionPane.showMessageDialog(dialog, "Financial report generated successfully!");
+        });
+        
+        JButton calculateNetPayBtn = createOperationButton("Calculate Net Pay");
+        calculateNetPayBtn.addActionListener(e -> {
+            double netPay = 0;
+            if (currentEmployee instanceof IFinanceOperations) {
+                netPay = ((IFinanceOperations) currentEmployee).calculateNetPay(currentEmployee);
+            }
+            JOptionPane.showMessageDialog(dialog, 
+                "Net Pay Calculated:\n" +
+                "Employee: " + currentEmployee.getFullName() + "\n" +
+                "Net Pay: ₱" + String.format("%.2f", netPay),
+                "Net Pay Calculation", JOptionPane.INFORMATION_MESSAGE);
+        });
+        
+        JButton viewDeductionsBtn = createOperationButton("View Deductions Breakdown");
+        viewDeductionsBtn.addActionListener(e -> {
+            double deductions = 0;
+            if (currentEmployee instanceof IFinanceOperations) {
+                deductions = ((IFinanceOperations) currentEmployee).calculateTotalDeductions(currentEmployee);
+            }
+            JOptionPane.showMessageDialog(dialog, 
+                "Total Deductions: ₱" + String.format("%.2f", deductions),
+                "Deductions", JOptionPane.INFORMATION_MESSAGE);
+        });
+        
+        JButton closeBtn = createOperationButton("Close");
+        closeBtn.setBackground(new Color(231, 76, 60));
+        closeBtn.addActionListener(e -> dialog.dispose());
+        
+        contentPanel.add(titleLabel);
+        contentPanel.add(processPayrollBtn);
+        contentPanel.add(generateFinancialReportBtn);
+        contentPanel.add(calculateNetPayBtn);
+        contentPanel.add(viewDeductionsBtn);
+        contentPanel.add(new JLabel());
+        contentPanel.add(new JLabel());
+        contentPanel.add(closeBtn);
+        
+        dialog.add(contentPanel, BorderLayout.CENTER);
+        dialog.setVisible(true);
     }
     
     private void openITOperationsDialog() {
-        if (currentEmployee instanceof IITOperations) {
-            IITOperations itOps = (IITOperations) currentEmployee;
-            
-            JDialog dialog = new JDialog(this, "IT Operations", true);
-            dialog.setSize(500, 450);
-            dialog.setLocationRelativeTo(this);
-            dialog.setLayout(new BorderLayout(10, 10));
-            
-            JPanel contentPanel = new JPanel();
-            contentPanel.setLayout(new GridLayout(7, 1, 10, 10));
-            contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-            contentPanel.setBackground(WHITE);
-            
-            JLabel titleLabel = new JLabel("IT Operations Panel", SwingConstants.CENTER);
-            titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
-            titleLabel.setForeground(new Color(52, 73, 94));
-            
-            JButton securityBtn = createOperationButton("Manage System Security");
-            securityBtn.addActionListener(e -> {
-                itOps.manageSystemSecurity();
-                JOptionPane.showMessageDialog(dialog, "System security settings updated!");
-            });
-            
-            JButton maintenanceBtn = createOperationButton("Perform System Maintenance");
-            maintenanceBtn.addActionListener(e -> {
-                itOps.performSystemMaintenance();
-                JOptionPane.showMessageDialog(dialog, "System maintenance completed!");
-            });
-            
-            JButton backupBtn = createOperationButton("Backup Database");
-            backupBtn.addActionListener(e -> {
-                itOps.backupDatabase();
-                JOptionPane.showMessageDialog(dialog, "Database backup completed successfully!");
-            });
-            
-            JButton monitorBtn = createOperationButton("Monitor System Health");
-            monitorBtn.addActionListener(e -> {
-                itOps.monitorSystemHealth();
-                JOptionPane.showMessageDialog(dialog, 
-                    "System Health Status:\n" +
-                    "CPU Usage: 45%\n" +
-                    "Memory: 62%\n" +
-                    "Disk Space: 78%\n" +
-                    "Status: HEALTHY",
-                    "System Health", JOptionPane.INFORMATION_MESSAGE);
-            });
-            
-            JButton configBtn = createOperationButton("Configure System Settings");
-            configBtn.addActionListener(e -> {
-                itOps.configureSystemSettings();
-                JOptionPane.showMessageDialog(dialog, "System settings configured!");
-            });
-            
-            JButton closeBtn = createOperationButton("Close");
-            closeBtn.setBackground(new Color(231, 76, 60));
-            closeBtn.addActionListener(e -> dialog.dispose());
-            
-            contentPanel.add(titleLabel);
-            contentPanel.add(securityBtn);
-            contentPanel.add(maintenanceBtn);
-            contentPanel.add(backupBtn);
-            contentPanel.add(monitorBtn);
-            contentPanel.add(configBtn);
-            contentPanel.add(closeBtn);
-            
-            dialog.add(contentPanel, BorderLayout.CENTER);
-            dialog.setVisible(true);
-        }
+        JDialog dialog = new JDialog(this, "IT Operations", true);
+        dialog.setSize(500, 450);
+        dialog.setLocationRelativeTo(this);
+        dialog.setLayout(new BorderLayout(10, 10));
+        
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayout(7, 1, 10, 10));
+        contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        contentPanel.setBackground(WHITE);
+        
+        JLabel titleLabel = new JLabel("IT Operations Panel", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        titleLabel.setForeground(new Color(52, 73, 94));
+        
+        JButton securityBtn = createOperationButton("Manage System Security");
+        securityBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IITOperations) {
+                ((IITOperations) currentEmployee).manageSystemSecurity();
+            }
+            JOptionPane.showMessageDialog(dialog, "System security settings updated!");
+        });
+        
+        JButton maintenanceBtn = createOperationButton("Perform System Maintenance");
+        maintenanceBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IITOperations) {
+                ((IITOperations) currentEmployee).performSystemMaintenance();
+            }
+            JOptionPane.showMessageDialog(dialog, "System maintenance completed!");
+        });
+        
+        JButton backupBtn = createOperationButton("Backup Database");
+        backupBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IITOperations) {
+                ((IITOperations) currentEmployee).backupDatabase();
+            }
+            JOptionPane.showMessageDialog(dialog, "Database backup completed successfully!");
+        });
+        
+        JButton monitorBtn = createOperationButton("Monitor System Health");
+        monitorBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IITOperations) {
+                ((IITOperations) currentEmployee).monitorSystemHealth();
+            }
+            JOptionPane.showMessageDialog(dialog, 
+                "System Health Status:\n" +
+                "CPU Usage: 45%\n" +
+                "Memory: 62%\n" +
+                "Disk Space: 78%\n" +
+                "Status: HEALTHY",
+                "System Health", JOptionPane.INFORMATION_MESSAGE);
+        });
+        
+        JButton configBtn = createOperationButton("Configure System Settings");
+        configBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IITOperations) {
+                ((IITOperations) currentEmployee).configureSystemSettings();
+            }
+            JOptionPane.showMessageDialog(dialog, "System settings configured!");
+        });
+        
+        JButton closeBtn = createOperationButton("Close");
+        closeBtn.setBackground(new Color(231, 76, 60));
+        closeBtn.addActionListener(e -> dialog.dispose());
+        
+        contentPanel.add(titleLabel);
+        contentPanel.add(securityBtn);
+        contentPanel.add(maintenanceBtn);
+        contentPanel.add(backupBtn);
+        contentPanel.add(monitorBtn);
+        contentPanel.add(configBtn);
+        contentPanel.add(closeBtn);
+        
+        dialog.add(contentPanel, BorderLayout.CENTER);
+        dialog.setVisible(true);
     }
     
     private void openAccountingOperationsDialog() {
-        if (currentEmployee instanceof IAccountingOperations) {
-            IAccountingOperations accountingOps = (IAccountingOperations) currentEmployee;
-            
-            JDialog dialog = new JDialog(this, "Accounting Operations", true);
-            dialog.setSize(500, 450);
-            dialog.setLocationRelativeTo(this);
-            dialog.setLayout(new BorderLayout(10, 10));
-            
-            JPanel contentPanel = new JPanel();
-            contentPanel.setLayout(new GridLayout(7, 1, 10, 10));
-            contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-            contentPanel.setBackground(WHITE);
-            
-            JLabel titleLabel = new JLabel("Accounting Operations Panel", SwingConstants.CENTER);
-            titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
-            titleLabel.setForeground(new Color(230, 126, 34));
-            
-            JButton recordTransactionBtn = createOperationButton("Record Transaction");
-            recordTransactionBtn.addActionListener(e -> {
-                String[] options = {"INCOME", "EXPENSE"};
-                String type = (String) JOptionPane.showInputDialog(dialog, "Select transaction type:",
-                    "Record Transaction", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                if (type != null) {
-                    String amountStr = JOptionPane.showInputDialog(dialog, "Enter amount:");
-                    if (amountStr != null) {
-                        try {
-                            double amount = Double.parseDouble(amountStr);
-                            accountingOps.recordTransaction(type, amount);
-                            JOptionPane.showMessageDialog(dialog, type + " of ₱" + amount + " recorded!");
-                        } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(dialog, "Invalid amount!", "Error", JOptionPane.ERROR_MESSAGE);
+        JDialog dialog = new JDialog(this, "Accounting Operations", true);
+        dialog.setSize(500, 450);
+        dialog.setLocationRelativeTo(this);
+        dialog.setLayout(new BorderLayout(10, 10));
+        
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new GridLayout(7, 1, 10, 10));
+        contentPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        contentPanel.setBackground(WHITE);
+        
+        JLabel titleLabel = new JLabel("Accounting Operations Panel", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        titleLabel.setForeground(new Color(230, 126, 34));
+        
+        JButton recordTransactionBtn = createOperationButton("Record Transaction");
+        recordTransactionBtn.addActionListener(e -> {
+            String[] options = {"INCOME", "EXPENSE"};
+            String type = (String) JOptionPane.showInputDialog(dialog, "Select transaction type:",
+                "Record Transaction", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (type != null) {
+                String amountStr = JOptionPane.showInputDialog(dialog, "Enter amount:");
+                if (amountStr != null) {
+                    try {
+                        double amount = Double.parseDouble(amountStr);
+                        if (currentEmployee instanceof IAccountingOperations) {
+                            ((IAccountingOperations) currentEmployee).recordTransaction(type, amount);
                         }
+                        JOptionPane.showMessageDialog(dialog, type + " of ₱" + amount + " recorded!");
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(dialog, "Invalid amount!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-            });
-            
-            JButton reconcileBtn = createOperationButton("Reconcile Accounts");
-            reconcileBtn.addActionListener(e -> {
-                accountingOps.reconcileAccounts();
-                JOptionPane.showMessageDialog(dialog, "Accounts reconciled successfully!");
-            });
-            
-            JButton taxReportBtn = createOperationButton("Generate Tax Report");
-            taxReportBtn.addActionListener(e -> {
-                accountingOps.generateTaxReport();
-                JOptionPane.showMessageDialog(dialog, "Tax report generated!");
-            });
-            
-            JButton payableBtn = createOperationButton("Manage Accounts Payable");
-            payableBtn.addActionListener(e -> {
-                accountingOps.manageAccountsPayable();
-                JOptionPane.showMessageDialog(dialog, "Accounts payable managed!");
-            });
-            
-            JButton receivableBtn = createOperationButton("Manage Accounts Receivable");
-            receivableBtn.addActionListener(e -> {
-                accountingOps.manageAccountsReceivable();
-                JOptionPane.showMessageDialog(dialog, "Accounts receivable managed!");
-            });
-            
-            JButton closeBtn = createOperationButton("Close");
-            closeBtn.setBackground(new Color(231, 76, 60));
-            closeBtn.addActionListener(e -> dialog.dispose());
-            
-            contentPanel.add(titleLabel);
-            contentPanel.add(recordTransactionBtn);
-            contentPanel.add(reconcileBtn);
-            contentPanel.add(taxReportBtn);
-            contentPanel.add(payableBtn);
-            contentPanel.add(receivableBtn);
-            contentPanel.add(closeBtn);
-            
-            dialog.add(contentPanel, BorderLayout.CENTER);
-            dialog.setVisible(true);
-        }
+            }
+        });
+        
+        JButton reconcileBtn = createOperationButton("Reconcile Accounts");
+        reconcileBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IAccountingOperations) {
+                ((IAccountingOperations) currentEmployee).reconcileAccounts();
+            }
+            JOptionPane.showMessageDialog(dialog, "Accounts reconciled successfully!");
+        });
+        
+        JButton taxReportBtn = createOperationButton("Generate Tax Report");
+        taxReportBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IAccountingOperations) {
+                ((IAccountingOperations) currentEmployee).generateTaxReport();
+            }
+            JOptionPane.showMessageDialog(dialog, "Tax report generated!");
+        });
+        
+        JButton payableBtn = createOperationButton("Manage Accounts Payable");
+        payableBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IAccountingOperations) {
+                ((IAccountingOperations) currentEmployee).manageAccountsPayable();
+            }
+            JOptionPane.showMessageDialog(dialog, "Accounts payable managed!");
+        });
+        
+        JButton receivableBtn = createOperationButton("Manage Accounts Receivable");
+        receivableBtn.addActionListener(e -> {
+            if (currentEmployee instanceof IAccountingOperations) {
+                ((IAccountingOperations) currentEmployee).manageAccountsReceivable();
+            }
+            JOptionPane.showMessageDialog(dialog, "Accounts receivable managed!");
+        });
+        
+        JButton closeBtn = createOperationButton("Close");
+        closeBtn.setBackground(new Color(231, 76, 60));
+        closeBtn.addActionListener(e -> dialog.dispose());
+        
+        contentPanel.add(titleLabel);
+        contentPanel.add(recordTransactionBtn);
+        contentPanel.add(reconcileBtn);
+        contentPanel.add(taxReportBtn);
+        contentPanel.add(payableBtn);
+        contentPanel.add(receivableBtn);
+        contentPanel.add(closeBtn);
+        
+        dialog.add(contentPanel, BorderLayout.CENTER);
+        dialog.setVisible(true);
     }
     
     private void openExecutiveOperationsDialog() {

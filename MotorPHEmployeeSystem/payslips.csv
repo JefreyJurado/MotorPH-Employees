@@ -37,24 +37,24 @@ Total Deductions: ₱2,141.43
 === NET PAY ===
 Net Pay: ₱11,901.07
 "
-PS-1772865251915-9,9,Rosie Atienza,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Rosie Atienza
-Emp #: 9
-Position: HR Rank and File
-Period: 2026-03-16 to 2026-03-22
+PS-1772863860260-22,22,Kolby Delos Santos,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
+Employee: Kolby Delos Santos
+Emp #: 22
+Position: Account Rank and File
+Period: 2026-03-02 to 2026-03-11
 
 === EARNINGS ===
-Gross Pay: ₱6,250.00
+Gross Pay: ₱6,625.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱125.00
+PhilHealth: ₱132.50
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
+Withholding Tax: ₱212.50
+Total Deductions: ₱595.00
 
 === NET PAY ===
-Net Pay: ₱5,718.75
+Net Pay: ₱6,030.00
 "
 PS-1772865121277-26,26,Percival Gutierrez,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6812.50,6185.63,626.88,"=== PAYSLIP ===
 Employee: Percival Gutierrez
@@ -75,43 +75,24 @@ Total Deductions: ₱626.88
 === NET PAY ===
 Net Pay: ₱6,185.63
 "
-PS-1772863860260-22,22,Kolby Delos Santos,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
-Employee: Kolby Delos Santos
-Emp #: 22
-Position: Account Rank and File
-Period: 2026-03-02 to 2026-03-11
-
-=== EARNINGS ===
-Gross Pay: ₱6,625.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱132.50
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱212.50
-Total Deductions: ₱595.00
-
-=== NET PAY ===
-Net Pay: ₱6,030.00
-"
-PS-1772865251971-25,25,Jacklyn Tolentino,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
-Employee: Jacklyn Tolentino
-Emp #: 25
-Position: Account Rank and File
+PS-1772865251915-9,9,Rosie Atienza,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Rosie Atienza
+Emp #: 9
+Position: HR Rank and File
 Period: 2026-03-16 to 2026-03-22
 
 === EARNINGS ===
-Gross Pay: ₱6,625.00
+Gross Pay: ₱6,250.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱132.50
+PhilHealth: ₱125.00
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱212.50
-Total Deductions: ₱595.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
 
 === NET PAY ===
-Net Pay: ₱6,030.00
+Net Pay: ₱5,718.75
 "
 PS-1772863860228-6,6,Andrea Mae Villanueva,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Andrea Mae Villanueva
@@ -132,11 +113,49 @@ Total Deductions: ₱2,141.43
 === NET PAY ===
 Net Pay: ₱11,901.07
 "
+PS-1772865251971-25,25,Jacklyn Tolentino,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
+Employee: Jacklyn Tolentino
+Emp #: 25
+Position: Account Rank and File
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱6,625.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱132.50
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱212.50
+Total Deductions: ₱595.00
+
+=== NET PAY ===
+Net Pay: ₱6,030.00
+"
 PS-1772863860237-10,10,Roderick Alvaro,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Roderick Alvaro
 Emp #: 10
 Position: Accounting Head
 Period: 2026-03-02 to 2026-03-11
+
+=== EARNINGS ===
+Gross Pay: ₱14,042.50
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱280.85
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱1,610.58
+Total Deductions: ₱2,141.43
+
+=== NET PAY ===
+Net Pay: ₱11,901.07
+"
+PS-1772864362793-32,32,John Rafael Castro,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
+Employee: John Rafael Castro
+Emp #: 32
+Position: Sales & Marketing
+Period: 2026-02-23 to 2026-03-01
 
 === EARNINGS ===
 Gross Pay: ₱14,042.50
@@ -170,44 +189,6 @@ Total Deductions: ₱595.00
 === NET PAY ===
 Net Pay: ₱6,030.00
 "
-PS-1772864362793-32,32,John Rafael Castro,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
-Employee: John Rafael Castro
-Emp #: 32
-Position: Sales & Marketing
-Period: 2026-02-23 to 2026-03-01
-
-=== EARNINGS ===
-Gross Pay: ₱14,042.50
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱280.85
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,610.58
-Total Deductions: ₱2,141.43
-
-=== NET PAY ===
-Net Pay: ₱11,901.07
-"
-PS-1772864362700-3,3,Bianca Sofia Aquino,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
-Employee: Bianca Sofia Aquino
-Emp #: 3
-Position: Chief Finance Officer
-Period: 2026-02-23 to 2026-03-01
-
-=== EARNINGS ===
-Gross Pay: ₱16,125.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱322.50
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱2,027.08
-Total Deductions: ₱2,599.58
-
-=== NET PAY ===
-Net Pay: ₱13,525.42
-"
 PS-1772864208767-8,8,Alice Romualdez,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Alice Romualdez
 Emp #: 8
@@ -227,43 +208,24 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
-PS-1772865251912-8,8,Alice Romualdez,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Alice Romualdez
-Emp #: 8
-Position: HR Rank and File
-Period: 2026-03-16 to 2026-03-22
+PS-1772864362700-3,3,Bianca Sofia Aquino,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
+Employee: Bianca Sofia Aquino
+Emp #: 3
+Position: Chief Finance Officer
+Period: 2026-02-23 to 2026-03-01
 
 === EARNINGS ===
-Gross Pay: ₱6,250.00
+Gross Pay: ₱16,125.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱125.00
+PhilHealth: ₱322.50
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
+Withholding Tax: ₱2,027.08
+Total Deductions: ₱2,599.58
 
 === NET PAY ===
-Net Pay: ₱5,718.75
-"
-PS-1772864208796-23,23,Vella Santos,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Vella Santos
-Emp #: 23
-Position: Account Rank and File
-Period: 2026-03-02 to 2026-03-08
-
-=== EARNINGS ===
-Gross Pay: ₱6,250.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱125.00
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
-
-=== NET PAY ===
-Net Pay: ₱5,718.75
+Net Pay: ₱13,525.42
 "
 PS1770434205611,6,Andrea Mae Villanueva,2026-01-31,2026-02-07,2026-02-07,finance_anthony,12387.37,10245.94,2141.43,"═══════════════════════════════════════════════════════════════
                     MOTORPH PAYROLL SYSTEM                      
@@ -317,24 +279,43 @@ Regular Hours: 32.00 | Overtime Hours: 4.00 | Total: 36.00
 This is a computer-generated payslip. No signature required.
 Generated on: Feb 07, 2026
 "
-PS-1772865251929-13,13,Martha Farala,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
-Employee: Martha Farala
-Emp #: 13
-Position: Payroll Rank and File
-Period: 2026-03-16 to 2026-03-22
+PS-1772864208796-23,23,Vella Santos,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Vella Santos
+Emp #: 23
+Position: Account Rank and File
+Period: 2026-03-02 to 2026-03-08
 
 === EARNINGS ===
-Gross Pay: ₱6,625.00
+Gross Pay: ₱6,250.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱132.50
+PhilHealth: ₱125.00
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱212.50
-Total Deductions: ₱595.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
 
 === NET PAY ===
-Net Pay: ₱6,030.00
+Net Pay: ₱5,718.75
+"
+PS-1772865251912-8,8,Alice Romualdez,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Alice Romualdez
+Emp #: 8
+Position: HR Rank and File
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱6,250.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱125.00
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
+
+=== NET PAY ===
+Net Pay: ₱5,718.75
 "
 PS-1772864362760-20,20,Mark Bautista,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6437.50,5874.38,563.13,"=== PAYSLIP ===
 Employee: Mark Bautista
@@ -354,6 +335,25 @@ Total Deductions: ₱563.13
 
 === NET PAY ===
 Net Pay: ₱5,874.38
+"
+PS-1772865251929-13,13,Martha Farala,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
+Employee: Martha Farala
+Emp #: 13
+Position: Payroll Rank and File
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱6,625.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱132.50
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱212.50
+Total Deductions: ₱595.00
+
+=== NET PAY ===
+Net Pay: ₱6,030.00
 "
 PS-1772864208772-10,10,Roderick Alvaro,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Roderick Alvaro
@@ -469,43 +469,24 @@ Total Deductions: ₱2,187.08
 === NET PAY ===
 Net Pay: ₱12,062.92
 "
-PS-1772864362704-4,4,Isabella Reyes,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
-Employee: Isabella Reyes
-Emp #: 4
-Position: Chief Marketing Officer
-Period: 2026-02-23 to 2026-03-01
+PS-1772863860239-11,11,Anthony Salcedo,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,13581.25,11541.29,2039.96,"=== PAYSLIP ===
+Employee: Anthony Salcedo
+Emp #: 11
+Position: Payroll Manager
+Period: 2026-03-02 to 2026-03-11
 
 === EARNINGS ===
-Gross Pay: ₱16,125.00
+Gross Pay: ₱13,581.25
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱322.50
+PhilHealth: ₱271.63
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱2,027.08
-Total Deductions: ₱2,599.58
+Withholding Tax: ₱1,518.33
+Total Deductions: ₱2,039.96
 
 === NET PAY ===
-Net Pay: ₱13,525.42
-"
-PS-1772864208822-35,35,Juan Dela Cruz,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6875.00,6237.50,637.50,"=== PAYSLIP ===
-Employee: Juan Dela Cruz
-Emp #: 35
-Position: HR Assistant
-Period: 2026-03-02 to 2026-03-08
-
-=== EARNINGS ===
-Gross Pay: ₱6,875.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱137.50
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱250.00
-Total Deductions: ₱637.50
-
-=== NET PAY ===
-Net Pay: ₱6,237.50
+Net Pay: ₱11,541.29
 "
 PS-1772864208769-9,9,Rosie Atienza,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Rosie Atienza
@@ -526,24 +507,43 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
-PS-1772863860239-11,11,Anthony Salcedo,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,13581.25,11541.29,2039.96,"=== PAYSLIP ===
-Employee: Anthony Salcedo
-Emp #: 11
-Position: Payroll Manager
-Period: 2026-03-02 to 2026-03-11
+PS-1772864208822-35,35,Juan Dela Cruz,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6875.00,6237.50,637.50,"=== PAYSLIP ===
+Employee: Juan Dela Cruz
+Emp #: 35
+Position: HR Assistant
+Period: 2026-03-02 to 2026-03-08
 
 === EARNINGS ===
-Gross Pay: ₱13,581.25
+Gross Pay: ₱6,875.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱271.63
+PhilHealth: ₱137.50
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,518.33
-Total Deductions: ₱2,039.96
+Withholding Tax: ₱250.00
+Total Deductions: ₱637.50
 
 === NET PAY ===
-Net Pay: ₱11,541.29
+Net Pay: ₱6,237.50
+"
+PS-1772864362704-4,4,Isabella Reyes,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
+Employee: Isabella Reyes
+Emp #: 4
+Position: Chief Marketing Officer
+Period: 2026-02-23 to 2026-03-01
+
+=== EARNINGS ===
+Gross Pay: ₱16,125.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱322.50
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱2,027.08
+Total Deductions: ₱2,599.58
+
+=== NET PAY ===
+Net Pay: ₱13,525.42
 "
 PS-1772864208820-34,34,Beatriz Santos,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Beatriz Santos
@@ -735,43 +735,24 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
-PS-1772865251960-23,23,Vella Santos,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Vella Santos
-Emp #: 23
-Position: Account Rank and File
-Period: 2026-03-16 to 2026-03-22
+PS-1772864362709-5,5,Eduard Hernandez,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
+Employee: Eduard Hernandez
+Emp #: 5
+Position: IT Operations and Systems
+Period: 2026-02-23 to 2026-03-01
 
 === EARNINGS ===
-Gross Pay: ₱6,250.00
+Gross Pay: ₱14,042.50
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱125.00
+PhilHealth: ₱280.85
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
+Withholding Tax: ₱1,610.58
+Total Deductions: ₱2,141.43
 
 === NET PAY ===
-Net Pay: ₱5,718.75
-"
-PS-1772865251935-15,15,Fredrick Romualdez,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14250.00,12062.92,2187.08,"=== PAYSLIP ===
-Employee: Fredrick Romualdez
-Emp #: 15
-Position: Account Manager
-Period: 2026-03-16 to 2026-03-22
-
-=== EARNINGS ===
-Gross Pay: ₱14,250.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱285.00
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,652.08
-Total Deductions: ₱2,187.08
-
-=== NET PAY ===
-Net Pay: ₱12,062.92
+Net Pay: ₱11,901.07
 "
 PS-1772864362766-22,22,Kolby Delos Santos,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
 Employee: Kolby Delos Santos
@@ -792,24 +773,43 @@ Total Deductions: ₱595.00
 === NET PAY ===
 Net Pay: ₱6,030.00
 "
-PS-1772864362709-5,5,Eduard Hernandez,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
-Employee: Eduard Hernandez
-Emp #: 5
-Position: IT Operations and Systems
-Period: 2026-02-23 to 2026-03-01
+PS-1772865251935-15,15,Fredrick Romualdez,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14250.00,12062.92,2187.08,"=== PAYSLIP ===
+Employee: Fredrick Romualdez
+Emp #: 15
+Position: Account Manager
+Period: 2026-03-16 to 2026-03-22
 
 === EARNINGS ===
-Gross Pay: ₱14,042.50
+Gross Pay: ₱14,250.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱280.85
+PhilHealth: ₱285.00
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,610.58
-Total Deductions: ₱2,141.43
+Withholding Tax: ₱1,652.08
+Total Deductions: ₱2,187.08
 
 === NET PAY ===
-Net Pay: ₱11,901.07
+Net Pay: ₱12,062.92
+"
+PS-1772865251960-23,23,Vella Santos,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Vella Santos
+Emp #: 23
+Position: Account Rank and File
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱6,250.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱125.00
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
+
+=== NET PAY ===
+Net Pay: ₱5,718.75
 "
 PS-1772864208803-26,26,Percival Gutierrez,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6812.50,6185.63,626.88,"=== PAYSLIP ===
 Employee: Percival Gutierrez
@@ -849,24 +849,24 @@ Total Deductions: ₱2,141.43
 === NET PAY ===
 Net Pay: ₱11,901.07
 "
-PS-1772865251905-6,6,Andrea Mae Villanueva,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
-Employee: Andrea Mae Villanueva
-Emp #: 6
-Position: HR Manager
-Period: 2026-03-16 to 2026-03-22
+PS-1772865121204-7,7,Brad San Jose,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
+Employee: Brad San Jose
+Emp #: 7
+Position: HR Team Leader
+Period: 2026-03-09 to 2026-03-15
 
 === EARNINGS ===
-Gross Pay: ₱14,042.50
+Gross Pay: ₱11,518.75
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱280.85
+PhilHealth: ₱230.38
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,610.58
-Total Deductions: ₱2,141.43
+Withholding Tax: ₱1,105.83
+Total Deductions: ₱1,586.21
 
 === NET PAY ===
-Net Pay: ₱11,901.07
+Net Pay: ₱9,932.54
 "
 PS-1772865121282-27,27,Garfield Manalaysay,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6812.50,6185.63,626.88,"=== PAYSLIP ===
 Employee: Garfield Manalaysay
@@ -887,24 +887,24 @@ Total Deductions: ₱626.88
 === NET PAY ===
 Net Pay: ₱6,185.63
 "
-PS-1772865121204-7,7,Brad San Jose,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
-Employee: Brad San Jose
-Emp #: 7
-Position: HR Team Leader
-Period: 2026-03-09 to 2026-03-15
+PS-1772865251905-6,6,Andrea Mae Villanueva,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
+Employee: Andrea Mae Villanueva
+Emp #: 6
+Position: HR Manager
+Period: 2026-03-16 to 2026-03-22
 
 === EARNINGS ===
-Gross Pay: ₱11,518.75
+Gross Pay: ₱14,042.50
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱230.38
+PhilHealth: ₱280.85
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,105.83
-Total Deductions: ₱1,586.21
+Withholding Tax: ₱1,610.58
+Total Deductions: ₱2,141.43
 
 === NET PAY ===
-Net Pay: ₱9,932.54
+Net Pay: ₱11,901.07
 "
 PS-1772864208764-6,6,Andrea Mae Villanueva,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Andrea Mae Villanueva
@@ -925,25 +925,6 @@ Total Deductions: ₱2,141.43
 === NET PAY ===
 Net Pay: ₱11,901.07
 "
-PS-1772863860287-35,35,Juan Dela Cruz,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6875.00,6237.50,637.50,"=== PAYSLIP ===
-Employee: Juan Dela Cruz
-Emp #: 35
-Position: HR Assistant
-Period: 2026-03-02 to 2026-03-11
-
-=== EARNINGS ===
-Gross Pay: ₱6,875.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱137.50
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱250.00
-Total Deductions: ₱637.50
-
-=== NET PAY ===
-Net Pay: ₱6,237.50
-"
 PS-1772863860235-9,9,Rosie Atienza,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Rosie Atienza
 Emp #: 9
@@ -962,6 +943,25 @@ Total Deductions: ₱531.25
 
 === NET PAY ===
 Net Pay: ₱5,718.75
+"
+PS-1772863860287-35,35,Juan Dela Cruz,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6875.00,6237.50,637.50,"=== PAYSLIP ===
+Employee: Juan Dela Cruz
+Emp #: 35
+Position: HR Assistant
+Period: 2026-03-02 to 2026-03-11
+
+=== EARNINGS ===
+Gross Pay: ₱6,875.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱137.50
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱250.00
+Total Deductions: ₱637.50
+
+=== NET PAY ===
+Net Pay: ₱6,237.50
 "
 PS-1772863860282-33,33,Carlos Ian Martinez,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Carlos Ian Martinez
@@ -1020,25 +1020,6 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
-PS-1772865121213-9,9,Rosie Atienza,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Rosie Atienza
-Emp #: 9
-Position: HR Rank and File
-Period: 2026-03-09 to 2026-03-15
-
-=== EARNINGS ===
-Gross Pay: ₱6,250.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱125.00
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
-
-=== NET PAY ===
-Net Pay: ₱5,718.75
-"
 PS-1772864362716-7,7,Brad San Jose,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
 Employee: Brad San Jose
 Emp #: 7
@@ -1057,6 +1038,25 @@ Total Deductions: ₱1,586.21
 
 === NET PAY ===
 Net Pay: ₱9,932.54
+"
+PS-1772865121213-9,9,Rosie Atienza,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Rosie Atienza
+Emp #: 9
+Position: HR Rank and File
+Period: 2026-03-09 to 2026-03-15
+
+=== EARNINGS ===
+Gross Pay: ₱6,250.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱125.00
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
+
+=== NET PAY ===
+Net Pay: ₱5,718.75
 "
 PS-1772864208765-7,7,Brad San Jose,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
 Employee: Brad San Jose
@@ -1077,24 +1077,24 @@ Total Deductions: ₱1,586.21
 === NET PAY ===
 Net Pay: ₱9,932.54
 "
-PS-1772865251968-24,24,Tomas Del Rosario,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Tomas Del Rosario
-Emp #: 24
-Position: Account Rank and File
-Period: 2026-03-16 to 2026-03-22
+PS-1772864362712-6,6,Andrea Mae Villanueva,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
+Employee: Andrea Mae Villanueva
+Emp #: 6
+Position: HR Manager
+Period: 2026-02-23 to 2026-03-01
 
 === EARNINGS ===
-Gross Pay: ₱6,250.00
+Gross Pay: ₱14,042.50
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱125.00
+PhilHealth: ₱280.85
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
+Withholding Tax: ₱1,610.58
+Total Deductions: ₱2,141.43
 
 === NET PAY ===
-Net Pay: ₱5,718.75
+Net Pay: ₱11,901.07
 "
 PS-1772864362790-31,31,Delia Aguilar,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Delia Aguilar
@@ -1115,24 +1115,24 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
-PS-1772864362712-6,6,Andrea Mae Villanueva,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
-Employee: Andrea Mae Villanueva
-Emp #: 6
-Position: HR Manager
-Period: 2026-02-23 to 2026-03-01
+PS-1772865251968-24,24,Tomas Del Rosario,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Tomas Del Rosario
+Emp #: 24
+Position: Account Rank and File
+Period: 2026-03-16 to 2026-03-22
 
 === EARNINGS ===
-Gross Pay: ₱14,042.50
+Gross Pay: ₱6,250.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱280.85
+PhilHealth: ₱125.00
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,610.58
-Total Deductions: ₱2,141.43
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
 
 === NET PAY ===
-Net Pay: ₱11,901.07
+Net Pay: ₱5,718.75
 "
 PS-1772864208816-32,32,John Rafael Castro,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: John Rafael Castro
@@ -1191,25 +1191,6 @@ Total Deductions: ₱626.88
 === NET PAY ===
 Net Pay: ₱6,185.63
 "
-PS-1772863860276-30,30,Emelia Maceda,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Emelia Maceda
-Emp #: 30
-Position: Account Rank and File
-Period: 2026-03-02 to 2026-03-11
-
-=== EARNINGS ===
-Gross Pay: ₱6,250.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱125.00
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
-
-=== NET PAY ===
-Net Pay: ₱5,718.75
-"
 PS1770432999180,1,Manuel III Garcia,2026-01-31,2026-02-07,2026-02-07,finance_anthony,5208.44,610.94,4597.50,"═══════════════════════════════════════════════════════════════
                     MOTORPH PAYROLL SYSTEM                      
                      WEEKLY PAYSLIP                             
@@ -1262,6 +1243,25 @@ Regular Hours: 8.00 | Overtime Hours: 1.00 | Total: 9.00
 This is a computer-generated payslip. No signature required.
 Generated on: Feb 07, 2026
 "
+PS-1772863860276-30,30,Emelia Maceda,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Emelia Maceda
+Emp #: 30
+Position: Account Rank and File
+Period: 2026-03-02 to 2026-03-11
+
+=== EARNINGS ===
+Gross Pay: ₱6,250.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱125.00
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
+
+=== NET PAY ===
+Net Pay: ₱5,718.75
+"
 PS-1772865121311-34,34,Beatriz Santos,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Beatriz Santos
 Emp #: 34
@@ -1280,25 +1280,6 @@ Total Deductions: ₱2,141.43
 
 === NET PAY ===
 Net Pay: ₱11,901.07
-"
-PS-1772865251953-21,21,Darlene Lazaro,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6437.50,5874.38,563.13,"=== PAYSLIP ===
-Employee: Darlene Lazaro
-Emp #: 21
-Position: Account Rank and File
-Period: 2026-03-16 to 2026-03-22
-
-=== EARNINGS ===
-Gross Pay: ₱6,437.50
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱128.75
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱184.38
-Total Deductions: ₱563.13
-
-=== NET PAY ===
-Net Pay: ₱5,874.38
 "
 PS-1772864362757-19,19,Cydney Rosario,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Cydney Rosario
@@ -1319,6 +1300,25 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
+PS-1772865251953-21,21,Darlene Lazaro,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6437.50,5874.38,563.13,"=== PAYSLIP ===
+Employee: Darlene Lazaro
+Emp #: 21
+Position: Account Rank and File
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱6,437.50
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱128.75
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱184.38
+Total Deductions: ₱563.13
+
+=== NET PAY ===
+Net Pay: ₱5,874.38
+"
 PS-1772865121243-17,17,Selena De Leon,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,11237.50,9713.17,1524.33,"=== PAYSLIP ===
 Employee: Selena De Leon
 Emp #: 17
@@ -1338,25 +1338,6 @@ Total Deductions: ₱1,524.33
 === NET PAY ===
 Net Pay: ₱9,713.17
 "
-PS-1772865251978-28,28,Lizeth Villegas,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
-Employee: Lizeth Villegas
-Emp #: 28
-Position: Account Rank and File
-Period: 2026-03-16 to 2026-03-22
-
-=== EARNINGS ===
-Gross Pay: ₱6,625.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱132.50
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱212.50
-Total Deductions: ₱595.00
-
-=== NET PAY ===
-Net Pay: ₱6,030.00
-"
 PS-1772865121197-5,5,Eduard Hernandez,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Eduard Hernandez
 Emp #: 5
@@ -1375,6 +1356,25 @@ Total Deductions: ₱2,141.43
 
 === NET PAY ===
 Net Pay: ₱11,901.07
+"
+PS-1772865251978-28,28,Lizeth Villegas,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
+Employee: Lizeth Villegas
+Emp #: 28
+Position: Account Rank and File
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱6,625.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱132.50
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱212.50
+Total Deductions: ₱595.00
+
+=== NET PAY ===
+Net Pay: ₱6,030.00
 "
 PS-1772864362802-35,35,Juan Dela Cruz,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6875.00,6237.50,637.50,"=== PAYSLIP ===
 Employee: Juan Dela Cruz
@@ -1452,25 +1452,6 @@ Total Deductions: ₱2,599.58
 === NET PAY ===
 Net Pay: ₱13,525.42
 "
-PS-1772865121221-11,11,Anthony Salcedo,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,13581.25,11541.29,2039.96,"=== PAYSLIP ===
-Employee: Anthony Salcedo
-Emp #: 11
-Position: Payroll Manager
-Period: 2026-03-09 to 2026-03-15
-
-=== EARNINGS ===
-Gross Pay: ₱13,581.25
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱271.63
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,518.33
-Total Deductions: ₱2,039.96
-
-=== NET PAY ===
-Net Pay: ₱11,541.29
-"
 PS-1772864208806-27,27,Garfield Manalaysay,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6812.50,6185.63,626.88,"=== PAYSLIP ===
 Employee: Garfield Manalaysay
 Emp #: 27
@@ -1489,6 +1470,25 @@ Total Deductions: ₱626.88
 
 === NET PAY ===
 Net Pay: ₱6,185.63
+"
+PS-1772865121221-11,11,Anthony Salcedo,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,13581.25,11541.29,2039.96,"=== PAYSLIP ===
+Employee: Anthony Salcedo
+Emp #: 11
+Position: Payroll Manager
+Period: 2026-03-09 to 2026-03-15
+
+=== EARNINGS ===
+Gross Pay: ₱13,581.25
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱271.63
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱1,518.33
+Total Deductions: ₱2,039.96
+
+=== NET PAY ===
+Net Pay: ₱11,541.29
 "
 PS-1772865251903-5,5,Eduard Hernandez,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Eduard Hernandez
@@ -1509,11 +1509,11 @@ Total Deductions: ₱2,141.43
 === NET PAY ===
 Net Pay: ₱11,901.07
 "
-PS-1772865121267-23,23,Vella Santos,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Vella Santos
-Emp #: 23
+PS-1772864208812-30,30,Emelia Maceda,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Emelia Maceda
+Emp #: 30
 Position: Account Rank and File
-Period: 2026-03-09 to 2026-03-15
+Period: 2026-03-02 to 2026-03-08
 
 === EARNINGS ===
 Gross Pay: ₱6,250.00
@@ -1547,11 +1547,11 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
-PS-1772864208812-30,30,Emelia Maceda,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Emelia Maceda
-Emp #: 30
+PS-1772865121267-23,23,Vella Santos,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Vella Santos
+Emp #: 23
 Position: Account Rank and File
-Period: 2026-03-02 to 2026-03-08
+Period: 2026-03-09 to 2026-03-15
 
 === EARNINGS ===
 Gross Pay: ₱6,250.00
@@ -1737,6 +1737,25 @@ Total Deductions: ₱563.13
 === NET PAY ===
 Net Pay: ₱5,874.38
 "
+PS-1772863682473-2,2,Antonio Lim,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
+Employee: Antonio Lim
+Emp #: 2
+Position: Chief Operating Officer
+Period: 2026-03-02 to 2026-03-08
+
+=== EARNINGS ===
+Gross Pay: ₱16,125.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱322.50
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱2,027.08
+Total Deductions: ₱2,599.58
+
+=== NET PAY ===
+Net Pay: ₱13,525.42
+"
 PS-1772864362732-12,12,Josie Lopez,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,10393.75,9055.04,1338.71,"=== PAYSLIP ===
 Employee: Josie Lopez
 Emp #: 12
@@ -1756,24 +1775,24 @@ Total Deductions: ₱1,338.71
 === NET PAY ===
 Net Pay: ₱9,055.04
 "
-PS-1772863682473-2,2,Antonio Lim,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
-Employee: Antonio Lim
-Emp #: 2
-Position: Chief Operating Officer
-Period: 2026-03-02 to 2026-03-08
+PS-1772864362785-29,29,Carol Ramos,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Carol Ramos
+Emp #: 29
+Position: Account Rank and File
+Period: 2026-02-23 to 2026-03-01
 
 === EARNINGS ===
-Gross Pay: ₱16,125.00
+Gross Pay: ₱6,250.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱322.50
+PhilHealth: ₱125.00
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱2,027.08
-Total Deductions: ₱2,599.58
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
 
 === NET PAY ===
-Net Pay: ₱13,525.42
+Net Pay: ₱5,718.75
 "
 PS-1772865121187-3,3,Bianca Sofia Aquino,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
 Employee: Bianca Sofia Aquino
@@ -1794,11 +1813,11 @@ Total Deductions: ₱2,599.58
 === NET PAY ===
 Net Pay: ₱13,525.42
 "
-PS-1772864362785-29,29,Carol Ramos,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+PS-1772864208811-29,29,Carol Ramos,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Carol Ramos
 Emp #: 29
 Position: Account Rank and File
-Period: 2026-02-23 to 2026-03-01
+Period: 2026-03-02 to 2026-03-08
 
 === EARNINGS ===
 Gross Pay: ₱6,250.00
@@ -1832,24 +1851,24 @@ Total Deductions: ₱595.00
 === NET PAY ===
 Net Pay: ₱6,030.00
 "
-PS-1772864208811-29,29,Carol Ramos,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Carol Ramos
-Emp #: 29
-Position: Account Rank and File
-Period: 2026-03-02 to 2026-03-08
+PS-1772864362695-2,2,Antonio Lim,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
+Employee: Antonio Lim
+Emp #: 2
+Position: Chief Operating Officer
+Period: 2026-02-23 to 2026-03-01
 
 === EARNINGS ===
-Gross Pay: ₱6,250.00
+Gross Pay: ₱16,125.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱125.00
+PhilHealth: ₱322.50
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
+Withholding Tax: ₱2,027.08
+Total Deductions: ₱2,599.58
 
 === NET PAY ===
-Net Pay: ₱5,718.75
+Net Pay: ₱13,525.42
 "
 PS-1772865121259-21,21,Darlene Lazaro,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6437.50,5874.38,563.13,"=== PAYSLIP ===
 Employee: Darlene Lazaro
@@ -1869,25 +1888,6 @@ Total Deductions: ₱563.13
 
 === NET PAY ===
 Net Pay: ₱5,874.38
-"
-PS-1772864362695-2,2,Antonio Lim,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
-Employee: Antonio Lim
-Emp #: 2
-Position: Chief Operating Officer
-Period: 2026-02-23 to 2026-03-01
-
-=== EARNINGS ===
-Gross Pay: ₱16,125.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱322.50
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱2,027.08
-Total Deductions: ₱2,599.58
-
-=== NET PAY ===
-Net Pay: ₱13,525.42
 "
 PS-1772863860245-14,14,Leila Martinez,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
 Employee: Leila Martinez
@@ -2029,24 +2029,24 @@ Total Deductions: ₱4,597.50
 === NET PAY ===
 Net Pay: ₱19,027.50
 "
-PS-1772865121180-2,2,Antonio Lim,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
-Employee: Antonio Lim
-Emp #: 2
-Position: Chief Operating Officer
-Period: 2026-03-09 to 2026-03-15
+PS-1772864362746-15,15,Fredrick Romualdez,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,14250.00,12062.92,2187.08,"=== PAYSLIP ===
+Employee: Fredrick Romualdez
+Emp #: 15
+Position: Account Manager
+Period: 2026-02-23 to 2026-03-01
 
 === EARNINGS ===
-Gross Pay: ₱16,125.00
+Gross Pay: ₱14,250.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱322.50
+PhilHealth: ₱285.00
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱2,027.08
-Total Deductions: ₱2,599.58
+Withholding Tax: ₱1,652.08
+Total Deductions: ₱2,187.08
 
 === NET PAY ===
-Net Pay: ₱13,525.42
+Net Pay: ₱12,062.92
 "
 PS-1772864362780-27,27,Garfield Manalaysay,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6812.50,6185.63,626.88,"=== PAYSLIP ===
 Employee: Garfield Manalaysay
@@ -2067,24 +2067,24 @@ Total Deductions: ₱626.88
 === NET PAY ===
 Net Pay: ₱6,185.63
 "
-PS-1772864362746-15,15,Fredrick Romualdez,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,14250.00,12062.92,2187.08,"=== PAYSLIP ===
-Employee: Fredrick Romualdez
-Emp #: 15
-Position: Account Manager
-Period: 2026-02-23 to 2026-03-01
+PS-1772865121180-2,2,Antonio Lim,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
+Employee: Antonio Lim
+Emp #: 2
+Position: Chief Operating Officer
+Period: 2026-03-09 to 2026-03-15
 
 === EARNINGS ===
-Gross Pay: ₱14,250.00
+Gross Pay: ₱16,125.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱285.00
+PhilHealth: ₱322.50
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,652.08
-Total Deductions: ₱2,187.08
+Withholding Tax: ₱2,027.08
+Total Deductions: ₱2,599.58
 
 === NET PAY ===
-Net Pay: ₱12,062.92
+Net Pay: ₱13,525.42
 "
 PS-1772865121295-30,30,Emelia Maceda,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Emelia Maceda
@@ -2219,25 +2219,6 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
-PS-1772864208789-19,19,Cydney Rosario,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Cydney Rosario
-Emp #: 19
-Position: Account Rank and File
-Period: 2026-03-02 to 2026-03-08
-
-=== EARNINGS ===
-Gross Pay: ₱6,250.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱125.00
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
-
-=== NET PAY ===
-Net Pay: ₱5,718.75
-"
 PS-1772863860249-16,16,Christian Mata,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
 Employee: Christian Mata
 Emp #: 16
@@ -2256,6 +2237,25 @@ Total Deductions: ₱1,586.21
 
 === NET PAY ===
 Net Pay: ₱9,932.54
+"
+PS-1772864208789-19,19,Cydney Rosario,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Cydney Rosario
+Emp #: 19
+Position: Account Rank and File
+Period: 2026-03-02 to 2026-03-08
+
+=== EARNINGS ===
+Gross Pay: ₱6,250.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱125.00
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
+
+=== NET PAY ===
+Net Pay: ₱5,718.75
 "
 PS-1772865251948-19,19,Cydney Rosario,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Cydney Rosario
@@ -2314,24 +2314,24 @@ Total Deductions: ₱595.00
 === NET PAY ===
 Net Pay: ₱6,030.00
 "
-PS-1772865251945-18,18,Allison San Jose,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Allison San Jose
-Emp #: 18
-Position: Account Rank and File
-Period: 2026-03-16 to 2026-03-22
+PS-1772864362752-17,17,Selena De Leon,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,11237.50,9713.17,1524.33,"=== PAYSLIP ===
+Employee: Selena De Leon
+Emp #: 17
+Position: Account Team Leader
+Period: 2026-02-23 to 2026-03-01
 
 === EARNINGS ===
-Gross Pay: ₱6,250.00
+Gross Pay: ₱11,237.50
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱125.00
+PhilHealth: ₱224.75
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
+Withholding Tax: ₱1,049.58
+Total Deductions: ₱1,524.33
 
 === NET PAY ===
-Net Pay: ₱5,718.75
+Net Pay: ₱9,713.17
 "
 PS-1772864362773-25,25,Jacklyn Tolentino,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
 Employee: Jacklyn Tolentino
@@ -2352,24 +2352,24 @@ Total Deductions: ₱595.00
 === NET PAY ===
 Net Pay: ₱6,030.00
 "
-PS-1772864362752-17,17,Selena De Leon,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,11237.50,9713.17,1524.33,"=== PAYSLIP ===
-Employee: Selena De Leon
-Emp #: 17
-Position: Account Team Leader
-Period: 2026-02-23 to 2026-03-01
+PS-1772865251945-18,18,Allison San Jose,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Allison San Jose
+Emp #: 18
+Position: Account Rank and File
+Period: 2026-03-16 to 2026-03-22
 
 === EARNINGS ===
-Gross Pay: ₱11,237.50
+Gross Pay: ₱6,250.00
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱224.75
+PhilHealth: ₱125.00
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,049.58
-Total Deductions: ₱1,524.33
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
 
 === NET PAY ===
-Net Pay: ₱9,713.17
+Net Pay: ₱5,718.75
 "
 PS-1772865251984-31,31,Delia Aguilar,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Delia Aguilar
@@ -2485,25 +2485,6 @@ Total Deductions: ₱2,141.43
 === NET PAY ===
 Net Pay: ₱11,901.07
 "
-PS-1772864208783-16,16,Christian Mata,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
-Employee: Christian Mata
-Emp #: 16
-Position: Account Team Leader
-Period: 2026-03-02 to 2026-03-08
-
-=== EARNINGS ===
-Gross Pay: ₱11,518.75
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱230.38
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,105.83
-Total Deductions: ₱1,586.21
-
-=== NET PAY ===
-Net Pay: ₱9,932.54
-"
 PS-1772863860255-19,19,Cydney Rosario,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Cydney Rosario
 Emp #: 19
@@ -2522,6 +2503,25 @@ Total Deductions: ₱531.25
 
 === NET PAY ===
 Net Pay: ₱5,718.75
+"
+PS-1772864208783-16,16,Christian Mata,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
+Employee: Christian Mata
+Emp #: 16
+Position: Account Team Leader
+Period: 2026-03-02 to 2026-03-08
+
+=== EARNINGS ===
+Gross Pay: ₱11,518.75
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱230.38
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱1,105.83
+Total Deductions: ₱1,586.21
+
+=== NET PAY ===
+Net Pay: ₱9,932.54
 "
 PS-1772864362771-24,24,Tomas Del Rosario,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Tomas Del Rosario
@@ -2580,24 +2580,24 @@ Total Deductions: ₱1,524.33
 === NET PAY ===
 Net Pay: ₱9,713.17
 "
-PS-1772865251986-32,32,John Rafael Castro,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
-Employee: John Rafael Castro
-Emp #: 32
-Position: Sales & Marketing
-Period: 2026-03-16 to 2026-03-22
+PS-1772864362749-16,16,Christian Mata,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
+Employee: Christian Mata
+Emp #: 16
+Position: Account Team Leader
+Period: 2026-02-23 to 2026-03-01
 
 === EARNINGS ===
-Gross Pay: ₱14,042.50
+Gross Pay: ₱11,518.75
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱280.85
+PhilHealth: ₱230.38
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,610.58
-Total Deductions: ₱2,141.43
+Withholding Tax: ₱1,105.83
+Total Deductions: ₱1,586.21
 
 === NET PAY ===
-Net Pay: ₱11,901.07
+Net Pay: ₱9,932.54
 "
 PS-1772865121248-18,18,Allison San Jose,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Allison San Jose
@@ -2618,24 +2618,24 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
-PS-1772864362749-16,16,Christian Mata,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
-Employee: Christian Mata
-Emp #: 16
-Position: Account Team Leader
-Period: 2026-02-23 to 2026-03-01
+PS-1772865251986-32,32,John Rafael Castro,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
+Employee: John Rafael Castro
+Emp #: 32
+Position: Sales & Marketing
+Period: 2026-03-16 to 2026-03-22
 
 === EARNINGS ===
-Gross Pay: ₱11,518.75
+Gross Pay: ₱14,042.50
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱230.38
+PhilHealth: ₱280.85
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,105.83
-Total Deductions: ₱1,586.21
+Withholding Tax: ₱1,610.58
+Total Deductions: ₱2,141.43
 
 === NET PAY ===
-Net Pay: ₱9,932.54
+Net Pay: ₱11,901.07
 "
 PS-1772863701890-3,3,Bianca Sofia Aquino,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
 Employee: Bianca Sofia Aquino
@@ -2675,25 +2675,6 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
-PS-1772864362768-23,23,Vella Santos,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Vella Santos
-Emp #: 23
-Position: Account Rank and File
-Period: 2026-02-23 to 2026-03-01
-
-=== EARNINGS ===
-Gross Pay: ₱6,250.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱125.00
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
-
-=== NET PAY ===
-Net Pay: ₱5,718.75
-"
 PS-1772864208781-15,15,Fredrick Romualdez,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,14250.00,12062.92,2187.08,"=== PAYSLIP ===
 Employee: Fredrick Romualdez
 Emp #: 15
@@ -2712,6 +2693,25 @@ Total Deductions: ₱2,187.08
 
 === NET PAY ===
 Net Pay: ₱12,062.92
+"
+PS-1772864362768-23,23,Vella Santos,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Vella Santos
+Emp #: 23
+Position: Account Rank and File
+Period: 2026-02-23 to 2026-03-01
+
+=== EARNINGS ===
+Gross Pay: ₱6,250.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱125.00
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
+
+=== NET PAY ===
+Net Pay: ₱5,718.75
 "
 PS-1772865251938-16,16,Christian Mata,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
 Employee: Christian Mata
@@ -2732,25 +2732,6 @@ Total Deductions: ₱1,586.21
 === NET PAY ===
 Net Pay: ₱9,932.54
 "
-PS-1772865121217-10,10,Roderick Alvaro,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
-Employee: Roderick Alvaro
-Emp #: 10
-Position: Accounting Head
-Period: 2026-03-09 to 2026-03-15
-
-=== EARNINGS ===
-Gross Pay: ₱14,042.50
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱280.85
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,610.58
-Total Deductions: ₱2,141.43
-
-=== NET PAY ===
-Net Pay: ₱11,901.07
-"
 PS-1772863860243-13,13,Martha Farala,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
 Employee: Martha Farala
 Emp #: 13
@@ -2770,11 +2751,11 @@ Total Deductions: ₱595.00
 === NET PAY ===
 Net Pay: ₱6,030.00
 "
-PS-1772865251987-33,33,Carlos Ian Martinez,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
-Employee: Carlos Ian Martinez
-Emp #: 33
-Position: Supply Chain and Logistics
-Period: 2026-03-16 to 2026-03-22
+PS-1772865121217-10,10,Roderick Alvaro,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
+Employee: Roderick Alvaro
+Emp #: 10
+Position: Accounting Head
+Period: 2026-03-09 to 2026-03-15
 
 === EARNINGS ===
 Gross Pay: ₱14,042.50
@@ -2808,30 +2789,30 @@ Total Deductions: ₱531.25
 === NET PAY ===
 Net Pay: ₱5,718.75
 "
+PS-1772865251987-33,33,Carlos Ian Martinez,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
+Employee: Carlos Ian Martinez
+Emp #: 33
+Position: Supply Chain and Logistics
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱14,042.50
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱280.85
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱1,610.58
+Total Deductions: ₱2,141.43
+
+=== NET PAY ===
+Net Pay: ₱11,901.07
+"
 PS-1772865121263-22,22,Kolby Delos Santos,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
 Employee: Kolby Delos Santos
 Emp #: 22
 Position: Account Rank and File
 Period: 2026-03-09 to 2026-03-15
-
-=== EARNINGS ===
-Gross Pay: ₱6,625.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱132.50
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱212.50
-Total Deductions: ₱595.00
-
-=== NET PAY ===
-Net Pay: ₱6,030.00
-"
-PS-1772864208809-28,28,Lizeth Villegas,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
-Employee: Lizeth Villegas
-Emp #: 28
-Position: Account Rank and File
-Period: 2026-03-02 to 2026-03-08
 
 === EARNINGS ===
 Gross Pay: ₱6,625.00
@@ -2865,30 +2846,30 @@ Total Deductions: ₱595.00
 === NET PAY ===
 Net Pay: ₱6,030.00
 "
+PS-1772864208809-28,28,Lizeth Villegas,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
+Employee: Lizeth Villegas
+Emp #: 28
+Position: Account Rank and File
+Period: 2026-03-02 to 2026-03-08
+
+=== EARNINGS ===
+Gross Pay: ₱6,625.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱132.50
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱212.50
+Total Deductions: ₱595.00
+
+=== NET PAY ===
+Net Pay: ₱6,030.00
+"
 PS-1772865121291-29,29,Carol Ramos,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Carol Ramos
 Emp #: 29
 Position: Account Rank and File
 Period: 2026-03-09 to 2026-03-15
-
-=== EARNINGS ===
-Gross Pay: ₱6,250.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱125.00
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
-
-=== NET PAY ===
-Net Pay: ₱5,718.75
-"
-PS-1772863860278-31,31,Delia Aguilar,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Delia Aguilar
-Emp #: 31
-Position: Account Rank and File
-Period: 2026-03-02 to 2026-03-11
 
 === EARNINGS ===
 Gross Pay: ₱6,250.00
@@ -2921,6 +2902,25 @@ Total Deductions: ₱4,597.50
 
 === NET PAY ===
 Net Pay: ₱19,027.50
+"
+PS-1772863860278-31,31,Delia Aguilar,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Delia Aguilar
+Emp #: 31
+Position: Account Rank and File
+Period: 2026-03-02 to 2026-03-11
+
+=== EARNINGS ===
+Gross Pay: ₱6,250.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱125.00
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
+
+=== NET PAY ===
+Net Pay: ₱5,718.75
 "
 PS-1772865121315-35,35,Juan Dela Cruz,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,6875.00,6237.50,637.50,"=== PAYSLIP ===
 Employee: Juan Dela Cruz
@@ -2960,25 +2960,6 @@ Total Deductions: ₱2,599.58
 === NET PAY ===
 Net Pay: ₱13,525.42
 "
-PS-1772865251956-22,22,Kolby Delos Santos,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
-Employee: Kolby Delos Santos
-Emp #: 22
-Position: Account Rank and File
-Period: 2026-03-16 to 2026-03-22
-
-=== EARNINGS ===
-Gross Pay: ₱6,625.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱132.50
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱212.50
-Total Deductions: ₱595.00
-
-=== NET PAY ===
-Net Pay: ₱6,030.00
-"
 PS-1772864362754-18,18,Allison San Jose,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
 Employee: Allison San Jose
 Emp #: 18
@@ -2997,6 +2978,25 @@ Total Deductions: ₱531.25
 
 === NET PAY ===
 Net Pay: ₱5,718.75
+"
+PS-1772865251956-22,22,Kolby Delos Santos,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6625.00,6030.00,595.00,"=== PAYSLIP ===
+Employee: Kolby Delos Santos
+Emp #: 22
+Position: Account Rank and File
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱6,625.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱132.50
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱212.50
+Total Deductions: ₱595.00
+
+=== NET PAY ===
+Net Pay: ₱6,030.00
 "
 PS-1772865121240-16,16,Christian Mata,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,11518.75,9932.54,1586.21,"=== PAYSLIP ===
 Employee: Christian Mata
@@ -3017,24 +3017,24 @@ Total Deductions: ₱1,586.21
 === NET PAY ===
 Net Pay: ₱9,932.54
 "
-PS-1772865251976-27,27,Garfield Manalaysay,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6812.50,6185.63,626.88,"=== PAYSLIP ===
-Employee: Garfield Manalaysay
-Emp #: 27
-Position: Account Rank and File
-Period: 2026-03-16 to 2026-03-22
+PS-1772864208763-5,5,Eduard Hernandez,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
+Employee: Eduard Hernandez
+Emp #: 5
+Position: IT Operations and Systems
+Period: 2026-03-02 to 2026-03-08
 
 === EARNINGS ===
-Gross Pay: ₱6,812.50
+Gross Pay: ₱14,042.50
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱136.25
+PhilHealth: ₱280.85
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱240.63
-Total Deductions: ₱626.88
+Withholding Tax: ₱1,610.58
+Total Deductions: ₱2,141.43
 
 === NET PAY ===
-Net Pay: ₱6,185.63
+Net Pay: ₱11,901.07
 "
 PS-1772864362799-34,34,Beatriz Santos,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Beatriz Santos
@@ -3055,24 +3055,24 @@ Total Deductions: ₱2,141.43
 === NET PAY ===
 Net Pay: ₱11,901.07
 "
-PS-1772864208763-5,5,Eduard Hernandez,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
-Employee: Eduard Hernandez
-Emp #: 5
-Position: IT Operations and Systems
-Period: 2026-03-02 to 2026-03-08
+PS-1772865251976-27,27,Garfield Manalaysay,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6812.50,6185.63,626.88,"=== PAYSLIP ===
+Employee: Garfield Manalaysay
+Emp #: 27
+Position: Account Rank and File
+Period: 2026-03-16 to 2026-03-22
 
 === EARNINGS ===
-Gross Pay: ₱14,042.50
+Gross Pay: ₱6,812.50
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱280.85
+PhilHealth: ₱136.25
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱1,610.58
-Total Deductions: ₱2,141.43
+Withholding Tax: ₱240.63
+Total Deductions: ₱626.88
 
 === NET PAY ===
-Net Pay: ₱11,901.07
+Net Pay: ₱6,185.63
 "
 PS-1772865121201-6,6,Andrea Mae Villanueva,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Andrea Mae Villanueva
@@ -3112,25 +3112,6 @@ Total Deductions: ₱595.00
 === NET PAY ===
 Net Pay: ₱6,030.00
 "
-PS-1772865251991-35,35,Juan Dela Cruz,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6875.00,6237.50,637.50,"=== PAYSLIP ===
-Employee: Juan Dela Cruz
-Emp #: 35
-Position: HR Assistant
-Period: 2026-03-16 to 2026-03-22
-
-=== EARNINGS ===
-Gross Pay: ₱6,875.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱137.50
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱250.00
-Total Deductions: ₱637.50
-
-=== NET PAY ===
-Net Pay: ₱6,237.50
-"
 PS-1772865251918-10,10,Roderick Alvaro,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Roderick Alvaro
 Emp #: 10
@@ -3149,6 +3130,25 @@ Total Deductions: ₱2,141.43
 
 === NET PAY ===
 Net Pay: ₱11,901.07
+"
+PS-1772865251991-35,35,Juan Dela Cruz,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6875.00,6237.50,637.50,"=== PAYSLIP ===
+Employee: Juan Dela Cruz
+Emp #: 35
+Position: HR Assistant
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱6,875.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱137.50
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱250.00
+Total Deductions: ₱637.50
+
+=== NET PAY ===
+Net Pay: ₱6,237.50
 "
 PS-1772865121191-4,4,Isabella Reyes,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,16125.00,13525.42,2599.58,"=== PAYSLIP ===
 Employee: Isabella Reyes
@@ -3245,25 +3245,6 @@ Total Deductions: ₱2,599.58
 === NET PAY ===
 Net Pay: ₱13,525.42
 "
-PS-1772864208792-21,21,Darlene Lazaro,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6437.50,5874.38,563.13,"=== PAYSLIP ===
-Employee: Darlene Lazaro
-Emp #: 21
-Position: Account Rank and File
-Period: 2026-03-02 to 2026-03-08
-
-=== EARNINGS ===
-Gross Pay: ₱6,437.50
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱128.75
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱184.38
-Total Deductions: ₱563.13
-
-=== NET PAY ===
-Net Pay: ₱5,874.38
-"
 PS-1772863641169-1,1,Manuel III Garcia,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,23625.00,19027.50,4597.50,"=== PAYSLIP ===
 Employee: Manuel III Garcia
 Emp #: 1
@@ -3283,24 +3264,24 @@ Total Deductions: ₱4,597.50
 === NET PAY ===
 Net Pay: ₱19,027.50
 "
-PS-1772865121224-12,12,Josie Lopez,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,10393.75,9055.04,1338.71,"=== PAYSLIP ===
-Employee: Josie Lopez
-Emp #: 12
-Position: Payroll Team Leader
-Period: 2026-03-09 to 2026-03-15
+PS-1772864208792-21,21,Darlene Lazaro,2026-03-02,2026-03-08,2026-03-07,salcedoanthony,6437.50,5874.38,563.13,"=== PAYSLIP ===
+Employee: Darlene Lazaro
+Emp #: 21
+Position: Account Rank and File
+Period: 2026-03-02 to 2026-03-08
 
 === EARNINGS ===
-Gross Pay: ₱10,393.75
+Gross Pay: ₱6,437.50
 
 === DEDUCTIONS ===
 SSS: ₱225.00
-PhilHealth: ₱207.88
+PhilHealth: ₱128.75
 Pag-IBIG: ₱25.00
-Withholding Tax: ₱880.83
-Total Deductions: ₱1,338.71
+Withholding Tax: ₱184.38
+Total Deductions: ₱563.13
 
 === NET PAY ===
-Net Pay: ₱9,055.04
+Net Pay: ₱5,874.38
 "
 PS-1772863860246-15,15,Fredrick Romualdez,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,14250.00,12062.92,2187.08,"=== PAYSLIP ===
 Employee: Fredrick Romualdez
@@ -3320,6 +3301,25 @@ Total Deductions: ₱2,187.08
 
 === NET PAY ===
 Net Pay: ₱12,062.92
+"
+PS-1772865121224-12,12,Josie Lopez,2026-03-09,2026-03-15,2026-03-07,salcedoanthony,10393.75,9055.04,1338.71,"=== PAYSLIP ===
+Employee: Josie Lopez
+Emp #: 12
+Position: Payroll Team Leader
+Period: 2026-03-09 to 2026-03-15
+
+=== EARNINGS ===
+Gross Pay: ₱10,393.75
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱207.88
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱880.83
+Total Deductions: ₱1,338.71
+
+=== NET PAY ===
+Net Pay: ₱9,055.04
 "
 PS-1772863860226-5,5,Eduard Hernandez,2026-03-02,2026-03-11,2026-03-07,salcedoanthony,14042.50,11901.07,2141.43,"=== PAYSLIP ===
 Employee: Eduard Hernandez
@@ -3416,25 +3416,6 @@ Total Deductions: ₱595.00
 === NET PAY ===
 Net Pay: ₱6,030.00
 "
-PS-1772865251980-29,29,Carol Ramos,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
-Employee: Carol Ramos
-Emp #: 29
-Position: Account Rank and File
-Period: 2026-03-16 to 2026-03-22
-
-=== EARNINGS ===
-Gross Pay: ₱6,250.00
-
-=== DEDUCTIONS ===
-SSS: ₱225.00
-PhilHealth: ₱125.00
-Pag-IBIG: ₱25.00
-Withholding Tax: ₱156.25
-Total Deductions: ₱531.25
-
-=== NET PAY ===
-Net Pay: ₱5,718.75
-"
 PS-1772864362729-11,11,Anthony Salcedo,2026-02-23,2026-03-01,2026-03-07,salcedoanthony,13581.25,11541.29,2039.96,"=== PAYSLIP ===
 Employee: Anthony Salcedo
 Emp #: 11
@@ -3454,6 +3435,25 @@ Total Deductions: ₱2,039.96
 === NET PAY ===
 Net Pay: ₱11,541.29
 "
+PS-1772865251980-29,29,Carol Ramos,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,6250.00,5718.75,531.25,"=== PAYSLIP ===
+Employee: Carol Ramos
+Emp #: 29
+Position: Account Rank and File
+Period: 2026-03-16 to 2026-03-22
+
+=== EARNINGS ===
+Gross Pay: ₱6,250.00
+
+=== DEDUCTIONS ===
+SSS: ₱225.00
+PhilHealth: ₱125.00
+Pag-IBIG: ₱25.00
+Withholding Tax: ₱156.25
+Total Deductions: ₱531.25
+
+=== NET PAY ===
+Net Pay: ₱5,718.75
+"
 PS-1772865251926-12,12,Josie Lopez,2026-03-16,2026-03-22,2026-03-07,salcedoanthony,10393.75,9055.04,1338.71,"=== PAYSLIP ===
 Employee: Josie Lopez
 Emp #: 12
@@ -3472,4 +3472,1299 @@ Total Deductions: ₱1,338.71
 
 === NET PAY ===
 Net Pay: ₱9,055.04
+"
+PS-1773052881222-1,1,Manuel III Garcia,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,23625.00,19027.50,4597.50,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Manuel III Garcia
+Employee #: 1
+Position: Chief Executive Officer
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱23,625.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱472.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱3,875.00
+────────────────────────────────────────────────────
+Total Deductions: ₱4,597.50
+
+════════════════════════════════════════════════════
+NET PAY: ₱19,027.50
+════════════════════════════════════════════════════
+"
+PS-1773052881247-2,2,Antonio Lim,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,16125.00,13525.42,2599.58,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Antonio Lim
+Employee #: 2
+Position: Chief Operating Officer
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱16,125.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱322.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱2,027.08
+────────────────────────────────────────────────────
+Total Deductions: ₱2,599.58
+
+════════════════════════════════════════════════════
+NET PAY: ₱13,525.42
+════════════════════════════════════════════════════
+"
+PS-1773052881257-3,3,Bianca Sofia Aquino,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,16125.00,13525.42,2599.58,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Bianca Sofia Aquino
+Employee #: 3
+Position: Chief Finance Officer
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱16,125.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱322.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱2,027.08
+────────────────────────────────────────────────────
+Total Deductions: ₱2,599.58
+
+════════════════════════════════════════════════════
+NET PAY: ₱13,525.42
+════════════════════════════════════════════════════
+"
+PS-1773052881265-4,4,Isabella Reyes,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,16125.00,13525.42,2599.58,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Isabella Reyes
+Employee #: 4
+Position: Chief Marketing Officer
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱16,125.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱322.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱2,027.08
+────────────────────────────────────────────────────
+Total Deductions: ₱2,599.58
+
+════════════════════════════════════════════════════
+NET PAY: ₱13,525.42
+════════════════════════════════════════════════════
+"
+PS-1773052881273-5,5,Eduard Hernandez,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,14042.50,11901.07,2141.43,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Eduard Hernandez
+Employee #: 5
+Position: IT Operations and Systems
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱14,042.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱280.85
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,610.58
+────────────────────────────────────────────────────
+Total Deductions: ₱2,141.43
+
+════════════════════════════════════════════════════
+NET PAY: ₱11,901.07
+════════════════════════════════════════════════════
+"
+PS-1773052881280-6,6,Andrea Mae Villanueva,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,14042.50,11901.07,2141.43,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Andrea Mae Villanueva
+Employee #: 6
+Position: HR Manager
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱14,042.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱280.85
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,610.58
+────────────────────────────────────────────────────
+Total Deductions: ₱2,141.43
+
+════════════════════════════════════════════════════
+NET PAY: ₱11,901.07
+════════════════════════════════════════════════════
+"
+PS-1773052881289-7,7,Brad San Jose,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,11518.75,9932.54,1586.21,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Brad San Jose
+Employee #: 7
+Position: HR Team Leader
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱11,518.75
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱230.38
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,105.83
+────────────────────────────────────────────────────
+Total Deductions: ₱1,586.21
+
+════════════════════════════════════════════════════
+NET PAY: ₱9,932.54
+════════════════════════════════════════════════════
+"
+PS-1773052881296-8,8,Alice Romualdez,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6250.00,5718.75,531.25,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Alice Romualdez
+Employee #: 8
+Position: HR Rank and File
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱125.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱156.25
+────────────────────────────────────────────────────
+Total Deductions: ₱531.25
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,718.75
+════════════════════════════════════════════════════
+"
+PS-1773052881305-9,9,Rosie Atienza,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6250.00,5718.75,531.25,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Rosie Atienza
+Employee #: 9
+Position: HR Rank and File
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱125.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱156.25
+────────────────────────────────────────────────────
+Total Deductions: ₱531.25
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,718.75
+════════════════════════════════════════════════════
+"
+PS-1773052881314-10,10,Roderick Alvaro,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,14042.50,11901.07,2141.43,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Roderick Alvaro
+Employee #: 10
+Position: Accounting Head
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱14,042.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱280.85
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,610.58
+────────────────────────────────────────────────────
+Total Deductions: ₱2,141.43
+
+════════════════════════════════════════════════════
+NET PAY: ₱11,901.07
+════════════════════════════════════════════════════
+"
+PS-1773052881320-11,11,Anthony Salcedo,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,13581.25,11541.29,2039.96,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Anthony Salcedo
+Employee #: 11
+Position: Payroll Manager
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱13,581.25
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱271.63
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,518.33
+────────────────────────────────────────────────────
+Total Deductions: ₱2,039.96
+
+════════════════════════════════════════════════════
+NET PAY: ₱11,541.29
+════════════════════════════════════════════════════
+"
+PS-1773052881326-12,12,Josie Lopez,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,10393.75,9055.04,1338.71,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Josie Lopez
+Employee #: 12
+Position: Payroll Team Leader
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱10,393.75
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱207.88
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱880.83
+────────────────────────────────────────────────────
+Total Deductions: ₱1,338.71
+
+════════════════════════════════════════════════════
+NET PAY: ₱9,055.04
+════════════════════════════════════════════════════
+"
+PS-1773052881331-13,13,Martha Farala,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6625.00,6030.00,595.00,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Martha Farala
+Employee #: 13
+Position: Payroll Rank and File
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,625.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱132.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱212.50
+────────────────────────────────────────────────────
+Total Deductions: ₱595.00
+
+════════════════════════════════════════════════════
+NET PAY: ₱6,030.00
+════════════════════════════════════════════════════
+"
+PS-1773052881337-14,14,Leila Martinez,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6625.00,6030.00,595.00,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Leila Martinez
+Employee #: 14
+Position: Payroll Rank and File
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,625.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱132.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱212.50
+────────────────────────────────────────────────────
+Total Deductions: ₱595.00
+
+════════════════════════════════════════════════════
+NET PAY: ₱6,030.00
+════════════════════════════════════════════════════
+"
+PS-1773052881350-15,15,Fredrick Romualdez,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,14250.00,12062.92,2187.08,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Fredrick Romualdez
+Employee #: 15
+Position: Account Manager
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱14,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱285.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,652.08
+────────────────────────────────────────────────────
+Total Deductions: ₱2,187.08
+
+════════════════════════════════════════════════════
+NET PAY: ₱12,062.92
+════════════════════════════════════════════════════
+"
+PS-1773052881358-16,16,Christian Mata,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,11518.75,9932.54,1586.21,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Christian Mata
+Employee #: 16
+Position: Account Team Leader
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱11,518.75
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱230.38
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,105.83
+────────────────────────────────────────────────────
+Total Deductions: ₱1,586.21
+
+════════════════════════════════════════════════════
+NET PAY: ₱9,932.54
+════════════════════════════════════════════════════
+"
+PS-1773052881367-17,17,Selena De Leon,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,11237.50,9713.17,1524.33,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Selena De Leon
+Employee #: 17
+Position: Account Team Leader
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱11,237.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱224.75
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,049.58
+────────────────────────────────────────────────────
+Total Deductions: ₱1,524.33
+
+════════════════════════════════════════════════════
+NET PAY: ₱9,713.17
+════════════════════════════════════════════════════
+"
+PS-1773052881372-18,18,Allison San Jose,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6250.00,5718.75,531.25,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Allison San Jose
+Employee #: 18
+Position: Account Rank and File
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱125.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱156.25
+────────────────────────────────────────────────────
+Total Deductions: ₱531.25
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,718.75
+════════════════════════════════════════════════════
+"
+PS-1773052881377-19,19,Cydney Rosario,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6250.00,5718.75,531.25,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Cydney Rosario
+Employee #: 19
+Position: Account Rank and File
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱125.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱156.25
+────────────────────────────────────────────────────
+Total Deductions: ₱531.25
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,718.75
+════════════════════════════════════════════════════
+"
+PS-1773052881382-20,20,Mark Bautista,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6437.50,5874.38,563.13,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Mark Bautista
+Employee #: 20
+Position: Account Rank and File
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,437.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱128.75
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱184.38
+────────────────────────────────────────────────────
+Total Deductions: ₱563.13
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,874.38
+════════════════════════════════════════════════════
+"
+PS-1773052881387-21,21,Darlene Lazaro,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6437.50,5874.38,563.13,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Darlene Lazaro
+Employee #: 21
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,437.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱128.75
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱184.38
+────────────────────────────────────────────────────
+Total Deductions: ₱563.13
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,874.38
+════════════════════════════════════════════════════
+"
+PS-1773052881393-22,22,Kolby Delos Santos,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6625.00,6030.00,595.00,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Kolby Delos Santos
+Employee #: 22
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,625.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱132.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱212.50
+────────────────────────────────────────────────────
+Total Deductions: ₱595.00
+
+════════════════════════════════════════════════════
+NET PAY: ₱6,030.00
+════════════════════════════════════════════════════
+"
+PS-1773052881398-23,23,Vella Santos,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6250.00,5718.75,531.25,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Vella Santos
+Employee #: 23
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱125.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱156.25
+────────────────────────────────────────────────────
+Total Deductions: ₱531.25
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,718.75
+════════════════════════════════════════════════════
+"
+PS-1773052881404-24,24,Tomas Del Rosario,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6250.00,5718.75,531.25,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Tomas Del Rosario
+Employee #: 24
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱125.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱156.25
+────────────────────────────────────────────────────
+Total Deductions: ₱531.25
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,718.75
+════════════════════════════════════════════════════
+"
+PS-1773052881410-25,25,Jacklyn Tolentino,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6625.00,6030.00,595.00,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Jacklyn Tolentino
+Employee #: 25
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,625.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱132.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱212.50
+────────────────────────────────────────────────────
+Total Deductions: ₱595.00
+
+════════════════════════════════════════════════════
+NET PAY: ₱6,030.00
+════════════════════════════════════════════════════
+"
+PS-1773052881415-26,26,Percival Gutierrez,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6812.50,6185.63,626.88,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Percival Gutierrez
+Employee #: 26
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,812.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱136.25
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱240.63
+────────────────────────────────────────────────────
+Total Deductions: ₱626.88
+
+════════════════════════════════════════════════════
+NET PAY: ₱6,185.63
+════════════════════════════════════════════════════
+"
+PS-1773052881422-27,27,Garfield Manalaysay,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6812.50,6185.63,626.88,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Garfield Manalaysay
+Employee #: 27
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,812.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱136.25
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱240.63
+────────────────────────────────────────────────────
+Total Deductions: ₱626.88
+
+════════════════════════════════════════════════════
+NET PAY: ₱6,185.63
+════════════════════════════════════════════════════
+"
+PS-1773052881427-28,28,Lizeth Villegas,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6625.00,6030.00,595.00,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Lizeth Villegas
+Employee #: 28
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,625.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱132.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱212.50
+────────────────────────────────────────────────────
+Total Deductions: ₱595.00
+
+════════════════════════════════════════════════════
+NET PAY: ₱6,030.00
+════════════════════════════════════════════════════
+"
+PS-1773052881435-29,29,Carol Ramos,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6250.00,5718.75,531.25,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Carol Ramos
+Employee #: 29
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱125.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱156.25
+────────────────────────────────────────────────────
+Total Deductions: ₱531.25
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,718.75
+════════════════════════════════════════════════════
+"
+PS-1773052881442-30,30,Emelia Maceda,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6250.00,5718.75,531.25,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Emelia Maceda
+Employee #: 30
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱125.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱156.25
+────────────────────────────────────────────────────
+Total Deductions: ₱531.25
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,718.75
+════════════════════════════════════════════════════
+"
+PS-1773052881450-31,31,Delia Aguilar,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6250.00,5718.75,531.25,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Delia Aguilar
+Employee #: 31
+Position: Account Rank and File
+Employment Status: Probationary
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,250.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱125.00
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱156.25
+────────────────────────────────────────────────────
+Total Deductions: ₱531.25
+
+════════════════════════════════════════════════════
+NET PAY: ₱5,718.75
+════════════════════════════════════════════════════
+"
+PS-1773052881455-32,32,John Rafael Castro,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,14042.50,11901.07,2141.43,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: John Rafael Castro
+Employee #: 32
+Position: Sales & Marketing
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱14,042.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱280.85
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,610.58
+────────────────────────────────────────────────────
+Total Deductions: ₱2,141.43
+
+════════════════════════════════════════════════════
+NET PAY: ₱11,901.07
+════════════════════════════════════════════════════
+"
+PS-1773052881496-33,33,Carlos Ian Martinez,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,14042.50,11901.07,2141.43,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Carlos Ian Martinez
+Employee #: 33
+Position: Supply Chain and Logistics
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱14,042.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱280.85
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,610.58
+────────────────────────────────────────────────────
+Total Deductions: ₱2,141.43
+
+════════════════════════════════════════════════════
+NET PAY: ₱11,901.07
+════════════════════════════════════════════════════
+"
+PS-1773052881515-34,34,Beatriz Santos,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,14042.50,11901.07,2141.43,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Beatriz Santos
+Employee #: 34
+Position: Customer Service and Relations
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱14,042.50
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱280.85
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱1,610.58
+────────────────────────────────────────────────────
+Total Deductions: ₱2,141.43
+
+════════════════════════════════════════════════════
+NET PAY: ₱11,901.07
+════════════════════════════════════════════════════
+"
+PS-1773052881529-35,35,Juan Dela Cruz,2026-03-16,2026-03-23,2026-03-09,salcedoanthony,6875.00,6237.50,637.50,"════════════════════════════════════════════════════
+                  MOTORPH PAYSLIP                   
+════════════════════════════════════════════════════
+
+EMPLOYEE INFORMATION
+────────────────────────────────────────────────────
+Name: Juan Dela Cruz
+Employee #: 35
+Position: HR Assistant
+Employment Status: Regular
+
+PAY PERIOD
+────────────────────────────────────────────────────
+Period: 2026-03-16 to 2026-03-23
+
+ATTENDANCE SUMMARY
+────────────────────────────────────────────────────
+Attendance Records: Not available
+Calculation Method: Monthly salary basis (÷4)
+
+EARNINGS
+────────────────────────────────────────────────────
+Gross Pay: ₱6,875.00
+
+DEDUCTIONS
+────────────────────────────────────────────────────
+SSS Contribution: ₱225.00
+PhilHealth Contribution: ₱137.50
+Pag-IBIG Contribution: ₱25.00
+Withholding Tax: ₱250.00
+────────────────────────────────────────────────────
+Total Deductions: ₱637.50
+
+════════════════════════════════════════════════════
+NET PAY: ₱6,237.50
+════════════════════════════════════════════════════
 "

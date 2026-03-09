@@ -9,13 +9,11 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.List;
 import dao.EmployeeRepository;
-import dao.PayslipRepository;
 import service.SalaryCalculator;
 import dao.AttendanceRepository;
 
 public class ModernEmployeeManagementFrame extends JFrame {
     private final EmployeeRepository employeeRepository;
-    private final PayslipRepository payslipRepository;
     private final SalaryCalculator salaryCalculator;
     private final User currentUser; 
     private final AttendanceRepository attendanceRepository;
@@ -29,10 +27,12 @@ public class ModernEmployeeManagementFrame extends JFrame {
     private DefaultTableModel tableModel;
     private JTable employeeTable;
     private JButton updateButton, deleteButton;
+    
+    private final String operationContext; 
 
-    public ModernEmployeeManagementFrame(EmployeeRepository repository, User user) {
+    public ModernEmployeeManagementFrame(EmployeeRepository repository, User user, String operationContext) {
+        this.operationContext = operationContext;
         this.employeeRepository = repository;
-        this.payslipRepository = new PayslipRepository();
         this.salaryCalculator = new SalaryCalculator();
         this.currentUser = user;
         this.attendanceRepository = new AttendanceRepository();
@@ -80,99 +80,104 @@ public class ModernEmployeeManagementFrame extends JFrame {
         headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 22));
         headerPanel.setBackground(PRIMARY_COLOR);
         headerPanel.setPreferredSize(new Dimension(1400, 80));
-        
+
         JLabel titleLabel = new JLabel("MotorPH Employee Management");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         titleLabel.setForeground(WHITE);
         titleLabel.setPreferredSize(new Dimension(400, 40));
         headerPanel.add(titleLabel);
-        
-        // Add some spacing
+
         headerPanel.add(Box.createHorizontalStrut(20));
-        
+
         String role = currentUser.getRole();
-        
-        // QUERY - Everyone with access can see
-        if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
-            role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
-            role.equals("Executive")) {
-            JButton queryBtn = createHeaderButton("Query");
-            queryBtn.addActionListener(e -> handleQuery());
-            headerPanel.add(queryBtn);
+        boolean isAdminOrOwner = role.equals("SystemAdmin") || role.equals("Owner");
+
+        // QUERY - Always visible
+        JButton queryBtn = createHeaderButton("Query");
+        queryBtn.addActionListener(e -> handleQuery());
+        headerPanel.add(queryBtn);
+
+        // ADD - Only in HR context
+        if (operationContext.equals("HR")) {
+            if (isAdminOrOwner || role.equals("HR")) {
+                JButton addBtn = createHeaderButton("Add");
+                addBtn.addActionListener(e -> handleAdd());
+                headerPanel.add(addBtn);
+            }
         }
-        
-        // ADD - Only HR and Owner
-        if (role.equals("HR") || role.equals("Owner")) {
-            JButton addBtn = createHeaderButton("Add");
-            addBtn.addActionListener(e -> handleAdd());
-            headerPanel.add(addBtn);
-        }
-        
-        // UPDATE - Only HR and Owner
-        if (role.equals("HR") || role.equals("Owner")) {
-            updateButton = createHeaderButton("Update");
-            updateButton.setEnabled(false);
-            updateButton.addActionListener(e -> handleUpdate());
-            headerPanel.add(updateButton);
+
+        // UPDATE - Only in HR context
+        if (operationContext.equals("HR")) {
+            if (isAdminOrOwner || role.equals("HR")) {
+                updateButton = createHeaderButton("Update");
+                updateButton.setEnabled(false);
+                updateButton.addActionListener(e -> handleUpdate());
+                headerPanel.add(updateButton);
+            } else {
+                updateButton = new JButton(); 
+                updateButton.setVisible(false);
+            }
         } else {
             updateButton = new JButton(); 
             updateButton.setVisible(false);
         }
-        
-        // DELETE - Only HR and Owner
-        if (role.equals("HR") || role.equals("Owner")) {
-            deleteButton = createHeaderButton("Delete");
-            deleteButton.setEnabled(false);
-            deleteButton.addActionListener(e -> handleDelete());
-            headerPanel.add(deleteButton);
+
+        // DELETE - Only in HR context
+        if (operationContext.equals("HR")) {
+            if (isAdminOrOwner || role.equals("HR")) {
+                deleteButton = createHeaderButton("Delete");
+                deleteButton.setEnabled(false);
+                deleteButton.addActionListener(e -> handleDelete());
+                headerPanel.add(deleteButton);
+            } else {
+                deleteButton = new JButton();
+                deleteButton.setVisible(false);
+            }
         } else {
             deleteButton = new JButton();
             deleteButton.setVisible(false);
         }
-        
-        // CLEAR - Everyone
-        if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
-            role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
-            role.equals("Executive")) {
-            JButton clearBtn = createHeaderButton("Clear");
-            clearBtn.addActionListener(e -> clearSelection());
-            headerPanel.add(clearBtn);
-        }
-        
-        // SAVE - Everyone
-        if (role.equals("SystemAdmin") || role.equals("Owner") || role.equals("HR") || 
-            role.equals("Finance") || role.equals("IT") || role.equals("Accounting") || 
-            role.equals("Executive")) {
-            JButton saveBtn = createHeaderButton("Save");
-            saveBtn.addActionListener(e -> handleSave());
-            headerPanel.add(saveBtn);
-        }
-        
-        // LEAVE - Only HR and Owner
-        if (role.equals("HR") || role.equals("Owner")) {
-            JButton leaveBtn = createHeaderButton("Leave");
-            leaveBtn.addActionListener(e -> openApproveLeaveDialog());
-            headerPanel.add(leaveBtn);
+
+        // CLEAR - Always visible
+        JButton clearBtn = createHeaderButton("Clear");
+        clearBtn.addActionListener(e -> clearSelection());
+        headerPanel.add(clearBtn);
+
+        // SAVE - Always visible
+        JButton saveBtn = createHeaderButton("Save");
+        saveBtn.addActionListener(e -> handleSave());
+        headerPanel.add(saveBtn);
+
+        // LEAVE - Only in HR context
+        if (operationContext.equals("HR")) {
+            if (isAdminOrOwner || role.equals("HR")) {
+                JButton leaveBtn = createHeaderButton("Leave");
+                leaveBtn.addActionListener(e -> openApproveLeaveDialog());
+                headerPanel.add(leaveBtn);
+            }
         }
 
-        // ATTENDANCE - HR, Finance (for payroll), and Owner
-        if (role.equals("HR") || role.equals("Finance") || role.equals("Owner")) {
-            JButton attendanceBtn = createHeaderButton("Attendance");
-            attendanceBtn.setPreferredSize(new Dimension(110, 35));
-            attendanceBtn.addActionListener(e -> openAttendanceManagement());
-            headerPanel.add(attendanceBtn);
+        // ATTENDANCE - HR and Finance contexts
+        if (operationContext.equals("HR") || operationContext.equals("Finance")) {
+            if (isAdminOrOwner || role.equals("HR") || role.equals("Finance")) {
+                JButton attendanceBtn = createHeaderButton("Attendance");
+                attendanceBtn.setPreferredSize(new Dimension(110, 35));
+                attendanceBtn.addActionListener(e -> openAttendanceManagement());
+                headerPanel.add(attendanceBtn);
+            }
         }
-        
-        // PROCESS PAYROLL - Only Finance, Accounting, Executive, Owner
-        if (role.equals("Finance") || role.equals("Accounting") || 
-            role.equals("Executive") || role.equals("Owner")) {
-            JButton processPayrollBtn = createHeaderButton("Process Payroll");
-            processPayrollBtn.setPreferredSize(new Dimension(130, 35));
-            processPayrollBtn.addActionListener(e -> openProcessPayrollDialog());
-            headerPanel.add(processPayrollBtn);
+
+        // PROCESS PAYROLL - Only in Finance context
+        if (operationContext.equals("Finance")) {
+            if (isAdminOrOwner || role.equals("Finance") || role.equals("Accounting") || role.equals("Executive")) {
+                JButton processPayrollBtn = createHeaderButton("Process Payroll");
+                processPayrollBtn.setPreferredSize(new Dimension(130, 35));
+                processPayrollBtn.addActionListener(e -> openProcessPayrollDialog());
+                headerPanel.add(processPayrollBtn);
+            }
         }
-        
-        // BACK BUTTON - At the end, after all other buttons
+
+        // BACK BUTTON
         if (currentUser.getEmployeeNumber() != null && !currentUser.getEmployeeNumber().isEmpty()) {
             JButton backBtn = new JButton("← Back");
             backBtn.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -198,7 +203,7 @@ public class ModernEmployeeManagementFrame extends JFrame {
             });
             headerPanel.add(backBtn);
         }
-        
+
         return headerPanel;
     }
 
