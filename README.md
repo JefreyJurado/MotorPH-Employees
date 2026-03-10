@@ -1,110 +1,251 @@
 MotorPH Employee Management System
 
-A comprehensive Role-Based Access Control (RBAC) employee management system demonstrating advanced Object-Oriented Programming principles through a production-quality Java application.
+Project Information
+Student: Jefrey Jurado  
+Section: S2101  
+Course: MO-IT110 (Object-Oriented Programming)  
+Milestone: 2 - OOP Implementation  
+Repository: https://github.com/JefreyJurado/MotorPH-Employees
 
-Project Overview
+Project Description
+Enterprise-grade Employee Management System for MotorPH featuring role-based access control (RBAC), payroll processing, leave management, and attendance tracking. This system was refactored from procedural CP2 code to a complete Object-Oriented Programming (OOP) architecture using the MVC (Model-View-Controller) pattern.
 
-This system implements a sophisticated two-layer RBAC architecture managing MotorPH company operations including employee records, payroll processing, leave management, and attendance tracking. The application demonstrates mastery of all four OOP principles while following industry-standard 4-layer architecture pattern.
+Included Libraries
+- JCalendar 1.4 (included in `lib/jcalendar-1/jcalendar-1.4.jar`)
+  - Used for date selection in leave applications
+  - Already configured in NetBeans project
+  - No additional download required
 
-Core Features
+Setup Instructions
 
-Employee Management
-- Complete CRUD operations for employee records
-- Dynamic employee classification using Factory Pattern
-- Support for 8 different employee types with role-specific capabilities
-- 34 real MotorPH employees with comprehensive data
+Step 1: Clone the Repository
+```bash
+git clone https://github.com/JefreyJurado/MotorPH-Employees.git
+cd MotorPHEmployeeSystem
+```
 
-Role-Based Access Control (RBAC)
-Two-Layer RBAC Implementation:
-1. User Role Layer (8 roles)
-   - SystemAdmin, Owner, HR, Finance, IT, Accounting, Executive, Employee
-   - Each role has specific dashboard interface and operational permissions
+Step 2: Open in NetBeans
+1. Open NetBeans IDE
+2. Go to File → Open Project
+3. Navigate to the cloned `MotorPHEmployeeSystem` folder
+4. Select the project (you should see the NetBeans icon)
+5. Click Open Project
 
-2. Employee Type Layer (8 types)
-   - ExecutiveEmployee, HREmployee, FinanceEmployee, ITEmployee
-   - AccountingEmployee, OperationsEmployee, SalesEmployee, GeneralEmployee
-   - Each type implements department-specific interfaces
+Step 3: Verify Libraries
+1. In the Projects tab, expand Libraries
+2. Verify `jcalendar-1.4.jar` is listed
+3. If missing or showing error:
+   - Right-click Libraries → Add JAR/Folder
+   - Navigate to `lib/jcalendar-1/jcalendar-1.4.jar`
+   - Click **Open**
 
-Payroll Management
-- Automated salary calculations with Philippine tax compliance
-- SSS, PhilHealth, Pag-IBIG deductions (2024 rates)
-- TRAIN Law withholding tax computation
-- Weekly payslip generation with attendance integration
-- Method overloading for flexible salary calculations
+Step 4: Verify CSV Files
+Ensure these files are in the project root directory:
+- ✅ `employees.csv` - 35 employee records
+- ✅ `users.csv` - Login credentials (35+ accounts)
+- ✅ `leaves.csv` - Leave application history
+- ✅ `payslips.csv` - Payroll history
+- ✅ `attendance.csv` - Attendance records
+
+Step 5: Build and Run
+1. Right-click project → Clean and Build
+2. Wait for "BUILD SUCCESSFUL" message
+3. Right-click project → Run
+4. Login screen will appear
+
+Test Accounts
+
+Admin/Owner Access (Full System Access)
+| Username | Password | Role | Description |
+|----------|----------|------|-------------|
+| `admin` | `admin123` | SystemAdmin | Full access to all operations |
+| `owner` | `owner123` | Owner | Full access to all operations |
+
+Department Heads
+| Username | Password | Role | Department | Access |
+|----------|----------|------|------------|--------|
+| `villanuevaandrea` | `emp006` | HR | Human Resources | Employee CRUD, Leave Management |
+| `salcedoanthony` | `emp011` | Finance | Finance | Payroll Processing |
+| `hernandezeduard` | `emp005` | IT | IT | System Access |
+| `alvaroderick` | `emp010` | Accounting | Accounting | Financial Records |
+| `garciamanuel` | `emp001` | Executive | Executive (CEO) | Executive Dashboard |
+
+Regular Employees
+| Username | Password | Employee # | Full Name |
+|----------|----------|------------|-----------|
+| `martinezcarlos` | `emp033` | 33 | Carlos Ian Martinez |
+| `castrojohn` | `emp032` | 32 | John Rafael Castro |
+| `delacruzjuan` | `emp035` | 35 | Juan Dela Cruz |
+
+*Note: All 35 employees have accounts. Format: `lastnamefirstname` (lowercase, no spaces)*
+
+Features by Role
+
+SystemAdmin / Owner
+- Full access to ALL operations
+- Employee CRUD (Create, Read, Update, Delete)
+- Leave approval/rejection with history
+- Payroll processing and management
+- Attendance tracking
+- System configuration
+
+HR Department
+- Employee management (Add, Update, Delete)
+- Leave application review and approval
+- Leave history tracking (Pending/Approved/Rejected/All)
+- Attendance management
+- Employee records query
+
+Finance Department
+- Payroll processing
+- Automated salary calculations (hourly + overtime)
+- Government deductions (SSS, PhilHealth, Pag-IBIG, Tax)
+- Payslip generation
+- Deduction management
+
+Employees
+- View personal information
+- File leave applications (with past date validation)
+- View leave status and history
+- Check weekly/monthly payslips
+- View attendance records
+- Update contact information (phone, address)
+
+Project Architecture
+
+Package Structure
+```
+src/
+├── dao/                    # Data Access Layer
+│   ├── AttendanceRepository.java
+│   ├── CSVFileHandler.java
+│   ├── EmployeeRepository.java
+│   ├── IEmployeeRepository.java
+│   ├── LeaveRepository.java
+│   ├── PayslipRepository.java
+│   └── UserRepository.java
+│
+├── model/                  # Business Logic Layer
+│   ├── AccountingEmployee.java
+│   ├── AttendanceRecord.java
+│   ├── Employee.java (abstract)
+│   ├── ExecutiveEmployee.java
+│   ├── FinanceEmployee.java
+│   ├── GeneralEmployee.java
+│   ├── HREmployee.java
+│   ├── ITEmployee.java
+│   ├── LeaveApplication.java
+│   ├── OperationsEmployee.java
+│   ├── Payslip.java
+│   ├── SalesEmployee.java
+│   └── User.java
+│
+├── service/                # Service Layer
+│   ├── AuthenticationService.java
+│   ├── IAccountingOperations.java
+│   ├── IExecutiveOperations.java
+│   ├── IFinanceOperations.java
+│   ├── IHROperations.java
+│   ├── IITOperations.java
+│   └── SalaryCalculator.java
+│
+├── util/                   # Utility Classes
+│   └── EmployeeFactory.java
+│
+├── view/                   # UI Layer (Swing)
+│   ├── AddEmployeeDialog.java
+│   ├── ApproveLeaveDialog.java
+│   ├── AttendanceManagementDialog.java
+│   ├── EmployeeAttendanceDialog.jav
+│   ├── EmployeeDashboardFrame.java
+│   ├── EmployeeSalaryDetialsDialog.java
+│   ├── EmployeeViewPayslipsDialog.java
+│   ├── ModernEmployeeManagementFrame.java
+│   ├── ModernLeaveApplicationDialog.java
+│   ├── ModernLoginDialog.java
+│   ├── ModernViewEmployeeDialog.java
+│   ├── PayslipHistoryDialog.java
+│   ├── ProcessPayrollDialog.java
+│   ├── UpdateEmployeeDialog.java
+│   ├── ViewDeductionsDialog.java
+│   ├──WeeklyPayslipDialog.java
+│
+└── MainApplication.java    # Application Entry Point
+```
+
+Design Patterns Used
+- MVC Pattern - Separation of concerns
+- Factory Pattern - EmployeeFactory for object creation
+- Repository Pattern - Data access abstraction
+- Strategy Pattern - Role-based operations
+- Singleton Pattern - Authentication service
+
+Key Features
+
+Security & Validation
+- Role-Based Access Control (RBAC) with 7 roles
+- Context-based button visibility (HR vs Finance operations)
+- Government ID validation (SSS, PhilHealth, TIN, Pag-IBIG)
+- Phone number validation (Philippine mobile format)
+- Past date validation - Prevents backdating leave applications
+- Date range validation - End date cannot be before start date
 
 Leave Management
-- Leave application filing with multiple leave types
-- Approval workflow for HR personnel
-- Leave balance tracking and history
-- Status management (Pending, Approved, Rejected)
+- Complete leave application workflow
+- 12-point validation system for leave submissions
+- Leave history tracking with status filter (Pending/Approved/Rejected/All)
+- "Processed by" column showing HR approver/rejector
+- Text wrapping for long leave reasons
+- Audit trail for compliance and accountability
 
-Attendance Tracking
-- Time-in/time-out recording
-- Overtime calculation
-- Attendance-based salary computation
-- Working days calculation (excludes weekends)
+Data Integrity
+- CSV-based persistence with proper parsing
+- Employee number uniqueness validation
+- Duplicate header detection and prevention
+- Automatic CSV generation if files missing
+- Transaction-safe data updates
 
-Modern User Interface
-- Professional blue and white color scheme
-- Card-based layouts with modern styling
-- Role-based button visibility
-- Responsive design with proper spacing
+User Experience
+- Modern Swing UI with consistent color scheme
+- Centered and bold table headers
+- Mouse-enabled row selection
+- Calendar widget for date selection (JCalendar)
+- Responsive layouts with proper sizing
 
-4-Layer Architecture
+Troubleshooting
 
-This system follows industry-standard 4-layer architecture pattern as specified in course guidelines:
+Issue: "Cannot find employees.csv"
+Solution: 
+- Verify all CSV files are in project root (same level as `src/` and `build.xml`)
+- Files should be: `employees.csv`, `users.csv`, `leaves.csv`, `payslips.csv`, `attendance.csv`
 
-Layer 1: Model (Domain Layer)
-- Purpose: Pure domain entities with business logic
-- Rule: NO file I/O, NO UI components
-- Classes: Employee hierarchy, User, LeaveApplication, AttendanceRecord, Payslip
-- Example: `calculateTotalAllowances()` business method
+Issue: "JCalendar library not found"
+Solution:
+1. Right-click project → Properties
+2. Go to Libraries → Compile tab
+3. Click "Add JAR/Folder"
+4. Navigate to `lib/jcalendar-1/jcalendar-1.4.jar`
+5. Click Open → OK
 
-Layer 2: DAO (Data Access Object)
-- Purpose: ALL file operations and data persistence
-- Rule: ONLY data storage, NO business logic
-- Classes: Repository classes, CSVFileHandler
-- Example: `loadEmployeesFromCSV()` data operation
+Issue: "Build failed - package does not exist"
+Solution:
+- Right-click project → Clean and Build
+- Verify all packages (dao, model, service, util, view) exist in `src/`
 
-Layer 3: Service (Business Logic)
-- Purpose: Business rules, calculations, validation
-- Rule: NO file I/O, NO UI components
-- Classes: SalaryCalculator, AuthenticationService, Operational Interfaces
-- Example: `calculateWithholdingTax()` business calculation
+Issue: "Login fails with correct credentials"
+Solution: 
+- Verify `users.csv` is present and not corrupted
+- Check for duplicate header rows in CSV
+- Ensure username/password are lowercase (case-sensitive)
 
-Layer 4: UI (User Interface)
-- Purpose: User interaction and display
-- Rule: Calls SERVICE layer, NEVER directly calls DAO
-- Classes: JFrame and JDialog components
-- Example: User clicks button → calls Service method → Service calls DAO
+Issue: "Date picker not showing"
+Solution:  
+- Verify JCalendar library is added to project
+- Check `lib/jcalendar-1/jcalendar-1.4.jar` exists
+- Rebuild project after adding library
 
-Data Flow: UI → Service → DAO → Files
-
-Architecture & OOP Principles
-
-1. Encapsulation
-- Private fields with public getters/setters - All 19 Employee fields are private with controlled access
-- Repository Pattern - Data access logic encapsulated in repository classes
-- Service Layer - Business logic encapsulated in dedicated service classes
-
-2. Abstraction
-- Abstract Employee Class - Defines template with abstract methods `getDepartment()` and `getJobDescription()`
-- Interfaces - 6 interfaces (IEmployeeRepository, IHROperations, IFinanceOperations, IITOperations, IAccountingOperations, IExecutiveOperations)
-- Layer Separation - Abstract interfaces between architectural layers
-
-3. Inheritance
-- 8 Employee Subclasses - Each inherits from abstract Employee base class
-- Code Reusability - Subclasses inherit 19 fields and common methods
-- IS-A Relationship - HREmployee IS-A Employee, FinanceEmployee IS-A Employee, etc.
-
-4. Polymorphism
-- Method Overriding (Runtime) - `getDepartment()`, `getJobDescription()` implemented differently by each subclass
-- Method Overloading (Compile-Time) - `calculateSalary()` with 3 versions, `calculateDeductions()` with 2 versions
-- Interface Polymorphism - Employee references can hold any subclass, role-based operations using instanceof
-- Factory Pattern - EmployeeFactory returns Employee type, actual object can be any subclass
-
-This project demonstrates:
-- ✅ All 4 OOP Principles- Encapsulation, Abstraction, Inheritance, Polymorphism
-- ✅ Multiple Polymorphism Types - Method Overriding, Method Overloading, Interface Polymorphism, Factory Pattern
-- ✅ Design Patterns - Factory, Repository, DAO, Service Layer, Template Method, MVC
-- ✅ 4-Layer Architecture - Complete separation of concerns (Model, DAO, Service, UI)
+Objective: Demonstrate mastery of Object-Oriented Programming principles:
+- Encapsulation - Private fields with public getters/setters
+- Abstraction - Abstract Employee class, Interface-based services
+- Inheritance - Employee subclasses (HR, Finance, IT, etc.)
+- Polymorphism - Role-based operation interfaces
