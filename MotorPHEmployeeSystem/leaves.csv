@@ -1,3 +1,4 @@
-LeaveID,EmployeeNumber,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ApprovedBy
-LV1770121179389,1,Manuel III Garcia,Sick Leave,2026-03-01,2026-03-05,"I need to be confined in a hospital",Approved,2026-02-03,admin
-LV1770121363669,2,Antonio Lim,Vacation Leave,2026-03-21,2026-03-30,"We will have a family gathering",Approved,2026-02-03,hr_andrea
+LeaveID,EmployeeNumber,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ProcessedBy
+LV1773133424329,32,John Rafael Castro,Sick Leave,2026-03-10,2026-03-13,"I've had my check up because my stomach is aching",Approved,2026-03-10,villanuevaandrea
+LV1773133467001,33,Carlos Ian Martinez,Vacation Leave,2026-03-10,2026-03-16,"We will go to Japan together with my family",Rejected,2026-03-10,villanuevaandrea
+LV1773133510273,35,Juan Dela Cruz,Emergency Leave,2026-03-10,2026-03-11,"I need to attend to my mother's check up",Approved,2026-03-10,villanuevaandrea

@@ -21,21 +21,40 @@ public class LeaveRepository {
             createCSVFile();
             return;
         }
-        
+
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String header = br.readLine();
+            String header = br.readLine(); // Skip header
+            System.out.println("Header skipped: " + header);
+
             String line;
-            
+            int lineNumber = 1;
+
             while ((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    try {
-                        leaves.add(parseCSVLine(line));
-                    } catch (Exception e) {
-                        System.err.println("Error parsing leave line: " + line);
-                        e.printStackTrace();
-                    }
+                lineNumber++;
+
+                if (line.trim().isEmpty()) {
+                    System.out.println("Skipping empty line at " + lineNumber);
+                    continue; // Skip empty lines
+                }
+
+                // Skip if line looks like a header (starts with "LeaveID")
+                if (line.startsWith("LeaveID")) {
+                    System.out.println("Skipping duplicate header at line " + lineNumber);
+                    continue;
+                }
+
+                try {
+                    LeaveApplication leave = parseCSVLine(line);
+                    leaves.add(leave);
+                    System.out.println("Loaded: " + leave.getLeaveId() + " - " + leave.getEmployeeName());
+                } catch (Exception e) {
+                    System.err.println("Error parsing line " + lineNumber + ": " + line);
+                    e.printStackTrace();
                 }
             }
+
+            System.out.println("Total leaves loaded: " + leaves.size());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,7 +62,7 @@ public class LeaveRepository {
     
     private void createCSVFile() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(LEAVE_FILE))) {
-            writer.println("LeaveID,EmployeeNumber,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ApprovedBy");
+            writer.println("LeaveID,EmployeeNumber,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ProcessedBy");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,8 +88,10 @@ public class LeaveRepository {
     
     public void saveToCSV() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(LEAVE_FILE))) {
-            writer.println("LeaveID,EmployeeNumber,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ApprovedBy");
-            
+            // Write header ONCE
+            writer.println("LeaveID,EmployeeNumber,EmployeeName,LeaveType,StartDate,EndDate,Reason,Status,SubmittedDate,ProcessedBy");
+
+            // Write data
             for (LeaveApplication leave : leaves) {
                 writer.println(leave.toCSV());
             }
@@ -104,7 +125,21 @@ public class LeaveRepository {
             .collect(Collectors.toList());
     }
     
-    //Search by employee NUMBER instead of name
+    //Get Approved Leaves for History
+    public List<LeaveApplication> getApprovedLeaves() {
+        return leaves.stream()
+            .filter(leave -> "Approved".equals(leave.getStatus()))
+            .collect(Collectors.toList());
+    }
+    
+    // Get Rejected Leaves for History
+    public List<LeaveApplication> getRejectedLeaves() {
+        return leaves.stream()
+            .filter(leave -> "Rejected".equals(leave.getStatus()))
+            .collect(Collectors.toList());
+    }
+    
+    // Search by employee NUMBER instead of name
     public List<LeaveApplication> getLeavesByEmployeeNumber(String employeeNumber) {
         return leaves.stream()
             .filter(leave -> leave.getEmployeeNumber().equals(employeeNumber))

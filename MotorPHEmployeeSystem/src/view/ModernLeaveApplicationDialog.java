@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Calendar;
 import dao.LeaveRepository;
 
 public class ModernLeaveApplicationDialog extends JDialog {
@@ -157,7 +158,6 @@ public class ModernLeaveApplicationDialog extends JDialog {
     private boolean validateLeaveFields() {
         
         // 1. Check Employee (should always be set, but validate anyway)
-        
         if (currentEmployee == null || currentEmployee.getEmployeeNumber() == null) {
             JOptionPane.showMessageDialog(this,
                 "Employee information is missing",
@@ -167,7 +167,6 @@ public class ModernLeaveApplicationDialog extends JDialog {
         }
         
         // 2. Check Leave Type
-        
         String leaveType = (String) leaveTypeCombo.getSelectedItem();
         if (leaveType == null || leaveType.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this,
@@ -178,7 +177,6 @@ public class ModernLeaveApplicationDialog extends JDialog {
         }
         
         // 3. Check Start Date (from JDateChooser)
-        
         Date startDate = startDateChooser.getDate();
         if (startDate == null) {
             JOptionPane.showMessageDialog(this,
@@ -190,7 +188,6 @@ public class ModernLeaveApplicationDialog extends JDialog {
         }
         
         // 4. Check End Date (from JDateChooser)
-        
         Date endDate = endDateChooser.getDate();
         if (endDate == null) {
             JOptionPane.showMessageDialog(this,
@@ -201,8 +198,40 @@ public class ModernLeaveApplicationDialog extends JDialog {
             return false;
         }
         
-        // 5. Check that End Date is not before Start Date
+        // 5. NEW VALIDATION - Check that Start Date is not in the PAST (CRITICAL!)
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 0);
+        Date todayDate = today.getTime();
         
+        if (startDate.before(todayDate)) {
+            JOptionPane.showMessageDialog(this,
+                "Invalid Start Date!\n\n" +
+                "Start Date cannot be in the past.\n\n" +
+                "Selected Start Date: " + dateFormat.format(startDate) + "\n" +
+                "Today's Date: " + dateFormat.format(todayDate) + "\n\n" +
+                "Please select today or a future date.",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // 6. NEW VALIDATION - Check that End Date is not in the PAST (CRITICAL!)
+        if (endDate.before(todayDate)) {
+            JOptionPane.showMessageDialog(this,
+                "Invalid End Date!\n\n" +
+                "End Date cannot be in the past.\n\n" +
+                "Selected End Date: " + dateFormat.format(endDate) + "\n" +
+                "Today's Date: " + dateFormat.format(todayDate) + "\n\n" +
+                "Please select today or a future date.",
+                "Validation Error",
+                JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        // 7. Check that End Date is not before Start Date
         if (endDate.before(startDate)) {
             JOptionPane.showMessageDialog(this,
                 "Invalid Date Range!\n\n" +
@@ -214,13 +243,11 @@ public class ModernLeaveApplicationDialog extends JDialog {
             return false;
         }
         
-        // 6. Calculate and display leave duration
-        
+        // 8. Calculate and display leave duration
         long diffInMillies = endDate.getTime() - startDate.getTime();
         long days = (diffInMillies / (1000 * 60 * 60 * 24)) + 1; 
         
-        // 7. Warn if leave duration is very long (more than 30 days)
-        
+        // 9. Warn if leave duration is very long (more than 30 days)
         if (days > 30) {
             int confirm = JOptionPane.showConfirmDialog(this,
                 "Leave duration is very long (" + days + " days).\n\n" +
@@ -236,8 +263,7 @@ public class ModernLeaveApplicationDialog extends JDialog {
             }
         }
         
-        // 8. Check Reason (Must not be empty)
-        
+        // 10. Check Reason (Must not be empty)
         if (reasonArea.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this,
                 "Reason for leave is required",
@@ -247,8 +273,7 @@ public class ModernLeaveApplicationDialog extends JDialog {
             return false;
         }
         
-        // 9. Check Reason Length (At least 10 characters for meaningful explanation)
-        
+        // 11. Check Reason Length (At least 10 characters for meaningful explanation)
         if (reasonArea.getText().trim().length() < 10) {
             JOptionPane.showMessageDialog(this,
                 "Please provide a more detailed reason (at least 10 characters)\n" +
@@ -259,8 +284,7 @@ public class ModernLeaveApplicationDialog extends JDialog {
             return false;
         }
         
-        // 10. Warn if Reason is very long (more than 500 characters)
-        
+        // 12. Warn if Reason is very long (more than 500 characters)
         if (reasonArea.getText().trim().length() > 500) {
             int confirm = JOptionPane.showConfirmDialog(this,
                 "Your reason is very long (" + reasonArea.getText().trim().length() + " characters).\n" +

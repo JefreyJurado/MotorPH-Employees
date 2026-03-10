@@ -441,14 +441,14 @@ public class EmployeeDashboardFrame extends JFrame {
             BorderFactory.createLineBorder(BORDER_COLOR, 1),
             new EmptyBorder(20, 20, 20, 20)
         ));
-        
+
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(WHITE);
-        
+
         JLabel titleLabel = new JLabel("My Leave Applications");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
         titleLabel.setForeground(TEXT_COLOR);
-        
+
         JButton refreshBtn = new JButton("Refresh");
         refreshBtn.setFont(new Font("Segoe UI", Font.BOLD, 13));
         refreshBtn.setBackground(PRIMARY_COLOR);
@@ -458,47 +458,102 @@ public class EmployeeDashboardFrame extends JFrame {
         refreshBtn.setPreferredSize(new Dimension(100, 32));
         refreshBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         refreshBtn.addActionListener(e -> loadLeaveHistory());
-        
+
         headerPanel.add(titleLabel, BorderLayout.WEST);
         headerPanel.add(refreshBtn, BorderLayout.EAST);
-        
+
         panel.add(headerPanel, BorderLayout.NORTH);
-        
-        String[] columnNames = {"Leave ID", "Type", "Start Date", "End Date", "Reason", "Submitted", "Status", "Approved by"};
+
+        String[] columnNames = {"Leave ID", "Type", "Start Date", "End Date", "Reason", "Submitted", "Status", "Processed by"};
         leaveTableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        
-        JTable leaveTable = new JTable(leaveTableModel);
+
+        JTable leaveTable = new JTable(leaveTableModel) {
+            @Override
+            public int getRowHeight(int row) {
+                int baseHeight = 60;
+                try {
+                    Object reasonValue = getValueAt(row, 4);
+                    if (reasonValue != null) {
+                        String reasonText = reasonValue.toString();
+                        int charsPerLine = 50;
+                        int lines = (reasonText.length() / charsPerLine) + 1;
+                        int calculatedHeight = Math.max(baseHeight, lines * 20 + 20);
+                        return Math.min(calculatedHeight, 150);
+                    }
+                } catch (Exception e) {
+                }
+                return baseHeight;
+            }
+        };
+
         leaveTable.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        leaveTable.setRowHeight(35);
         leaveTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         leaveTable.setGridColor(BORDER_COLOR);
-        
+
+        // Set column widths
+        leaveTable.getColumnModel().getColumn(0).setPreferredWidth(120); // Leave ID
+        leaveTable.getColumnModel().getColumn(1).setPreferredWidth(120); // Type
+        leaveTable.getColumnModel().getColumn(2).setPreferredWidth(100); // Start Date
+        leaveTable.getColumnModel().getColumn(3).setPreferredWidth(100); // End Date
+        leaveTable.getColumnModel().getColumn(4).setPreferredWidth(350); // Reason
+        leaveTable.getColumnModel().getColumn(5).setPreferredWidth(100); // Submitted
+        leaveTable.getColumnModel().getColumn(6).setPreferredWidth(100); // Status
+        leaveTable.getColumnModel().getColumn(7).setPreferredWidth(150); // Processed by
+
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(PRIMARY_COLOR);
         headerRenderer.setForeground(WHITE);
         headerRenderer.setFont(new Font("Segoe UI", Font.BOLD, 13));
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
         headerRenderer.setOpaque(true);
-        
+
         for (int i = 0; i < leaveTable.getColumnModel().getColumnCount(); i++) {
             leaveTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
-        
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        centerRenderer.setVerticalAlignment(JLabel.CENTER);
+
         for (int i = 0; i < leaveTable.getColumnCount(); i++) {
-            leaveTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            if (i != 4) {
+                leaveTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            }
         }
-        
+
+        leaveTable.getColumnModel().getColumn(4).setCellRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+                if (value != null) {
+                    String text = value.toString();
+                    text = text.replace("<", "&lt;").replace(">", "&gt;");
+                    String html = "<html><div style='width:330px; text-align:center;'>" + text + "</div></html>";
+                    label.setText(html);
+                } else {
+                    label.setText("");
+                }
+
+                label.setHorizontalAlignment(JLabel.CENTER);
+                label.setVerticalAlignment(JLabel.CENTER);
+                label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+
+                return label;
+            }
+        });
+
         JScrollPane scrollPane = new JScrollPane(leaveTable);
         scrollPane.setBorder(BorderFactory.createLineBorder(BORDER_COLOR, 1));
         panel.add(scrollPane, BorderLayout.CENTER);
-        
+
         return panel;
     }
     
